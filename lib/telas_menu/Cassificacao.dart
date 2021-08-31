@@ -75,6 +75,7 @@ class _CassificacaoState extends State<Cassificacao> {
               extendBodyBehindAppBar: true,
               /*appBar: AppBar(
                 backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
               ),*/
               body: ListView.builder(
                 itemCount: snapshot.data.length,
@@ -82,40 +83,39 @@ class _CassificacaoState extends State<Cassificacao> {
                   List<ClassifUser> listaItens = snapshot.data;
                   ClassifUser classifUser = listaItens[indice];
 
-                  return Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(4),
-                      padding: EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                          color: Colors.blue[50],
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                image: DecorationImage(
-                                    image: NetworkImage(classifUser.urlimage),
-                                    fit: BoxFit.cover),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8))),
+                  return Container(
+                    margin: EdgeInsets.all(4),
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              image: DecorationImage(
+                                  image: NetworkImage(classifUser.urlimage),
+                                  fit: BoxFit.cover),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                        ),
+                        Expanded(
+                            flex: 2,
+                            child: Text(
+                              classifUser.nome,
+                              textAlign: TextAlign.center,
+                            )),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            classifUser.resultkd,
+                            textAlign: TextAlign.center,
                           ),
-                          Expanded(
-                              flex: 2,
-                              child: Text(
-                                classifUser.nome,
-                                textAlign: TextAlign.center,
-                              )),
-                          Expanded(
-                              flex: 1,
-                              child: Text(
-                                classifUser.resultkd,
-                                textAlign: TextAlign.center,
-                              )),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   );
                 },

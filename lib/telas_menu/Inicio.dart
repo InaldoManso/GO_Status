@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
+import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/model/Api.dart';
 import 'package:go_status/model/Video.dart';
 
@@ -14,6 +15,7 @@ class Inicio extends StatefulWidget {
 class _InicioState extends State<Inicio> {
   //Atributos
   String _resultado = "";
+  Paleta paleta = Paleta();
 
   _listarVideos(String pesquisa) {
     Api api = Api();
@@ -24,6 +26,26 @@ class _InicioState extends State<Inicio> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.youtube_searched_for_outlined,
+              color: paleta.royalBlue,
+            ),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.video_camera_back_outlined,
+              color: paleta.royalBlue,
+            ),
+            onPressed: () {},
+          ),
+        ],
+      ),
       body: FutureBuilder<List<Video>>(
         future: _listarVideos(widget.pesquisa),
         builder: (contex, snapshot) {
