@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_status/helper/CustomSearchDelegate.dart';
 import 'package:go_status/helper/RouteGenerator.dart';
 import 'package:go_status/telas_menu/Alertas.dart';
-import 'package:go_status/telas_menu/Chat.dart';
+import 'package:go_status/telas_menu/Cassificacao.dart';
 import 'package:go_status/telas_menu/Configs.dart';
 import 'package:go_status/telas_menu/Grupos.dart';
 import 'package:go_status/telas_menu/Inicio.dart';
@@ -38,12 +38,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     //Telas apresentadas
     List<Widget> telas = [
-      Inicio(_resultado),
-      Alertas(),
-      Perfil(),
-      Grupos(),
-      Configs(),
-      ReportBug()
+      Inicio(_resultado), //0
+      Alertas(), //1
+      Perfil(), //2
+      Cassificacao(), //3
+      Grupos(), //4
+      Configs(), //5
+      ReportBug() //6
     ];
 
     return Scaffold(
@@ -121,7 +122,7 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.people_alt_outlined),
+            icon: Icon(Icons.list_alt_outlined),
             onPressed: () {
               _apresentarTela(3);
             }),
@@ -131,7 +132,7 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.settings_outlined),
+            icon: Icon(Icons.people_alt_outlined),
             onPressed: () {
               _apresentarTela(4);
             }),
@@ -141,9 +142,19 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.bug_report_outlined),
+            icon: Icon(Icons.settings_outlined),
             onPressed: () {
               _apresentarTela(5);
+            }),
+      ),
+      Container(
+        margin: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+        child: IconButton(
+            icon: Icon(Icons.bug_report_outlined),
+            onPressed: () {
+              _apresentarTela(6);
             }),
       ),
       Container(

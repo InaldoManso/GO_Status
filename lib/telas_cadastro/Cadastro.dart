@@ -42,7 +42,7 @@ class _CadastroState extends State<Cadastro> {
         usuario.steamid = widget.usuario.steamid;
         usuario.time = timeEditingController.text;
         usuario.urlimage = widget.usuario.urlimage;
-        usuario.urlimage = widget.usuario.pais;
+        usuario.pais = widget.usuario.pais;
         _salvarCadastro(usuario);
       } else {
         _snackBarInfo("Senhas diferentes!");

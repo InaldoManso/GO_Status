@@ -7,7 +7,8 @@ import 'package:go_status/model/Video.dart';
 import 'package:http/http.dart' as http;
 
 const CHAVE_YOUTUBE_API = "AIzaSyAco60KceBeoM6j0VOsKdMRgA6VTatVERY";
-const ID_CANAL = "UCGsYpTrwc-sPjlyoSGPbcbw";
+const ID_CANAL = "UC_KRbC4RyGuQI6LaQxahNEQ";
+const ID_CANAL2 = "UCGsYpTrwc-sPjlyoSGPbcbw";
 const URL_BASE = "https://www.googleapis.com/youtube/v3/";
 
 class Api {
