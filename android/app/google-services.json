@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "673566456611",
+    "project_id": "go-status-f1667",
+    "storage_bucket": "go-status-f1667.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673566456611:android:eafc8d69c6f55cc5a82a96",
+        "android_client_info": {
+          "package_name": "com.inaldomanso.dev.go_status"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "673566456611-v3ufpvr4q6qid3rtde3hviu415bnbpg4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5h2aioP5hF6lEBeqZcv1596HI3jDNiGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "673566456611-v3ufpvr4q6qid3rtde3hviu415bnbpg4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
