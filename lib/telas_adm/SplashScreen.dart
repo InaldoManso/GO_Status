@@ -41,12 +41,25 @@ class _SplashScreenState extends State<SplashScreen> {
         await db.collection("usuarios").doc(user.uid).get();
 
     String steamid = snapshot["steamid"];
-    print("XXX " + snapshot["steamid"]);
 
-    _recCsgoStats(steamid);
+    _recSteamID(steamid);
     setState(() {
       _carregando = true;
     });
+  }
+
+  _recSteamID(String steamID) async {
+    http.Response response = await http.get(api.recSteamID + steamID);
+
+    //Decodificar o resultado (String to Json)
+    Map<String, dynamic> retorno = json.decode(response.body);
+
+    csgoStats.urlimage =
+        retorno["response"]["players"][0]["avatarfull"].toString();
+    csgoStats.nome =
+        retorno["response"]["players"][0]["personaname"].toString();
+
+    _recCsgoStats(steamID);
   }
 
   _recCsgoStats(String steamID) async {

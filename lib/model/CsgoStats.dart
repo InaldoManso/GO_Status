@@ -1,4 +1,6 @@
 class CsgoStats {
+  String _nome;
+  String _urlimage;
   String _resultkd;
   String _kill;
   String _death;
@@ -11,6 +13,8 @@ class CsgoStats {
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
+      "nome": this.nome,
+      "urlimage": this.urlimage,
       "resultkd": this.resultkd,
       "kill": this.kill,
       "death": this.death,
@@ -21,6 +25,14 @@ class CsgoStats {
     };
     return map;
   }
+
+  get nome => this._nome;
+
+  set nome(value) => this._nome = value;
+
+  get urlimage => this._urlimage;
+
+  set urlimage(value) => this._urlimage = value;
 
   get resultkd => this._resultkd;
 

@@ -25,8 +25,9 @@ class _InicioState extends State<Inicio> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(
+      /*appBar: AppBar(
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         actions: [
@@ -45,7 +46,7 @@ class _InicioState extends State<Inicio> {
             onPressed: () {},
           ),
         ],
-      ),
+      ),*/
       body: FutureBuilder<List<Video>>(
         future: _listarVideos(widget.pesquisa),
         builder: (contex, snapshot) {
@@ -82,12 +83,20 @@ class _InicioState extends State<Inicio> {
                               Container(
                                 height: 200,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(8)),
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(video.imagem),
-                                    )),
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(8)),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(video.imagem),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.play_circle_outline_outlined,
+                                    size: 50,
+                                    color: paleta.royalBlue,
+                                  ),
+                                ),
                               ),
                               ListTile(
                                 title: Text(video.titulo),
