@@ -142,16 +142,6 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.settings_outlined),
-            onPressed: () {
-              _apresentarTela(5);
-            }),
-      ),
-      Container(
-        margin: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
-        child: IconButton(
             icon: Icon(Icons.bug_report_outlined),
             onPressed: () {
               _apresentarTela(6);
@@ -162,11 +152,21 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
+            icon: Icon(Icons.settings_outlined),
+            onPressed: () {
+              _apresentarTela(5);
+            }),
+      ),
+      /*Container(
+        margin: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+        child: IconButton(
             icon: Icon(Icons.power_settings_new_outlined),
             onPressed: () {
               _deslogarUser();
             }),
-      ),
+      ),*/
     ]);
     return row;
   }

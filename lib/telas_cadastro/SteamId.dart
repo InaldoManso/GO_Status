@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/helper/RouteGenerator.dart';
-import 'package:go_status/model/Api.dart';
+import 'package:go_status/helper/Api.dart';
 import 'package:go_status/model/Usuario.dart';
 import 'package:http/http.dart' as http;
 

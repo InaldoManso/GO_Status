@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/model/Api.dart';
+import 'package:go_status/helper/Api.dart';
 import 'package:go_status/model/Video.dart';
 
 class Inicio extends StatefulWidget {

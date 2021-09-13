@@ -3,7 +3,7 @@ import 'package:go_status/helper/RouteGenerator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_status/model/CsgoStats.dart';
 import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/model/Api.dart';
+import 'package:go_status/helper/Api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
