@@ -3,6 +3,7 @@
 // String steamId2 = "STEAM_1:1:616436488";
 import 'dart:convert';
 
+import 'package:go_status/model/Usuario.dart';
 import 'package:go_status/model/Video.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,14 +16,20 @@ class Api {
   //Atributos:
   String webKey = "F11D7D33D32510B6C271445DC579001D";
   String appId = "730";
-
-//RecuperarIdUser
-  String recCSTime =
-      "https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/?key=0850333260EF03D2E0AB3D29A0AC9176&steamid=76561198960813990";
-  String recSteamURL =
-      "https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/?key=0850333260EF03D2E0AB3D29A0AC9176&vanityurl=";
   String recSteamID =
       "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=0850333260EF03D2E0AB3D29A0AC9176&steamids=";
+
+  //Atributos de recuperacao por Steam URL
+  String link_URL1 =
+      "https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/?key=";
+  String link_URL2 = "&vanityurl=";
+
+  //Atributos de recuperacao por Stem ID
+  String link_ID1 =
+      "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=";
+  String link_ID2 = "&steamids=";
+
+//RecuperarIdUser
   String recCSGO1 =
       "https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?key=0850333260EF03D2E0AB3D29A0AC9176&steamid=";
   String recCSGO2 = "&appid=730";
@@ -30,6 +37,50 @@ class Api {
 //Avisos
   String avisoSteamPrivacidade =
       "Verifique se seu perfil esta público na Steam e tente novamente!";
+
+  Future<String> resgatarDadosSteamURL(String keyApi, String steamName) async {
+    http.Response response =
+        await http.get(link_URL1 + keyApi + link_URL2 + steamName);
+
+    //Decodificar o resultado (String to Json)
+    Map<String, dynamic> retorno = json.decode(response.body);
+
+    String sucesso = retorno["response"]["success"].toString();
+
+    if (sucesso == "1") {
+      print("XXXXXXXXXX" + retorno["response"]["steamid"].toString());
+      return retorno["response"]["steamid"].toString();
+    } else {
+      return null;
+    }
+  }
+
+  Future<Usuario> resgatarDadosSteamID(String keyApi, String steamID) async {
+    Usuario usuario = Usuario();
+    http.Response response =
+        await http.get(link_ID1 + keyApi + link_ID2 + steamID);
+
+    Map<String, dynamic> retorno = json.decode(response.body);
+
+    if (retorno["response"]["players"].toString() != "[]") {
+      usuario.email = "";
+      usuario.senha = "";
+      usuario.time = "";
+      usuario.userid = steamID;
+      usuario.steamid = retorno["response"]["players"][0]["steamid"].toString();
+      usuario.urlimage =
+          retorno["response"]["players"][0]["avatarfull"].toString();
+      usuario.nome =
+          retorno["response"]["players"][0]["personaname"].toString();
+      usuario.pais =
+          retorno["response"]["players"][0]["loccountrycode"].toString();
+
+      return usuario;
+    } else {
+      return null;
+    }
+  }
+
   Future<List<Video>> pesquisar(String pesquisa) async {
     http.Response response = await http.get(URL_BASE +
         "search"
@@ -50,15 +101,6 @@ class Api {
       }).toList();
 
       return videos;
-
-      //print("Resultado: " + videos.toString() );
-
-      /*
-      for( var video in dadosJson["items"] ){
-        print("Resultado: " + video.toString() );
-      }*/
-      //print("resultado: " + dadosJson["items"].toString() );
-
     } else {}
   }
 }

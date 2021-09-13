@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/helper/RouteGenerator.dart';
 import 'package:go_status/helper/Api.dart';
 import 'package:go_status/model/Usuario.dart';
-import 'package:http/http.dart' as http;
 
 class SteamId extends StatefulWidget {
   @override
@@ -22,68 +20,12 @@ class _SteamIdState extends State<SteamId> {
   String _labelTextField = "exemplo: MeuNome123";
 
   String _idSelecionado = "url";
-  bool _userEncontrado = false;
   bool _procurando = false;
 
   //Atributos User
   String _steamInfo = "";
-  String _urlImage = "";
-  String _steamID = "";
-  String _steamNome = "";
-  String _steamPais = "";
-
-  _recSteamURL(String steamName) async {
-    http.Response response = await http.get(api.recSteamURL + steamName);
-
-    //Decodificar o resultado (String to Json)
-    Map<String, dynamic> retorno = json.decode(response.body);
-
-    String sucesso = retorno["response"]["success"].toString();
-
-    if (sucesso == "1") {
-      String steamId = retorno["response"]["steamid"].toString();
-      _recSteamID(steamId);
-    } else {
-      _userEncontrado = false;
-      _procurando = false;
-      _urlImage = "";
-      setState(() {});
-    }
-  }
-
-  _recSteamID(String steamID) async {
-    http.Response response = await http.get(api.recSteamID + steamID);
-
-    //Decodificar o resultado (String to Json)
-    Map<String, dynamic> retorno = json.decode(response.body);
-    if (retorno["response"]["players"].toString() != "[]") {
-      _urlImage = retorno["response"]["players"][0]["avatarfull"].toString();
-      _steamID = retorno["response"]["players"][0]["steamid"].toString();
-      _steamNome = retorno["response"]["players"][0]["personaname"].toString();
-      _steamPais =
-          retorno["response"]["players"][0]["loccountrycode"].toString();
-      _userEncontrado = true;
-      _procurando = false;
-      setState(() {});
-    } else {
-      setState(() {
-        _userEncontrado = false;
-        _procurando = false;
-        _urlImage = "";
-      });
-    }
-  }
 
   _enviarCadastro() {
-    Usuario usuario = Usuario();
-    usuario.nome = _steamNome;
-    usuario.email = "";
-    usuario.senha = "";
-    usuario.steamid = _steamID;
-    usuario.time = "";
-    usuario.urlimage = _urlImage;
-    usuario.pais = _steamPais;
-
     Navigator.pushNamed(context, RouteGenerator.CADASTRO_ROTA,
         arguments: usuario);
   }
@@ -206,15 +148,28 @@ class _SteamIdState extends State<SteamId> {
                                   : Icon(Icons.search),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8)),
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_steamInfo.length > 0) {
                                   setState(() {
                                     _procurando = true;
                                   });
                                   if (_idSelecionado == "url") {
-                                    _recSteamURL(_steamInfo);
+                                    // _recSteamURL(_steamInfo);
+                                    String gg = await api.resgatarDadosSteamURL(
+                                        "0850333260EF03D2E0AB3D29A0AC9176",
+                                        _steamInfo);
+
+                                    usuario = await api.resgatarDadosSteamID(
+                                        "0850333260EF03D2E0AB3D29A0AC9176", gg);
+                                    _procurando = false;
+                                    setState(() {});
                                   } else {
-                                    _recSteamID(_steamInfo);
+                                    // _recSteamID(_steamInfo);
+                                    usuario = await api.resgatarDadosSteamID(
+                                        "0850333260EF03D2E0AB3D29A0AC9176",
+                                        _steamInfo);
+                                    _procurando = false;
+                                    setState(() {});
                                   }
                                 }
                               }),
@@ -224,31 +179,26 @@ class _SteamIdState extends State<SteamId> {
                   )),
               Padding(
                 padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _userEncontrado
-                        ? Container(
+                child: usuario.nome != "" && usuario.nome != null
+                    ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
                             height: 150,
                             width: 150,
                             decoration: BoxDecoration(
                                 color: Colors.grey[200],
                                 image: DecorationImage(
-                                    image: NetworkImage(_urlImage),
+                                    image: NetworkImage(usuario.urlimage),
                                     fit: BoxFit.cover),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
-                          )
-                        : Container(
-                            height: 150,
-                            width: 150,
                           ),
-                    Padding(
-                      padding: EdgeInsets.all(4),
-                    ),
-                    Expanded(
-                      child: _userEncontrado
-                          ? Container(
+                          Padding(
+                            padding: EdgeInsets.all(4),
+                          ),
+                          Expanded(
+                            child: Container(
                               height: 150,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -256,34 +206,31 @@ class _SteamIdState extends State<SteamId> {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   Text(
-                                    _steamNome,
+                                    usuario.nome,
                                     style: TextStyle(fontSize: 24),
                                   ),
                                   Text(
-                                    "id: " + _steamID,
+                                    "id: " + usuario.steamid,
                                     style: TextStyle(fontSize: 16),
                                   ),
-                                  _userEncontrado
-                                      ? RaisedButton(
-                                          color: paleta.royalBlue,
-                                          textColor: Colors.white,
-                                          padding: EdgeInsets.all(15),
-                                          child:
-                                              Text("Acessar como $_steamNome"),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          onPressed: () {
-                                            _enviarCadastro();
-                                          })
-                                      : Container()
+                                  RaisedButton(
+                                    color: paleta.royalBlue,
+                                    textColor: Colors.white,
+                                    padding: EdgeInsets.all(15),
+                                    child: Text("Acessar como " + usuario.nome),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)),
+                                    onPressed: () {
+                                      _enviarCadastro();
+                                    },
+                                  )
                                 ],
                               ),
-                            )
-                          : Container(),
-                    ),
-                  ],
-                ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Container(),
               ),
             ],
           ),

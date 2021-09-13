@@ -1,13 +1,13 @@
 class Usuario {
   // Atributos
-  String _nome;
-  String _email;
-  String _senha;
-  String _steamid;
-  String _userid;
-  String _time;
-  String _urlimage;
-  String _pais;
+  String _nome = "";
+  String _email = "";
+  String _senha = "";
+  String _steamid = "";
+  String _userid = "";
+  String _time = "";
+  String _urlimage = "";
+  String _pais = "";
 
   //Contrutor
   Usuario();
