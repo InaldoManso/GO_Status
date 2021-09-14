@@ -155,12 +155,14 @@ class _SteamIdState extends State<SteamId> {
                                   });
                                   if (_idSelecionado == "url") {
                                     // _recSteamURL(_steamInfo);
-                                    String gg = await api.resgatarDadosSteamURL(
-                                        "0850333260EF03D2E0AB3D29A0AC9176",
-                                        _steamInfo);
+                                    String dados =
+                                        await api.resgatarDadosSteamURL(
+                                            "0850333260EF03D2E0AB3D29A0AC9176",
+                                            _steamInfo);
 
                                     usuario = await api.resgatarDadosSteamID(
-                                        "0850333260EF03D2E0AB3D29A0AC9176", gg);
+                                        "0850333260EF03D2E0AB3D29A0AC9176",
+                                        dados);
                                     _procurando = false;
                                     setState(() {});
                                   } else {

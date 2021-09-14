@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.video_library_outlined),
             onPressed: () {
               _apresentarTela(0);
               setState(() {

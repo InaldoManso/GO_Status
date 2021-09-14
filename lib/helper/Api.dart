@@ -1,7 +1,3 @@
-//Atributos desativados
-// String steamId1 = "76561198960813990";
-// String steamId2 = "STEAM_1:1:616436488";
-
 import 'package:go_status/model/CsgoStats.dart';
 import 'package:go_status/model/Usuario.dart';
 import 'package:go_status/model/Video.dart';
@@ -10,16 +6,9 @@ import 'dart:convert';
 
 const CHAVE_YOUTUBE_API = "AIzaSyAco60KceBeoM6j0VOsKdMRgA6VTatVERY";
 const ID_CANAL = "UC_KRbC4RyGuQI6LaQxahNEQ";
-const ID_CANAL2 = "UCGsYpTrwc-sPjlyoSGPbcbw";
 const URL_BASE = "https://www.googleapis.com/youtube/v3/";
 
 class Api {
-  //Atributos:
-  String webKey = "F11D7D33D32510B6C271445DC579001D";
-  String appId = "730";
-  String recSteamID =
-      "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=0850333260EF03D2E0AB3D29A0AC9176&steamids=";
-
   //Atributos de recuperacao por Steam URL
   String link_URL1 =
       "https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/?key=";

@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_status/helper/Api.dart';
 import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/helper/RouteGenerator.dart';
+import 'package:go_status/model/CsgoStats.dart';
 import 'package:go_status/model/Usuario.dart';
 
 class Cadastro extends StatefulWidget {
@@ -111,9 +113,7 @@ class _CadastroState extends State<Cadastro> {
         setState(() {
           _buttonText = "Conta Salva!";
         });
-        Timer(Duration(seconds: 2), () {
-          Navigator.pushReplacementNamed(context, RouteGenerator.HOME_ROTA);
-        });
+        _recCsgoStats(usuario.steamid, usuario.nome, usuario.urlimage);
       });
     }).catchError((error) {
       print("erro: " + error.toString());
@@ -122,6 +122,32 @@ class _CadastroState extends State<Cadastro> {
       });
       _editando = true;
     });
+  }
+
+  _recCsgoStats(String steamid, String nome, String urlimage) async {
+    CsgoStats csgoStats = CsgoStats();
+    Api api = Api();
+    csgoStats = await api.atualizarStatsCsgo(
+        "0850333260EF03D2E0AB3D29A0AC9176", steamid, nome, urlimage);
+
+    if (csgoStats != null) {
+      User user = auth.currentUser;
+
+      db
+          .collection("usuarios")
+          .doc(user.uid)
+          .update(csgoStats.toMap())
+          .then((value) {
+        Timer(Duration(seconds: 2), () {
+          Navigator.pushReplacementNamed(context, RouteGenerator.HOME_ROTA);
+        });
+      });
+    } else {
+      setState(() {
+        _buttonText = "Erro ao Cadastrar, tente novamente!";
+      });
+      _editando = true;
+    }
   }
 
   //Botão do Snackbar
