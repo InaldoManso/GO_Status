@@ -14,10 +14,12 @@ class _LoginState extends State<Login> {
   //Atributos
   TextEditingController _controllerEmail =
       TextEditingController(text: "inaldo@gmail.com");
-  // TextEditingController _controllerEmail = TextEditingController();
+  // TextEditingController();
   TextEditingController _controllerSenha =
       TextEditingController(text: "123456");
-  // TextEditingController _controllerSenha = TextEditingController();
+  // TextEditingController();
+
+  //
   IconData _iconSenha = Icons.visibility_off_outlined;
   Paleta paleta = Paleta();
   bool _esconderSenha = true;

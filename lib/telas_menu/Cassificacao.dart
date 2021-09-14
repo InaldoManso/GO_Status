@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/model/CassifUser.dart';
 
 class Cassificacao extends StatefulWidget {
@@ -10,9 +11,10 @@ class Cassificacao extends StatefulWidget {
 
 class _CassificacaoState extends State<Cassificacao> {
   FirebaseAuth auth = FirebaseAuth.instance;
-  User _user;
-  String _idUsuarioLogado;
   String _emailUsuarioLogado;
+  String _idUsuarioLogado;
+  Paleta paleta = Paleta();
+  User _user;
 
   Future<List<ClassifUser>> _recuperarContatos() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
@@ -25,18 +27,135 @@ class _CassificacaoState extends State<Cassificacao> {
     List<ClassifUser> listaUsuarios = List();
     for (DocumentSnapshot item in querySnapshot.docs) {
       var dados = item.data();
-      //if (dados["email"] == _emailUsuarioLogado) continue;
+      if (dados["exibirclass"] == false) continue;
 
       ClassifUser classifUser = ClassifUser();
       classifUser.email = dados["email"];
       classifUser.nome = dados["nome"];
       classifUser.urlimage = dados["urlimage"];
       classifUser.resultkd = dados["resultkd"];
+      classifUser.kill = dados["kill"];
+      classifUser.mvps = dados["mvps"];
+      classifUser.timeplay = dados["timeplay"];
 
       listaUsuarios.add(classifUser);
     }
 
     return listaUsuarios;
+  }
+
+  _exibirTelaCadastro(ClassifUser classifUser) {
+    //Calcular Horas
+    int minutos = int.parse(classifUser.timeplay);
+    String horas = Duration(minutes: minutos).toString().split(':00')[0];
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          actionsAlignment: MainAxisAlignment.spaceAround,
+          title: Text(
+            classifUser.nome,
+            textAlign: TextAlign.center,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: CircleAvatar(
+                  child: classifUser.urlimage == ""
+                      ? CircularProgressIndicator()
+                      : ClipOval(child: Image.network(classifUser.urlimage)),
+                  radius: 70,
+                  backgroundColor: Colors.grey,
+                ),
+              ),
+              Divider(color: paleta.royalBlue),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Kill/ Death",
+                      style: TextStyle(
+                        color: paleta.royalBlue,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    classifUser.resultkd,
+                    style: TextStyle(color: paleta.royalBlue),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Total Kills",
+                      style: TextStyle(
+                        color: paleta.royalBlue,
+                        // decoration: TextDecoration.underline,
+                        // decorationStyle: TextDecorationStyle.dotted,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    classifUser.kill,
+                    style: TextStyle(color: paleta.royalBlue),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Mvps",
+                      style: TextStyle(
+                        color: paleta.royalBlue,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    classifUser.mvps,
+                    style: TextStyle(color: paleta.royalBlue),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Horas de jogo",
+                      style: TextStyle(
+                        color: paleta.royalBlue,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    horas,
+                    style: TextStyle(color: paleta.royalBlue),
+                  ),
+                ],
+              ),
+              Divider(color: paleta.royalBlue),
+            ],
+          ),
+          /*actions: [
+            TextButton(
+              child: Text("Avaliar"),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text("Mensagem"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],*/
+        );
+      },
+    );
   }
 
   _recuperarDadosUsuario() async {
@@ -83,40 +202,45 @@ class _CassificacaoState extends State<Cassificacao> {
                   List<ClassifUser> listaItens = snapshot.data;
                   ClassifUser classifUser = listaItens[indice];
 
-                  return Container(
-                    margin: EdgeInsets.all(4),
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: Colors.blue[50],
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              image: DecorationImage(
-                                  image: NetworkImage(classifUser.urlimage),
-                                  fit: BoxFit.cover),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8))),
-                        ),
-                        Expanded(
-                            flex: 2,
-                            child: Text(
-                              classifUser.nome,
-                              textAlign: TextAlign.center,
-                            )),
-                        Expanded(
-                          flex: 1,
-                          child: Text(
-                            classifUser.resultkd,
-                            textAlign: TextAlign.center,
+                  return GestureDetector(
+                    child: Container(
+                      margin: EdgeInsets.all(4),
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: Colors.blue[50],
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                image: DecorationImage(
+                                    image: NetworkImage(classifUser.urlimage),
+                                    fit: BoxFit.cover),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                              flex: 2,
+                              child: Text(
+                                classifUser.nome,
+                                textAlign: TextAlign.center,
+                              )),
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              classifUser.resultkd,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+                    onTap: () {
+                      _exibirTelaCadastro(classifUser);
+                    },
                   );
                 },
               ),
@@ -127,50 +251,3 @@ class _CassificacaoState extends State<Cassificacao> {
     );
   }
 }
-
-
-/* 
-
-
-ListView.builder(
-                    itemCount: querySnapshot.documents.length,
-                    itemBuilder: (context, indice) {
-
-                      //recupera mensagem
-                      List<DocumentSnapshot> mensagens = querySnapshot.documents.toList();
-                      DocumentSnapshot item = mensagens[indice];
-
-                      double larguraContainer =
-                          MediaQuery.of(context).size.width * 0.8;
-
-                      //Define cores e alinhamentos
-                      Alignment alinhamento = Alignment.centerRight;
-                      Color cor = Color(0xffd2ffa5);
-                      if ( _idUsuarioLogado != item["idUsuario"] ) {
-                        alinhamento = Alignment.centerLeft;
-                        cor = Colors.white;
-                      }
-
-                      return Align(
-                        alignment: alinhamento,
-                        child: Padding(
-                          padding: EdgeInsets.all(6),
-                          child: Container(
-                            width: larguraContainer,
-                            padding: EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                                color: cor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8))),
-                            child: Text(
-                              item["mensagem"],
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-                    )
-
-
-*/
