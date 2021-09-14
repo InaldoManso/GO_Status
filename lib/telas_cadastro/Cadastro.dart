@@ -8,6 +8,7 @@ import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/helper/RouteGenerator.dart';
 import 'package:go_status/model/CsgoStats.dart';
 import 'package:go_status/model/Usuario.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Cadastro extends StatefulWidget {
   Usuario usuario;
@@ -26,6 +27,8 @@ class _CadastroState extends State<Cadastro> {
   //Atributos
   bool _editando = true;
   String _buttonText = "Criar conta!";
+  String steamapikey;
+  String youtubeapikey;
 
   //Controladores
   TextEditingController emailEditingController = TextEditingController();
@@ -127,8 +130,8 @@ class _CadastroState extends State<Cadastro> {
   _recCsgoStats(String steamid, String nome, String urlimage) async {
     CsgoStats csgoStats = CsgoStats();
     Api api = Api();
-    csgoStats = await api.atualizarStatsCsgo(
-        "0850333260EF03D2E0AB3D29A0AC9176", steamid, nome, urlimage);
+    csgoStats =
+        await api.atualizarStatsCsgo(steamapikey, steamid, nome, urlimage);
 
     if (csgoStats != null) {
       User user = auth.currentUser;
@@ -162,6 +165,19 @@ class _CadastroState extends State<Cadastro> {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  @override
+  void initState() {
+    _recAdmKeys();
+    super.initState();
+  }
+
+  _recAdmKeys() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    steamapikey = prefs.getString("steamapikey");
+    youtubeapikey = prefs.getString("senhaUser");
   }
 
   @override

@@ -3,6 +3,7 @@ import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/helper/Api.dart';
 import 'package:go_status/model/Video.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Inicio extends StatefulWidget {
   String pesquisa;
@@ -16,10 +17,26 @@ class _InicioState extends State<Inicio> {
   //Atributos
   String _resultado = "";
   Paleta paleta = Paleta();
+  String steamapikey;
+  String youtubeapikey;
 
   _listarVideos(String pesquisa) {
     Api api = Api();
-    return api.pesquisar(pesquisa);
+    return api.pesquisar(pesquisa, youtubeapikey);
+  }
+
+  _recAdmKeys() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      steamapikey = prefs.getString("steamapikey");
+      youtubeapikey = prefs.getString("senhaUser");
+    });
+  }
+
+  @override
+  void initState() {
+    _recAdmKeys();
+    super.initState();
   }
 
   @override
@@ -68,7 +85,7 @@ class _InicioState extends State<Inicio> {
                       return GestureDetector(
                         onTap: () {
                           FlutterYoutube.playYoutubeVideoById(
-                              apiKey: CHAVE_YOUTUBE_API,
+                              apiKey: youtubeapikey,
                               videoId: video.id,
                               autoPlay: true,
                               fullScreen: true);

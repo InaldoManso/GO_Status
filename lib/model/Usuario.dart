@@ -8,6 +8,7 @@ class Usuario {
   String _time = "";
   String _urlimage = "";
   String _pais = "";
+  String _exibirclass = "n";
 
   //Contrutor
   Usuario();
@@ -22,7 +23,8 @@ class Usuario {
       "userid": this.userid,
       "time": this.time,
       "urlimage": this.urlimage,
-      "pais": this.pais
+      "pais": this.pais,
+      "exibirclass": this.exibirclass
     };
     return map;
   }
@@ -60,4 +62,8 @@ class Usuario {
   get pais => this._pais;
 
   set pais(value) => this._pais = value;
+
+  get exibirclass => this._exibirclass;
+
+  set exibirclass(value) => this._exibirclass = value;
 }

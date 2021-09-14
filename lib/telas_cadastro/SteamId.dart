@@ -3,6 +3,7 @@ import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/helper/RouteGenerator.dart';
 import 'package:go_status/helper/Api.dart';
 import 'package:go_status/model/Usuario.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SteamId extends StatefulWidget {
   @override
@@ -21,6 +22,8 @@ class _SteamIdState extends State<SteamId> {
 
   String _idSelecionado = "url";
   bool _procurando = false;
+  String steamapikey;
+  String youtubeapikey;
 
   //Atributos User
   String _steamInfo = "";
@@ -43,6 +46,19 @@ class _SteamIdState extends State<SteamId> {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  @override
+  void initState() {
+    _recAdmKeys();
+    super.initState();
+  }
+
+  _recAdmKeys() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    steamapikey = prefs.getString("steamapikey");
+    youtubeapikey = prefs.getString("senhaUser");
   }
 
   @override
@@ -157,19 +173,16 @@ class _SteamIdState extends State<SteamId> {
                                     // _recSteamURL(_steamInfo);
                                     String dados =
                                         await api.resgatarDadosSteamURL(
-                                            "0850333260EF03D2E0AB3D29A0AC9176",
-                                            _steamInfo);
+                                            steamapikey, _steamInfo);
 
                                     usuario = await api.resgatarDadosSteamID(
-                                        "0850333260EF03D2E0AB3D29A0AC9176",
-                                        dados);
+                                        steamapikey, dados);
                                     _procurando = false;
                                     setState(() {});
                                   } else {
                                     // _recSteamID(_steamInfo);
                                     usuario = await api.resgatarDadosSteamID(
-                                        "0850333260EF03D2E0AB3D29A0AC9176",
-                                        _steamInfo);
+                                        steamapikey, _steamInfo);
                                     _procurando = false;
                                     setState(() {});
                                   }

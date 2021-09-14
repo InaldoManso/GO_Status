@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:go_status/model/Usuario.dart';
 import 'dart:async';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -24,12 +26,14 @@ class _SplashScreenState extends State<SplashScreen> {
   //Dados a atualizar do User
   CsgoStats csgoStats = CsgoStats();
   Usuario usuario = Usuario();
+  String steamapikey;
+  String youtubeapikey;
 
   Future _verificarLogado() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User user = await auth.currentUser;
     if (user != null) {
-      recDadosUser();
+      _recAdmKeys();
     } else {
       Future.delayed(Duration(milliseconds: 2000), () {
         Navigator.pushReplacementNamed(context, RouteGenerator.LOGIN_ROTA);
@@ -37,26 +41,48 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  recDadosUser() async {
+  _recAdmKeys() async {
+    DocumentSnapshot snapshot = await db
+        .collection("admgostatus")
+        .doc("credenciais")
+        .get()
+        .then((snapshot) async {
+      steamapikey = snapshot["steamapikey"];
+      youtubeapikey = snapshot["youtubeapikey"];
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("steamapikey", steamapikey);
+      await prefs.setString("senhaUser", youtubeapikey);
+
+      _recDadosUser();
+    }).catchError((onError) {
+      _snackBarInfo("Resultado: Erro ao recuperar seus dados");
+    });
+  }
+
+  _recDadosUser() async {
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
         await db.collection("usuarios").doc(user.uid).get();
 
     String steamid = snapshot["steamid"];
 
-    usuario = await api.resgatarDadosSteamID(
-        "0850333260EF03D2E0AB3D29A0AC9176", steamid);
+    usuario = await api.resgatarDadosSteamID(steamapikey, steamid);
 
     // _recSteamID(steamid);
-    _recCsgoStats(steamid, usuario.nome, usuario.urlimage);
-    setState(() {
-      _carregando = true;
-    });
+    if (usuario != null) {
+      _recCsgoStats(steamid, usuario.nome, usuario.urlimage);
+      setState(() {
+        _carregando = true;
+      });
+    } else {
+      _snackBarInfo("Resultado: Erro ao recuperar seus dados");
+    }
   }
 
   _recCsgoStats(String steamid, String nome, String urlimage) async {
-    csgoStats = await api.atualizarStatsCsgo(
-        "0850333260EF03D2E0AB3D29A0AC9176", steamid, nome, urlimage);
+    csgoStats =
+        await api.atualizarStatsCsgo(steamapikey, steamid, nome, urlimage);
 
     if (csgoStats != null) {
       print("Resultado: Sucesso PORRA");

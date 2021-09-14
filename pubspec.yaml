@@ -36,6 +36,7 @@ dependencies:
   flutter_youtube: ^1.1.6
   youtube_player_flutter: ^7.0.0+7
   intl: ^0.16.1
+  shared_preferences: ^0.5.2
 
 dev_dependencies:
   flutter_test:

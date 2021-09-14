@@ -4,7 +4,6 @@ import 'package:go_status/model/Video.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-const CHAVE_YOUTUBE_API = "AIzaSyAco60KceBeoM6j0VOsKdMRgA6VTatVERY";
 const ID_CANAL = "UC_KRbC4RyGuQI6LaQxahNEQ";
 const URL_BASE = "https://www.googleapis.com/youtube/v3/";
 
@@ -55,24 +54,30 @@ class Api {
     http.Response response =
         await http.get(link_ID1 + keyApi + link_ID2 + steamID);
 
-    Map<String, dynamic> retorno = json.decode(response.body);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> retorno = json.decode(response.body);
+      if (retorno["response"]["players"].toString() != "[]") {
+        usuario.email = "";
+        usuario.senha = "";
+        usuario.time = "";
+        usuario.userid = steamID;
+        usuario.steamid =
+            retorno["response"]["players"][0]["steamid"].toString();
+        usuario.urlimage =
+            retorno["response"]["players"][0]["avatarfull"].toString();
+        usuario.nome =
+            retorno["response"]["players"][0]["personaname"].toString();
+        usuario.pais =
+            retorno["response"]["players"][0]["loccountrycode"].toString();
 
-    if (retorno["response"]["players"].toString() != "[]") {
-      usuario.email = "";
-      usuario.senha = "";
-      usuario.time = "";
-      usuario.userid = steamID;
-      usuario.steamid = retorno["response"]["players"][0]["steamid"].toString();
-      usuario.urlimage =
-          retorno["response"]["players"][0]["avatarfull"].toString();
-      usuario.nome =
-          retorno["response"]["players"][0]["personaname"].toString();
-      usuario.pais =
-          retorno["response"]["players"][0]["loccountrycode"].toString();
-
-      return usuario;
+        return usuario;
+      } else {
+        usuario = null;
+        return usuario;
+      }
     } else {
-      return null;
+      usuario = null;
+      return usuario;
     }
   }
 
@@ -130,14 +135,14 @@ class Api {
     }
   }
 
-  Future<List<Video>> pesquisar(String pesquisa) async {
+  Future<List<Video>> pesquisar(String pesquisa, String youtubeApiKey) async {
     http.Response response = await http.get(URL_BASE +
         "search"
             "?part=snippet"
             "&type=video"
             "&maxResults=20"
             "&order=date"
-            "&key=$CHAVE_YOUTUBE_API"
+            "&key=$youtubeApiKey"
             "&channelId=$ID_CANAL"
             "&q=$pesquisa");
 
