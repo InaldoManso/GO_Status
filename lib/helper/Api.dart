@@ -1,11 +1,12 @@
 //Atributos desativados
 // String steamId1 = "76561198960813990";
 // String steamId2 = "STEAM_1:1:616436488";
-import 'dart:convert';
 
+import 'package:go_status/model/CsgoStats.dart';
 import 'package:go_status/model/Usuario.dart';
 import 'package:go_status/model/Video.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 const CHAVE_YOUTUBE_API = "AIzaSyAco60KceBeoM6j0VOsKdMRgA6VTatVERY";
 const ID_CANAL = "UC_KRbC4RyGuQI6LaQxahNEQ";
@@ -29,12 +30,19 @@ class Api {
       "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=";
   String link_ID2 = "&steamids=";
 
-//RecuperarIdUser
-  String recCSGO1 =
-      "https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?key=0850333260EF03D2E0AB3D29A0AC9176&steamid=";
-  String recCSGO2 = "&appid=730";
+  //Atributos de atualização do Stats
+  String link_Stats1 =
+      "https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?key=";
+  String link_Stats2 = "&steamid=";
+  String link_Stats3 = "&appid=730";
 
-//Avisos
+  //Atributos de atualização de Tempo jogado
+  String link_Time1 =
+      "https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=";
+  String link_Time2 = "&steamid=";
+  String link_Time3 = "&appids_filter[0]=730";
+
+  //Avisos
   String avisoSteamPrivacidade =
       "Verifique se seu perfil esta público na Steam e tente novamente!";
 
@@ -42,13 +50,11 @@ class Api {
     http.Response response =
         await http.get(link_URL1 + keyApi + link_URL2 + steamName);
 
-    //Decodificar o resultado (String to Json)
     Map<String, dynamic> retorno = json.decode(response.body);
 
     String sucesso = retorno["response"]["success"].toString();
 
     if (sucesso == "1") {
-      print("XXXXXXXXXX" + retorno["response"]["steamid"].toString());
       return retorno["response"]["steamid"].toString();
     } else {
       return null;
@@ -76,6 +82,60 @@ class Api {
           retorno["response"]["players"][0]["loccountrycode"].toString();
 
       return usuario;
+    } else {
+      return null;
+    }
+  }
+
+  Future<CsgoStats> atualizarStatsCsgo(
+      String keyApi, String steamid, String nome, String urlimage) async {
+    CsgoStats csgoStats = CsgoStats();
+    http.Response response = await http
+        .get(link_Stats1 + keyApi + link_Stats2 + steamid + link_Stats3);
+
+    if (response.statusCode == 200) {
+      print("XXX Sucesso PORRA");
+      //Decodificar o resultado (String to Json)
+      Map<String, dynamic> retorno = json.decode(response.body);
+
+      //Total Kill
+      Map<String, dynamic> kills = retorno["playerstats"]["stats"][0];
+      csgoStats.kill = kills["value"].toString();
+
+      //Total Deaths
+      Map<String, dynamic> deaths = retorno["playerstats"]["stats"][1];
+      csgoStats.death = deaths["value"].toString();
+
+      //Total Wins
+      Map<String, dynamic> wins = retorno["playerstats"]["stats"][5];
+      csgoStats.wins = wins["value"].toString();
+
+      //Total MVPs
+      Map<String, dynamic> mvps = retorno["playerstats"]["stats"][98];
+      csgoStats.mvps = mvps["value"].toString();
+
+      //Total HShots
+      Map<String, dynamic> hshots = retorno["playerstats"]["stats"][25];
+      csgoStats.headshots = hshots["value"].toString();
+
+      int kil = int.parse(csgoStats.kill);
+      int dth = int.parse(csgoStats.death);
+      double KD = kil / dth;
+
+      csgoStats.resultkd = KD.toStringAsPrecision(2);
+      csgoStats.nome = nome;
+      csgoStats.urlimage = urlimage;
+
+      //Recuperando tempo jogado
+      http.Response responseTime = await http
+          .get(link_Time1 + keyApi + link_Time2 + steamid + link_Time3);
+      Map<String, dynamic> retornoTime = json.decode(responseTime.body);
+
+      //Total Time
+      csgoStats.timeplay =
+          retornoTime["response"]["games"][0]["playtime_forever"].toString();
+
+      return csgoStats;
     } else {
       return null;
     }

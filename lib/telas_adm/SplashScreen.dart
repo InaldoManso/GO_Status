@@ -5,8 +5,7 @@ import 'package:go_status/model/CsgoStats.dart';
 import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/helper/Api.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:go_status/model/Usuario.dart';
 import 'dart:async';
 
 class SplashScreen extends StatefulWidget {
@@ -18,10 +17,13 @@ class _SplashScreenState extends State<SplashScreen> {
   //Atributos
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
-  CsgoStats csgoStats = CsgoStats();
   Paleta paleta = Paleta();
   Api api = Api();
   bool _carregando = false;
+
+  //Dados a atualizar do User
+  CsgoStats csgoStats = CsgoStats();
+  Usuario usuario = Usuario();
 
   Future _verificarLogado() async {
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -42,68 +44,22 @@ class _SplashScreenState extends State<SplashScreen> {
 
     String steamid = snapshot["steamid"];
 
-    _recSteamID(steamid);
+    usuario = await api.resgatarDadosSteamID(
+        "0850333260EF03D2E0AB3D29A0AC9176", steamid);
+
+    // _recSteamID(steamid);
+    _recCsgoStats(steamid, usuario.nome, usuario.urlimage);
     setState(() {
       _carregando = true;
     });
   }
 
-  _recSteamID(String steamID) async {
-    http.Response response = await http.get(api.recSteamID + steamID);
+  _recCsgoStats(String steamid, String nome, String urlimage) async {
+    csgoStats = await api.atualizarStatsCsgo(
+        "0850333260EF03D2E0AB3D29A0AC9176", steamid, nome, urlimage);
 
-    //Decodificar o resultado (String to Json)
-    Map<String, dynamic> retorno = json.decode(response.body);
-
-    csgoStats.urlimage =
-        retorno["response"]["players"][0]["avatarfull"].toString();
-    csgoStats.nome =
-        retorno["response"]["players"][0]["personaname"].toString();
-
-    _recCsgoStats(steamID);
-  }
-
-  _recCsgoStats(String steamID) async {
-    http.Response response =
-        // ignore: missing_return
-        await http.get(api.recCSGO1 + steamID + api.recCSGO2);
-
-    print("XXX " + response.statusCode.toString());
-
-    if (response.statusCode == 200) {
-      print("XXX Sucesso PORRA");
-      //Decodificar o resultado (String to Json)
-      Map<String, dynamic> retorno = json.decode(response.body);
-
-      //Total Kill
-      Map<String, dynamic> kills = retorno["playerstats"]["stats"][0];
-      csgoStats.kill = kills["value"].toString();
-
-      //Total Deaths
-      Map<String, dynamic> deaths = retorno["playerstats"]["stats"][1];
-      csgoStats.death = deaths["value"].toString();
-
-      //Total Time
-      Map<String, dynamic> time = retorno["playerstats"]["stats"][2];
-      csgoStats.timeplay = time["value"].toString();
-
-      //Total Wins
-      Map<String, dynamic> wins = retorno["playerstats"]["stats"][5];
-      csgoStats.wins = wins["value"].toString();
-
-      //Total MVPs
-      Map<String, dynamic> mvps = retorno["playerstats"]["stats"][98];
-      csgoStats.mvps = mvps["value"].toString();
-
-      //Total HShots
-      Map<String, dynamic> hshots = retorno["playerstats"]["stats"][25];
-      csgoStats.headshots = hshots["value"].toString();
-
-      int kil = int.parse(csgoStats.kill);
-      int dth = int.parse(csgoStats.death);
-      double KD = kil / dth;
-
-      csgoStats.resultkd = KD.toStringAsPrecision(2);
-      print("XXX " + csgoStats.toMap().toString());
+    if (csgoStats != null) {
+      print("Resultado: Sucesso PORRA");
 
       User user = auth.currentUser;
 
@@ -118,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacementNamed(context, RouteGenerator.HOME_ROTA);
       });
     } else {
-      _snackBarInfo("Erro ao recuperar seus dados");
+      _snackBarInfo("Resultado: Erro ao recuperar seus dados");
       setState(() {
         _carregando = false;
       });

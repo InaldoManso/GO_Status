@@ -46,6 +46,8 @@ class _PerfilState extends State<Perfil> {
     DocumentSnapshot snapshot =
         await db.collection("usuarios").doc(user.uid).get();
 
+    int horas = int.parse(snapshot["timeplay"]);
+
     setState(() {
       _nome = snapshot["nome"];
       _image = snapshot["urlimage"];
@@ -54,7 +56,7 @@ class _PerfilState extends State<Perfil> {
 
       _totalKills = snapshot["kill"];
       _totalDeaths = snapshot["death"];
-      _totalTime = snapshot["timeplay"];
+      _totalTime = Duration(minutes: horas).toString().split(':00')[0];
       _totalWins = snapshot["wins"];
       _totalMvps = snapshot["mvps"];
       _totalHShots = snapshot["headshots"];

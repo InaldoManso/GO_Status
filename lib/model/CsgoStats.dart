@@ -1,13 +1,13 @@
 class CsgoStats {
-  String _nome;
-  String _urlimage;
-  String _resultkd;
-  String _kill;
-  String _death;
-  String _timeplay;
-  String _wins;
-  String _mvps;
-  String _headshots;
+  String _nome = "";
+  String _urlimage = "";
+  String _resultkd = "";
+  String _kill = "";
+  String _death = "";
+  String _timeplay = "";
+  String _wins = "";
+  String _mvps = "";
+  String _headshots = "";
 
   CsgoStats();
 
