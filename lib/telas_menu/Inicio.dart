@@ -29,7 +29,7 @@ class _InicioState extends State<Inicio> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       steamapikey = prefs.getString("steamapikey");
-      youtubeapikey = prefs.getString("senhaUser");
+      youtubeapikey = prefs.getString("youtubeapikey");
     });
   }
 

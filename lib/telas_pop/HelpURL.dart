@@ -41,7 +41,10 @@ class _HelpURLState extends State<HelpURL> {
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-              child: Text("Vá em: Steam> Perfil> EditarPerfil> Aba Geral:"),
+              child: Text(
+                "Preencha com a ultima parte da\nsua URL personalizada",
+                textAlign: TextAlign.center,
+              ),
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
@@ -49,7 +52,7 @@ class _HelpURLState extends State<HelpURL> {
                 height: 250,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("images/steamurl.jpg"),
+                      image: AssetImage("images/steamurlzoom.jpg"),
                       fit: BoxFit.fitWidth),
                 ),
               ),

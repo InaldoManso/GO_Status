@@ -58,7 +58,7 @@ class _SteamIdState extends State<SteamId> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     steamapikey = prefs.getString("steamapikey");
-    youtubeapikey = prefs.getString("senhaUser");
+    youtubeapikey = prefs.getString("youtubeapikey");
   }
 
   @override

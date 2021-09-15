@@ -31,7 +31,6 @@ void main() async {
 }
 
 /*
-
 Cor destaque: 0xff4876FF
 
 */

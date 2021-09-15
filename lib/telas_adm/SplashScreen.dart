@@ -48,11 +48,13 @@ class _SplashScreenState extends State<SplashScreen> {
         .get()
         .then((snapshot) async {
       steamapikey = snapshot["steamapikey"];
+      print("Resultado: 1 " + steamapikey);
       youtubeapikey = snapshot["youtubeapikey"];
+      print("Resultado: 2 " + youtubeapikey);
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString("steamapikey", steamapikey);
-      await prefs.setString("senhaUser", youtubeapikey);
+      await prefs.setString("youtubeapikey", youtubeapikey);
 
       _recDadosUser();
     }).catchError((onError) {

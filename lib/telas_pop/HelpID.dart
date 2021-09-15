@@ -41,7 +41,7 @@ class _HelpIdState extends State<HelpId> {
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-              child: Text("Vá em: Steam> Perfil> EditarPerfil> Aba Geral:"),
+              child: Text("Preencha apenas os numeros do seu ID"),
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
@@ -49,7 +49,7 @@ class _HelpIdState extends State<HelpId> {
                 height: 250,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("images/steamid.jpg"),
+                      image: AssetImage("images/steamidzoom.jpg"),
                       fit: BoxFit.fitWidth),
                 ),
               ),
