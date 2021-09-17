@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_status/telas_menu/Cassificacao.dart';
+import 'package:go_status/telas_menu/Chat.dart';
 import 'package:go_status/telas_menu/Configs.dart';
 import 'package:go_status/telas_menu/Grupos.dart';
 import 'package:go_status/telas_menu/Inicio.dart';
@@ -33,9 +34,10 @@ class _HomeState extends State<Home> {
       Perfil(), //1
       Cassificacao(), //2
       Videos(_resultado), //1
-      Grupos(), //4
-      ReportBug(), //5
-      Configs(), //6
+      Chat(), //4
+      Grupos(), //5
+      ReportBug(), //6
+      Configs(), //7
     ];
 
     return Scaffold(
@@ -110,7 +112,7 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.people_alt_outlined),
+            icon: Icon(Icons.chat_outlined),
             onPressed: () {
               _apresentarTela(4);
             }),
@@ -120,7 +122,7 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.bug_report_outlined),
+            icon: Icon(Icons.people_alt_outlined),
             onPressed: () {
               _apresentarTela(5);
             }),
@@ -130,9 +132,19 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.settings_outlined),
+            icon: Icon(Icons.bug_report_outlined),
             onPressed: () {
               _apresentarTela(6);
+            }),
+      ),
+      Container(
+        margin: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+        child: IconButton(
+            icon: Icon(Icons.settings_outlined),
+            onPressed: () {
+              _apresentarTela(7);
             }),
       ),
     ]);

@@ -21,7 +21,10 @@ class _InicioState extends State<Inicio> {
   Future<List<Postagem>> _recuperarPostagens() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
 
-    QuerySnapshot querySnapshot = await db.collection("postagens").get();
+    QuerySnapshot querySnapshot = await db
+        .collection("postagens")
+        .orderBy("idtime", descending: true)
+        .get();
 
     List<Postagem> listaPosts = [];
     for (DocumentSnapshot item in querySnapshot.docs) {
@@ -102,20 +105,6 @@ class _InicioState extends State<Inicio> {
                   IconButton(
                     icon: Icon(
                       Icons.post_add_outlined,
-                      color: paleta.royalBlue,
-                    ),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.image_outlined,
-                      color: paleta.royalBlue,
-                    ),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.analytics_outlined,
                       color: paleta.royalBlue,
                     ),
                     onPressed: () {},

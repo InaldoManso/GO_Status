@@ -23,19 +23,24 @@ class _ChatState extends State<Chat> {
             child: Row(
               children: [
                 Expanded(
-                  flex: 5,
-                  child: TextField(
-                    keyboardType: TextInputType.multiline,
-                    controller: null,
-                    minLines: 1,
-                    maxLines: 3,
-                    style: TextStyle(fontSize: 19),
-                    onChanged: (mensagem) {},
-                    decoration: InputDecoration(
-                      //Espaçamento interior
-                      contentPadding: EdgeInsets.fromLTRB(16, 8, 8, 8),
-                      hintText: "Digite uma mengem...",
-                      hintStyle: TextStyle(color: Colors.grey),
+                  flex: 4,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: TextField(
+                      keyboardType: TextInputType.multiline,
+                      controller: null,
+                      maxLength: 300,
+                      minLines: 1,
+                      maxLines: 3,
+                      style: TextStyle(fontSize: 19),
+                      onChanged: (mensagem) {},
+                      decoration: InputDecoration(
+                        //Espaçamento interior
+                        counterText: "",
+                        contentPadding: EdgeInsets.fromLTRB(16, 8, 8, 8),
+                        hintText: "Digite uma mengem...",
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
                     ),
                   ),
                 ),

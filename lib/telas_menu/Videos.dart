@@ -15,7 +15,7 @@ class Videos extends StatefulWidget {
 
 class _VideosState extends State<Videos> {
   //Atributos
-  String _resultado = "";
+  String _pesquisa = "";
   Paleta paleta = Paleta();
   String steamapikey;
   String youtubeapikey;
@@ -47,7 +47,26 @@ class _VideosState extends State<Videos> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
+        title: Text(
+          "\"" + _pesquisa + "\"",
+          style: TextStyle(color: paleta.orange),
+        ),
         actions: [
+          _pesquisa == ""
+              ? Container()
+              : IconButton(
+                  icon: Icon(
+                    Icons.delete_forever_outlined,
+                    color: paleta.royalBlue,
+                  ),
+                  onPressed: () async {
+                    setState(
+                      () {
+                        _pesquisa = "";
+                      },
+                    );
+                  },
+                ),
           IconButton(
             icon: Icon(
               Icons.search_outlined,
@@ -57,14 +76,14 @@ class _VideosState extends State<Videos> {
               String res = await showSearch(
                   context: context, delegate: CustomSearchDelegate());
               setState(() {
-                _resultado = res;
+                _pesquisa = res;
               });
             },
           ),
         ],
       ),
       body: FutureBuilder<List<Video>>(
-        future: _listarVideos(widget.pesquisa),
+        future: _listarVideos(_pesquisa),
         builder: (contex, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
