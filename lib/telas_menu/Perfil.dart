@@ -40,7 +40,7 @@ class _PerfilState extends State<Perfil> {
   double valorkd = 0;
   String label = "0";
 
-  recDadosUser() async {
+  recuperarDadosUser() async {
     _corKD = paleta.royalBlue;
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
@@ -87,7 +87,7 @@ class _PerfilState extends State<Perfil> {
 
   @override
   void initState() {
-    recDadosUser();
+    recuperarDadosUser();
     super.initState();
   }
 

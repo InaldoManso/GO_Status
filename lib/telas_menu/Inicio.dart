@@ -22,10 +22,10 @@ class _InicioState extends State<Inicio> {
 
   _listarVideos(String pesquisa) {
     Api api = Api();
-    return api.pesquisar(pesquisa, youtubeapikey);
+    return api.pesquisaYoutube(pesquisa, youtubeapikey);
   }
 
-  _recAdmKeys() async {
+  _recuperarAdmKeys() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       steamapikey = prefs.getString("steamapikey");
@@ -35,7 +35,7 @@ class _InicioState extends State<Inicio> {
 
   @override
   void initState() {
-    _recAdmKeys();
+    _recuperarAdmKeys();
     super.initState();
   }
 

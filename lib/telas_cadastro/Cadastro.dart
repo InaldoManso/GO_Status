@@ -116,7 +116,7 @@ class _CadastroState extends State<Cadastro> {
         setState(() {
           _buttonText = "Conta Salva!";
         });
-        _recCsgoStats(usuario.steamid, usuario.nome, usuario.urlimage);
+        _recuperarCsgoStats(usuario.steamid, usuario.nome, usuario.urlimage);
       });
     }).catchError((error) {
       print("erro: " + error.toString());
@@ -127,7 +127,7 @@ class _CadastroState extends State<Cadastro> {
     });
   }
 
-  _recCsgoStats(String steamid, String nome, String urlimage) async {
+  _recuperarCsgoStats(String steamid, String nome, String urlimage) async {
     CsgoStats csgoStats = CsgoStats();
     Api api = Api();
     csgoStats =
@@ -169,11 +169,11 @@ class _CadastroState extends State<Cadastro> {
 
   @override
   void initState() {
-    _recAdmKeys();
+    _recuperarAdmKeys();
     super.initState();
   }
 
-  _recAdmKeys() async {
+  _recuperarAdmKeys() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     steamapikey = prefs.getString("steamapikey");

@@ -50,11 +50,11 @@ class _SteamIdState extends State<SteamId> {
 
   @override
   void initState() {
-    _recAdmKeys();
+    _recuperarAdmKeys();
     super.initState();
   }
 
-  _recAdmKeys() async {
+  _recuperarAdmKeys() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     steamapikey = prefs.getString("steamapikey");

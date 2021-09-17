@@ -22,12 +22,6 @@ class _HomeState extends State<Home> {
   int _indiceAtual = 0;
   String _resultado = "";
 
-  _deslogarUser() async {
-    await FirebaseAuth.instance.signOut().then((value) {
-      Navigator.pushReplacementNamed(context, RouteGenerator.LOGOUT_ROTA);
-    });
-  }
-
   _apresentarTela(int indice) {
     setState(() {
       _indiceAtual = indice;
@@ -157,16 +151,6 @@ class _HomeState extends State<Home> {
               _apresentarTela(5);
             }),
       ),
-      /*Container(
-        margin: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
-        child: IconButton(
-            icon: Icon(Icons.power_settings_new_outlined),
-            onPressed: () {
-              _deslogarUser();
-            }),
-      ),*/
     ]);
     return row;
   }

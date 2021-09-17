@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
     FirebaseAuth auth = FirebaseAuth.instance;
     User user = await auth.currentUser;
     if (user != null) {
-      _recAdmKeys();
+      _recuperarAdmKeys();
     } else {
       Future.delayed(Duration(milliseconds: 2000), () {
         Navigator.pushReplacementNamed(context, RouteGenerator.LOGIN_ROTA);
@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  _recAdmKeys() async {
+  _recuperarAdmKeys() async {
     DocumentSnapshot snapshot = await db
         .collection("admgostatus")
         .doc("credenciais")
@@ -56,13 +56,13 @@ class _SplashScreenState extends State<SplashScreen> {
       await prefs.setString("steamapikey", steamapikey);
       await prefs.setString("youtubeapikey", youtubeapikey);
 
-      _recDadosUser();
+      _recuperarDadosUser();
     }).catchError((onError) {
       _snackBarInfo("Resultado: Erro ao recuperar seus dados");
     });
   }
 
-  _recDadosUser() async {
+  _recuperarDadosUser() async {
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
         await db.collection("usuarios").doc(user.uid).get();
@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // _recSteamID(steamid);
     if (usuario != null) {
-      _recCsgoStats(steamid, usuario.nome, usuario.urlimage);
+      _recuperarCsgoStats(steamid, usuario.nome, usuario.urlimage);
       setState(() {
         _carregando = true;
       });
@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  _recCsgoStats(String steamid, String nome, String urlimage) async {
+  _recuperarCsgoStats(String steamid, String nome, String urlimage) async {
     csgoStats =
         await api.atualizarStatsCsgo(steamapikey, steamid, nome, urlimage);
 

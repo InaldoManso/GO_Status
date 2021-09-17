@@ -135,14 +135,14 @@ class Api {
     }
   }
 
-  Future<List<Video>> pesquisar(String pesquisa, String youtubeApiKey) async {
+  Future<List<Video>> pesquisaYoutube(String pesquisa, String apiKey) async {
     http.Response response = await http.get(URL_BASE +
         "search"
             "?part=snippet"
             "&type=video"
             "&maxResults=20"
             "&order=date"
-            "&key=$youtubeApiKey"
+            "&key=$apiKey"
             "&channelId=$ID_CANAL"
             "&q=$pesquisa");
 

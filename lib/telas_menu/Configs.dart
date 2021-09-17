@@ -40,14 +40,14 @@ class _ConfigsState extends State<Configs> {
     });
   }
 
-  _recDadosUser() async {
+  _recuperarDadosUser() async {
     user = await auth.currentUser;
     _recuperarConfig(user.uid);
   }
 
   @override
   void initState() {
-    _recDadosUser();
+    _recuperarDadosUser();
     super.initState();
   }
 
