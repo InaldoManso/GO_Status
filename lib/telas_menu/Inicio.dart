@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/helper/RouteGenerator.dart';
 import 'package:go_status/model/Postagem.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -107,7 +108,10 @@ class _InicioState extends State<Inicio> {
                       Icons.post_add_outlined,
                       color: paleta.royalBlue,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                          context, RouteGenerator.CRIARPOST_ROTA);
+                    },
                   ),
                 ],
               ),

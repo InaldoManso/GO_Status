@@ -4,6 +4,7 @@ import 'package:go_status/telas_adm/Home.dart';
 import 'package:go_status/telas_adm/Login.dart';
 import 'package:go_status/telas_adm/SplashScreen.dart';
 import 'package:go_status/telas_cadastro/SteamId.dart';
+import 'package:go_status/telas_pop/CriarPostagem.dart';
 import 'package:go_status/telas_pop/HelpID.dart';
 import 'package:go_status/telas_pop/HelpURL.dart';
 import 'package:go_status/telas_pop/Logout.dart';
@@ -20,6 +21,7 @@ class RouteGenerator {
   static const String TELARESET_ROTA = "/telareset";
   static const String HELPURL_ROTA = "/helpurl";
   static const String HELPID_ROTA = "/helpid";
+  static const String CRIARPOST_ROTA = "/criarpost";
 
   //Retorna uma Rpta de valor dinamico
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -56,6 +58,9 @@ class RouteGenerator {
 
       case HELPID_ROTA:
         return MaterialPageRoute(builder: (_) => HelpId());
+
+      case CRIARPOST_ROTA:
+        return MaterialPageRoute(builder: (_) => CriarPostagem());
 
       /*case ITEM_ROTA:
         return MaterialPageRoute(builder: (_) => Item(args));*/

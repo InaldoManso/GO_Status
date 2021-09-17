@@ -48,7 +48,7 @@ class _VideosState extends State<Videos> {
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         title: Text(
-          "\"" + _pesquisa + "\"",
+          _pesquisa == "" ? "League Master Club" : "\"" + _pesquisa + "\"",
           style: TextStyle(color: paleta.orange),
         ),
         actions: [
