@@ -1,14 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/CustomSearchDelegate.dart';
-import 'package:go_status/helper/RouteGenerator.dart';
-import 'package:go_status/telas_menu/Alertas.dart';
 import 'package:go_status/telas_menu/Cassificacao.dart';
 import 'package:go_status/telas_menu/Configs.dart';
 import 'package:go_status/telas_menu/Grupos.dart';
 import 'package:go_status/telas_menu/Inicio.dart';
 import 'package:go_status/telas_menu/Perfil.dart';
 import 'package:go_status/telas_menu/ReportBug.dart';
+import 'package:go_status/telas_menu/Videos.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -32,13 +29,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     //Telas apresentadas
     List<Widget> telas = [
-      Inicio(_resultado), //0
-      Alertas(), //1
-      Perfil(), //2
-      Cassificacao(), //3
+      Inicio(), //0
+      Perfil(), //1
+      Cassificacao(), //2
+      Videos(_resultado), //1
       Grupos(), //4
-      Configs(), //5
-      ReportBug() //6
+      ReportBug(), //5
+      Configs(), //6
     ];
 
     return Scaffold(
@@ -67,7 +64,7 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.video_library_outlined),
+            icon: Icon(Icons.home_outlined),
             onPressed: () {
               _apresentarTela(0);
               setState(() {
@@ -80,23 +77,7 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () async {
-            _apresentarTela(0);
-            String res = await showSearch(
-                context: context, delegate: CustomSearchDelegate());
-            setState(() {
-              _resultado = res;
-            });
-          },
-        ),
-      ),
-      Container(
-        margin: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
-        child: IconButton(
-            icon: Icon(Icons.notifications_none_outlined),
+            icon: Icon(Icons.person_outline),
             onPressed: () {
               _apresentarTela(1);
             }),
@@ -106,7 +87,7 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.person_outline),
+            icon: Icon(Icons.list_alt_outlined),
             onPressed: () {
               _apresentarTela(2);
             }),
@@ -116,9 +97,12 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.list_alt_outlined),
+            icon: Icon(Icons.video_library_outlined),
             onPressed: () {
               _apresentarTela(3);
+              setState(() {
+                _resultado = "";
+              });
             }),
       ),
       Container(
@@ -138,7 +122,7 @@ class _HomeState extends State<Home> {
         child: IconButton(
             icon: Icon(Icons.bug_report_outlined),
             onPressed: () {
-              _apresentarTela(6);
+              _apresentarTela(5);
             }),
       ),
       Container(
@@ -148,7 +132,7 @@ class _HomeState extends State<Home> {
         child: IconButton(
             icon: Icon(Icons.settings_outlined),
             onPressed: () {
-              _apresentarTela(5);
+              _apresentarTela(6);
             }),
       ),
     ]);

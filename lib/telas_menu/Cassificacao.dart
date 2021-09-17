@@ -44,7 +44,7 @@ class _CassificacaoState extends State<Cassificacao> {
     return listaUsuarios;
   }
 
-  _exibirTelaCadastro(ClassifUser classifUser) {
+  _exibirMiniPerfil(ClassifUser classifUser) {
     //Calcular Horas
     int minutos = int.parse(classifUser.timeplay);
     String horas = Duration(minutes: minutos).toString().split(':00')[0];
@@ -239,7 +239,7 @@ class _CassificacaoState extends State<Cassificacao> {
                       ),
                     ),
                     onTap: () {
-                      _exibirTelaCadastro(classifUser);
+                      _exibirMiniPerfil(classifUser);
                     },
                   );
                 },

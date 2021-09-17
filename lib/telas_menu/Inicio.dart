@@ -1,28 +1,46 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/helper/Api.dart';
-import 'package:go_status/model/Video.dart';
+import 'package:go_status/model/Postagem.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Inicio extends StatefulWidget {
-  String pesquisa;
-  Inicio(this.pesquisa);
-
   @override
   _InicioState createState() => _InicioState();
 }
 
 class _InicioState extends State<Inicio> {
-  //Atributos
-  String _resultado = "";
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
   Paleta paleta = Paleta();
   String steamapikey;
   String youtubeapikey;
+  String _nomeUser = "";
 
-  _listarVideos(String pesquisa) {
-    Api api = Api();
-    return api.pesquisaYoutube(pesquisa, youtubeapikey);
+  Future<List<Postagem>> _recuperarPostagens() async {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+
+    QuerySnapshot querySnapshot = await db.collection("postagens").get();
+
+    List<Postagem> listaPosts = [];
+    for (DocumentSnapshot item in querySnapshot.docs) {
+      var dados = item.data();
+
+      Postagem postagem = Postagem();
+      postagem.idpostagem = dados["idpostagem"];
+      postagem.idtime = dados["idtime"];
+      postagem.iduser = dados["iduser"];
+      postagem.idtipo = dados["idtipo"];
+      postagem.nomeuser = dados["nomeuser"];
+      postagem.imageuser = dados["imageuser"];
+      postagem.texto = dados["texto"];
+      postagem.horario = dados["horario"];
+
+      listaPosts.add(postagem);
+    }
+
+    return listaPosts;
   }
 
   _recuperarAdmKeys() async {
@@ -33,112 +51,141 @@ class _InicioState extends State<Inicio> {
     });
   }
 
+  _recuperarDadosUsuario() async {
+    User user = auth.currentUser;
+    DocumentSnapshot snapshot =
+        await db.collection("usuarios").doc(user.uid).get();
+
+    setState(() {
+      _nomeUser = snapshot["nome"];
+    });
+  }
+
   @override
   void initState() {
     _recuperarAdmKeys();
+    _recuperarDadosUsuario();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: Colors.grey[300],
-      /*appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.youtube_searched_for_outlined,
-              color: paleta.royalBlue,
-            ),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.video_camera_back_outlined,
-              color: paleta.royalBlue,
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),*/
-      body: FutureBuilder<List<Video>>(
-        future: _listarVideos(widget.pesquisa),
-        builder: (contex, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-              break;
-            case ConnectionState.active:
-            case ConnectionState.done:
-              if (snapshot.hasData) {
-                return ListView.separated(
-                    itemBuilder: (context, index) {
-                      List<Video> videos = snapshot.data;
-                      Video video = videos[index];
+    double telaHeight = MediaQuery.of(context).size.height;
+    double telaWidth = MediaQuery.of(context).size.width;
+    return FutureBuilder<List<Postagem>>(
+      future: _recuperarPostagens(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.waiting:
+            return Center(
+              child: Column(
+                children: <Widget>[
+                  Text("Carregando contatos"),
+                  CircularProgressIndicator()
+                ],
+              ),
+            );
+            break;
+          case ConnectionState.active:
+          case ConnectionState.done:
+            return Scaffold(
+              extendBodyBehindAppBar: true,
+              appBar: AppBar(
+                title: Text(
+                  "Olá " + _nomeUser + "!",
+                  style: TextStyle(color: paleta.royalBlue),
+                ),
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                actions: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.post_add_outlined,
+                      color: paleta.royalBlue,
+                    ),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.image_outlined,
+                      color: paleta.royalBlue,
+                    ),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.analytics_outlined,
+                      color: paleta.royalBlue,
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              body: ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (_, indice) {
+                  List<Postagem> listaItens = snapshot.data;
+                  Postagem postagem = listaItens[indice];
 
-                      return GestureDetector(
-                        onTap: () {
-                          FlutterYoutube.playYoutubeVideoById(
-                              apiKey: youtubeapikey,
-                              videoId: video.id,
-                              autoPlay: true,
-                              fullScreen: true);
-                        },
-                        child: Container(
-                          margin: EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(8)),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(video.imagem),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.play_circle_outline_outlined,
-                                    size: 50,
-                                    color: paleta.royalBlue,
-                                  ),
+                  return GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      margin: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(right: 10),
+                                child: CircleAvatar(
+                                  child: postagem.imageuser == ""
+                                      ? CircularProgressIndicator()
+                                      : ClipOval(
+                                          child: Image.network(
+                                            postagem.imageuser,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                  radius: 20,
+                                  backgroundColor: Colors.grey,
                                 ),
                               ),
-                              ListTile(
-                                title: Text(video.titulo),
-                                subtitle: Text(video.canal),
+                              Expanded(
+                                child: Container(
+                                  child: Text(postagem.nomeuser),
+                                ),
                               )
                             ],
                           ),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) => Divider(
-                          height: 2,
-                          color: Colors.grey,
-                        ),
-                    itemCount: snapshot.data.length);
-              } else {
-                return Center(
-                  child: Text("Nenhum dado a ser exibido!"),
-                );
-              }
-              break;
-          }
-          return null;
-        },
-      ),
+                          Divider(
+                            color: paleta.royalBlue,
+                          ),
+                          Container(
+                            height: telaHeight / 7,
+                            child: SingleChildScrollView(
+                              child: Text(postagem.texto),
+                            ),
+                          ),
+                          Divider(
+                            color: paleta.royalBlue,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+            break;
+        }
+        return null;
+      },
     );
   }
 }

@@ -8,7 +8,7 @@ class Usuario {
   String _time = "";
   String _urlimage = "";
   String _pais = "";
-  String _exibirclass = "n";
+  bool _exibirclass = false;
 
   //Contrutor
   Usuario();
