@@ -48,9 +48,9 @@ class _SplashScreenState extends State<SplashScreen> {
         .get()
         .then((snapshot) async {
       steamapikey = snapshot["steamapikey"];
-      print("Resultado: 1 " + steamapikey);
+      // print("Resultado: 1 " + steamapikey);
       youtubeapikey = snapshot["youtubeapikey"];
-      print("Resultado: 2 " + youtubeapikey);
+      // print("Resultado: 2 " + youtubeapikey);
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString("steamapikey", steamapikey);
@@ -87,8 +87,6 @@ class _SplashScreenState extends State<SplashScreen> {
         await api.atualizarStatsCsgo(steamapikey, steamid, nome, urlimage);
 
     if (csgoStats != null) {
-      print("Resultado: Sucesso PORRA");
-
       User user = auth.currentUser;
 
       db
@@ -132,7 +130,6 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,

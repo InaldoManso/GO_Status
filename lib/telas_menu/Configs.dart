@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/helper/RouteGenerator.dart';
 import 'package:go_status/model/ConfigUser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Configs extends StatefulWidget {
   @override
@@ -19,9 +20,26 @@ class _ConfigsState extends State<Configs> {
 
   //Atributos
   bool _exibirclassificacao = false;
+  bool _modoEscuro = false;
+
   _atualizarConfig() {
     configUser.exibirclass = _exibirclassificacao;
+    configUser.modoescuro = _modoEscuro;
     db.collection("usuarios").doc(user.uid).update(configUser.toMap());
+  }
+
+  _atualizarTheme() {
+    configUser.exibirclass = _exibirclassificacao;
+    configUser.modoescuro = _modoEscuro;
+    db
+        .collection("usuarios")
+        .doc(user.uid)
+        .update(configUser.toMap())
+        .then((value) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("modoescuro", _modoEscuro.toString());
+    });
+    Navigator.pushReplacementNamed(context, RouteGenerator.SPLASH_ROTA);
   }
 
   _recuperarConfig(String uid) async {
@@ -30,6 +48,10 @@ class _ConfigsState extends State<Configs> {
     configUser.exibirclass = snapshot["exibirclass"];
 
     _exibirclassificacao = configUser.exibirclass == false ? false : true;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String themeBool = prefs.getString("modoescuro");
+    _modoEscuro = themeBool.toLowerCase() == "true";
 
     setState(() {});
   }
@@ -67,12 +89,21 @@ class _ConfigsState extends State<Configs> {
             ),
             Divider(),
             SwitchListTile(
-                title: Text("Exibir seu KD na classificação global?"),
+                title: Text("Exibir seu KD na classificação global"),
                 value: _exibirclassificacao,
                 onChanged: (bool valor) {
                   setState(() {
                     _exibirclassificacao = valor;
                     _atualizarConfig();
+                  });
+                }),
+            SwitchListTile(
+                title: Text("Ativar modo escuro"),
+                value: _modoEscuro,
+                onChanged: (bool valor) {
+                  setState(() {
+                    _modoEscuro = valor;
+                    _atualizarTheme();
                   });
                 }),
             Divider(),

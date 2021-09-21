@@ -88,7 +88,6 @@ class Api {
         .get(link_Stats1 + keyApi + link_Stats2 + steamid + link_Stats3);
 
     if (response.statusCode == 200) {
-      print("XXX Sucesso PORRA");
       //Decodificar o resultado (String to Json)
       Map<String, dynamic> retorno = json.decode(response.body);
 
