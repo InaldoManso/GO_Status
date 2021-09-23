@@ -124,11 +124,10 @@ class _InicioState extends State<Inicio> {
                   return GestureDetector(
                     onTap: () {},
                     child: Container(
-                      margin: EdgeInsets.all(8),
-                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.only(top: 8, bottom: 8),
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Colors.blue[50],
-                        borderRadius: BorderRadius.circular(8),
+                        color: paleta.grey850,
                       ),
                       child: Column(
                         children: [
@@ -151,7 +150,10 @@ class _InicioState extends State<Inicio> {
                               ),
                               Expanded(
                                 child: Container(
-                                  child: Text(postagem.nomeuser),
+                                  child: Text(
+                                    postagem.nomeuser,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               )
                             ],
@@ -162,7 +164,10 @@ class _InicioState extends State<Inicio> {
                           Container(
                             height: telaHeight / 7,
                             child: SingleChildScrollView(
-                              child: Text(postagem.texto),
+                              child: Text(
+                                postagem.texto,
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                           Divider(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/telas_menu/Cassificacao.dart';
 import 'package:go_status/telas_menu/Chat.dart';
 import 'package:go_status/telas_menu/Configs.dart';
@@ -15,6 +16,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   //atributos
+  Paleta paleta = Paleta();
 
   //Atributos das telas
   int _indiceAtual = 0;
@@ -46,7 +48,7 @@ class _HomeState extends State<Home> {
         child: telas[_indiceAtual],
       ),
       bottomNavigationBar: BottomAppBar(
-        elevation: 30,
+        elevation: 0,
         color: Colors.transparent,
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -64,7 +66,7 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
             icon: Icon(Icons.home_outlined),
             onPressed: () {
@@ -77,7 +79,7 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
             icon: Icon(Icons.person_outline),
             onPressed: () {
@@ -87,7 +89,7 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
             icon: Icon(Icons.list_alt_outlined),
             onPressed: () {
@@ -97,7 +99,7 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
             icon: Icon(Icons.video_library_outlined),
             onPressed: () {
@@ -110,7 +112,7 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
             icon: Icon(Icons.chat_outlined),
             onPressed: () {
@@ -120,7 +122,7 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
             icon: Icon(Icons.people_alt_outlined),
             onPressed: () {
@@ -130,7 +132,7 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
             icon: Icon(Icons.bug_report_outlined),
             onPressed: () {
@@ -140,7 +142,7 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
             icon: Icon(Icons.settings_outlined),
             onPressed: () {
