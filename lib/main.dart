@@ -19,9 +19,9 @@ void main() async {
       initialRoute: "/",
       onGenerateRoute: RouteGenerator.generateRoute,
       theme: ThemeData(
+        appBarTheme: AppBarTheme(backgroundColor: Colors.transparent),
         colorScheme: theme.colorScheme.copyWith(secondary: paleta.orange),
         accentColor: paleta.orange,
-        bottomAppBarTheme: BottomAppBarTheme(color: paleta.grey900),
         primaryColor: paleta.royalBlue,
         backgroundColor: paleta.grey850,
         scaffoldBackgroundColor: paleta.grey900,

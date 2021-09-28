@@ -18,8 +18,6 @@ class _CriarPostagemState extends State<CriarPostagem> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: paleta.royalBlue),
-        backgroundColor: Colors.white,
-        shadowColor: Colors.white,
         elevation: 0,
         centerTitle: true,
         title: Text(
@@ -41,12 +39,15 @@ class _CriarPostagemState extends State<CriarPostagem> {
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    labelText: "Digite aqui...",
+                    labelText: "Digite aqui",
+                    labelStyle: TextStyle(color: Colors.grey),
                     //Borda externa
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16)),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                     enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8)),
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: Colors.grey)),
                   ),
                 ),
                 padding: EdgeInsets.all(20)),
