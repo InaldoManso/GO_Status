@@ -151,7 +151,7 @@ class _PerfilState extends State<Perfil> {
                 padding: EdgeInsets.all(8),
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
-                    color: Colors.blue[50],
+                    color: paleta.grey850,
                     borderRadius: BorderRadius.circular(16)),
                 child: Row(
                   children: [
@@ -177,7 +177,7 @@ class _PerfilState extends State<Perfil> {
                 padding: EdgeInsets.all(8),
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
-                    color: Colors.blue[50],
+                    color: paleta.grey850,
                     borderRadius: BorderRadius.circular(16)),
                 child: Row(
                   children: [
@@ -203,7 +203,7 @@ class _PerfilState extends State<Perfil> {
                 padding: EdgeInsets.all(8),
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
-                    color: Colors.blue[50],
+                    color: paleta.grey850,
                     borderRadius: BorderRadius.circular(16)),
                 child: Row(
                   children: [
@@ -229,7 +229,7 @@ class _PerfilState extends State<Perfil> {
                 padding: EdgeInsets.all(8),
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
-                    color: Colors.blue[50],
+                    color: paleta.grey850,
                     borderRadius: BorderRadius.circular(16)),
                 child: Row(
                   children: [
@@ -255,7 +255,7 @@ class _PerfilState extends State<Perfil> {
                 padding: EdgeInsets.all(8),
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
-                    color: Colors.blue[50],
+                    color: paleta.grey850,
                     borderRadius: BorderRadius.circular(16)),
                 child: Row(
                   children: [
@@ -281,7 +281,7 @@ class _PerfilState extends State<Perfil> {
                 padding: EdgeInsets.all(8),
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
-                    color: Colors.blue[50],
+                    color: paleta.grey850,
                     borderRadius: BorderRadius.circular(16)),
                 child: Row(
                   children: [
@@ -307,7 +307,7 @@ class _PerfilState extends State<Perfil> {
                 padding: EdgeInsets.all(8),
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
-                    color: Colors.blue[50],
+                    color: paleta.grey850,
                     borderRadius: BorderRadius.circular(16)),
                 child: Row(
                   children: [

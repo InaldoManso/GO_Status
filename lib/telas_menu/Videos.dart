@@ -43,7 +43,6 @@ class _VideosState extends State<Videos> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
@@ -111,7 +110,7 @@ class _VideosState extends State<Videos> {
                         child: Container(
                           margin: EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: paleta.grey850,
                               borderRadius: BorderRadius.circular(8)),
                           child: Column(
                             children: <Widget>[

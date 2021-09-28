@@ -14,21 +14,28 @@ void main() async {
 
   runApp(
     MaterialApp(
-      //Iniciar Screen
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
-
-      //Rotas
       initialRoute: "/",
       onGenerateRoute: RouteGenerator.generateRoute,
-
-      //Tema
       theme: ThemeData(
-        scaffoldBackgroundColor: paleta.grey900,
-        backgroundColor: paleta.grey900,
+        colorScheme: theme.colorScheme.copyWith(secondary: paleta.orange),
         accentColor: paleta.orange,
+        bottomAppBarTheme: BottomAppBarTheme(color: paleta.grey900),
         primaryColor: paleta.royalBlue,
+        backgroundColor: paleta.grey850,
+        scaffoldBackgroundColor: paleta.grey900,
         iconTheme: IconThemeData(color: paleta.royalBlue),
+        textTheme: const TextTheme(
+          subtitle1: TextStyle(color: Colors.white),
+          caption: TextStyle(color: Colors.white),
+          button: TextStyle(color: Colors.white),
+          overline: TextStyle(color: Colors.white),
+          bodyText1: TextStyle(
+              fontSize: 14.0, fontFamily: 'Hind', color: Colors.white),
+          bodyText2: TextStyle(
+              fontSize: 14.0, fontFamily: 'Hind', color: Colors.white),
+        ),
       ),
     ),
   );
@@ -39,10 +46,18 @@ Cor destaque: 0xff4876FF
 
 
 ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        accentColor: paleta.orange,
+        brightness: Brightness.dark,
         primaryColor: paleta.royalBlue,
+        backgroundColor: paleta.grey850,
+        scaffoldBackgroundColor: paleta.grey900,
         iconTheme: IconThemeData(color: paleta.royalBlue),
+        colorScheme: theme.colorScheme.copyWith(secondary: paleta.orange),
+        textTheme: const TextTheme(
+          bodyText1: TextStyle(
+              fontSize: 14.0, fontFamily: 'Hind', color: Colors.white),
+          bodyText2: TextStyle(
+              fontSize: 14.0, fontFamily: 'Hind', color: Colors.white),
+        ),
       ),
 
 */

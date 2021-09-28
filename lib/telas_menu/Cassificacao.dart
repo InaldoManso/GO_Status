@@ -204,11 +204,9 @@ class _CassificacaoState extends State<Cassificacao> {
 
                   return GestureDetector(
                     child: Container(
-                      margin: EdgeInsets.all(4),
+                      margin: EdgeInsets.only(top: 4, bottom: 4),
                       padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: Colors.blue[50],
-                          borderRadius: BorderRadius.circular(8)),
+                      color: paleta.grey850,
                       child: Row(
                         children: [
                           Container(
