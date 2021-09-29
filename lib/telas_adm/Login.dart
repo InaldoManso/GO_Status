@@ -171,10 +171,12 @@ class _LoginState extends State<Login> {
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: "Digite seu e-mail",
+                    labelStyle: TextStyle(color: paleta.royalBlue),
                     //Borda externa
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16)),
                     enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
                         borderRadius: BorderRadius.circular(8)),
                   ),
                 ),
@@ -189,14 +191,20 @@ class _LoginState extends State<Login> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: "Senha de 6 dígitos",
+                    labelStyle: TextStyle(color: paleta.royalBlue),
+                    counterStyle: TextStyle(color: paleta.royalBlue),
                     suffixIcon: IconButton(
-                        icon: Icon(_iconSenha),
+                        icon: Icon(
+                          _iconSenha,
+                          color: paleta.orange,
+                        ),
                         onPressed: (() {
                           _exibirSenha();
                         })),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15)),
                     enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
                         borderRadius: BorderRadius.circular(8)),
                   ),
                 ),

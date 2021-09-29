@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/DateFormatter.dart';
 import 'package:go_status/helper/Paleta.dart';
@@ -14,6 +15,8 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
   //Atributos
+  final _controller = StreamController<QuerySnapshot>.broadcast();
+  ScrollController _scrollController = ScrollController();
   TextEditingController _controllerMensagem = TextEditingController();
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -34,7 +37,7 @@ class _ChatState extends State<Chat> {
       mensagem.mensagem = texto;
       mensagem.urlimage = "urlExemplo";
       mensagem.tipo = "1";
-      mensagem.horaexibir = "00:11:22";
+      mensagem.horaexibir = DateTime.now().toString();
       mensagem.time =
           dateFormatter.gerarHoraIdMensagem(DateTime.now().toString());
       _salvarMensagem(mensagem);
@@ -48,11 +51,27 @@ class _ChatState extends State<Chat> {
         .then((value) => _controllerMensagem.clear());
   }
 
+  Stream<QuerySnapshot> _adicionarListenerMensagens() {
+    final stream = db
+        .collection("chatgeral")
+        .orderBy("time", descending: false)
+        .snapshots();
+
+    stream.listen((dados) {
+      _controller.add(dados);
+      //Sempre que atualizar, rolar para o fim
+      Timer(Duration(milliseconds: 200), () {
+        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+      });
+    });
+  }
+
   _recuperarDadosUser() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
         await db.collection("usuarios").doc(user.uid).get();
+    _adicionarListenerMensagens();
 
     _idUser = user.uid;
     _nomeUser = snapshot["nome"];
@@ -71,7 +90,7 @@ class _ChatState extends State<Chat> {
       extendBodyBehindAppBar: true,
       body: Container(
         child: StreamBuilder(
-          stream: db.collection("chatgeral").orderBy("time").snapshots(),
+          stream: _controller.stream,
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -91,6 +110,7 @@ class _ChatState extends State<Chat> {
                   );
                 } else {
                   return ListView.builder(
+                    controller: _scrollController,
                     itemCount: querySnapshot.docs.length,
                     itemBuilder: (context, index) {
                       //Recuperar mensagens
@@ -113,14 +133,33 @@ class _ChatState extends State<Chat> {
                         child: Padding(
                           padding: EdgeInsets.all(6),
                           child: Container(
-                            padding: EdgeInsets.all(16),
+                            padding: EdgeInsets.all(8),
                             width: laguraContainer,
                             decoration: BoxDecoration(
                                 color: color,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
-                            child: Text(item["mensagem"],
-                                style: TextStyle(fontSize: 18)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                _idUser != item["iduser"]
+                                    ? Text(item["nome"],
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(fontSize: 12))
+                                    : Container(),
+                                _idUser != item["iduser"]
+                                    ? Divider(color: Colors.grey[100])
+                                    : Container(),
+                                Text(item["mensagem"],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 16)),
+                                Text(
+                                    dateFormatter
+                                        .exibirHoraMin(item["horaexibir"]),
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(fontSize: 10))
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -163,6 +202,12 @@ class _ChatState extends State<Chat> {
                         hintText: "Digite uma mengem...",
                         hintStyle: TextStyle(color: Colors.grey),
                       ),
+                      onTap: () {
+                        Timer(Duration(milliseconds: 200), () {
+                          _scrollController.jumpTo(
+                              _scrollController.position.maxScrollExtent);
+                        });
+                      },
                     ),
                   ),
                 ),

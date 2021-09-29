@@ -28,6 +28,7 @@ void main() async {
         iconTheme: IconThemeData(color: paleta.royalBlue),
         textTheme: const TextTheme(
           subtitle1: TextStyle(color: Colors.white),
+          subtitle2: TextStyle(color: Colors.white),
           caption: TextStyle(color: Colors.white),
           button: TextStyle(color: Colors.white),
           overline: TextStyle(color: Colors.white),

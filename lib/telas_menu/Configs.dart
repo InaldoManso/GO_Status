@@ -19,6 +19,7 @@ class _ConfigsState extends State<Configs> {
 
   //Atributos
   bool _exibirclassificacao = false;
+  bool _carregado = false;
 
   _atualizarConfig() {
     configUser.exibirclass = _exibirclassificacao;
@@ -29,8 +30,8 @@ class _ConfigsState extends State<Configs> {
     DocumentSnapshot snapshot = await db.collection("usuarios").doc(uid).get();
 
     configUser.exibirclass = snapshot["exibirclass"];
-
     _exibirclassificacao = configUser.exibirclass == false ? false : true;
+    _carregado = true;
 
     setState(() {});
   }
@@ -57,56 +58,69 @@ class _ConfigsState extends State<Configs> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 40, bottom: 70),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              "Configurações",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 24),
-            ),
-            Divider(),
-            SwitchListTile(
-                title: Text("Exibir seu KD na classificação global"),
-                value: _exibirclassificacao,
-                onChanged: (bool valor) {
-                  setState(() {
-                    _exibirclassificacao = valor;
-                    _atualizarConfig();
-                  });
-                }),
-            Divider(),
-            Center(
-              child: GestureDetector(
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  width: MediaQuery.of(context).size.width / 3,
-                  decoration: BoxDecoration(
-                      color: paleta.royalBlue,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        "Logof",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      Icon(
-                        Icons.power_settings_new_outlined,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  _deslogarUser();
-                },
-              ),
-            )
-          ],
-        ),
-      ),
+          padding: EdgeInsets.only(top: 40, bottom: 70),
+          child: configuracoesCarregadas()),
     );
+  }
+
+  Widget configuracoesCarregadas() {
+    Widget widget = Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: Center(child: CircularProgressIndicator()),
+    );
+
+    if (_carregado) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            "Configurações",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 24),
+          ),
+          Divider(),
+          SwitchListTile(
+              title: Text("Exibir seu KD na classificação global"),
+              value: _exibirclassificacao,
+              onChanged: (bool valor) {
+                setState(() {
+                  _exibirclassificacao = valor;
+                  _atualizarConfig();
+                });
+              }),
+          Divider(),
+          Center(
+            child: GestureDetector(
+              child: Container(
+                padding: EdgeInsets.all(10),
+                width: MediaQuery.of(context).size.width / 3,
+                decoration: BoxDecoration(
+                    color: paleta.royalBlue,
+                    borderRadius: BorderRadius.circular(8)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "Logof",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Icon(
+                      Icons.power_settings_new_outlined,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+              onTap: () {
+                _deslogarUser();
+              },
+            ),
+          )
+        ],
+      );
+    }
+
+    return widget;
   }
 }

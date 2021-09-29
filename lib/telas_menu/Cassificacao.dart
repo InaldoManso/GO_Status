@@ -179,13 +179,10 @@ class _CassificacaoState extends State<Cassificacao> {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
           case ConnectionState.waiting:
-            return Center(
-              child: Column(
-                children: <Widget>[
-                  Text("Carregando contatos"),
-                  CircularProgressIndicator()
-                ],
-              ),
+            return Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Center(child: CircularProgressIndicator()),
             );
             break;
           case ConnectionState.active:
