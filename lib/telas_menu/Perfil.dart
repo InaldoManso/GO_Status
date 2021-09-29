@@ -1,11 +1,8 @@
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/helper/Api.dart';
-import 'package:go_status/model/CsgoStats.dart';
-import 'package:http/http.dart' as http;
 
 class Perfil extends StatefulWidget {
   @override
@@ -17,14 +14,10 @@ class _PerfilState extends State<Perfil> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  //Atributos API
-  String _steamID;
-
   //Atributos User
   String _nome = "";
   String _image = "";
   String _pais = "";
-  String _steamid = "";
 
   //Atributos Interface
   Paleta paleta = Paleta();
@@ -52,7 +45,6 @@ class _PerfilState extends State<Perfil> {
       _nome = snapshot["nome"];
       _image = snapshot["urlimage"];
       _pais = snapshot["pais"];
-      _steamid = snapshot["steamid"];
 
       _totalKills = snapshot["kill"];
       _totalDeaths = snapshot["death"];
@@ -96,42 +88,53 @@ class _PerfilState extends State<Perfil> {
     return Scaffold(
       body: Container(
         child: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(8, 100, 8, 100),
+          padding: EdgeInsets.fromLTRB(8, 30, 8, 100),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: CircleAvatar(
-                  child: _image == ""
-                      ? CircularProgressIndicator()
-                      : ClipOval(child: Image.network(_image)),
-                  radius: 70,
-                  backgroundColor: Colors.grey,
-                ),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          _nome,
-                          textAlign: TextAlign.center,
-                          style:
-                              TextStyle(fontSize: 24, color: paleta.royalBlue),
-                        ),
-                        Text(
-                          _pais,
-                          textAlign: TextAlign.center,
-                          style:
-                              TextStyle(fontSize: 18, color: paleta.royalBlue),
-                        )
-                      ],
+              Container(
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                    color: paleta.grey850,
+                    borderRadius: BorderRadius.circular(8)),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(8),
+                      child: CircleAvatar(
+                        child: _image == ""
+                            ? CircularProgressIndicator()
+                            : ClipOval(child: Image.network(_image)),
+                        radius: 60,
+                        backgroundColor: Colors.grey,
+                      ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: Container(
+                        child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                _nome,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              _pais,
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(fontSize: 18, color: paleta.orange),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(8, 20, 8, 20),
@@ -158,12 +161,7 @@ class _PerfilState extends State<Perfil> {
                     Expanded(
                       child: Text(
                         "Kill/ Death",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: paleta.royalBlue,
-                          // decoration: TextDecoration.underline,
-                          // decorationStyle: TextDecorationStyle.dotted,
-                        ),
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
                     Text(
@@ -184,12 +182,7 @@ class _PerfilState extends State<Perfil> {
                     Expanded(
                       child: Text(
                         "Total Kills",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: paleta.royalBlue,
-                          // decoration: TextDecoration.underline,
-                          // decorationStyle: TextDecorationStyle.dotted,
-                        ),
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
                     Text(
@@ -210,12 +203,7 @@ class _PerfilState extends State<Perfil> {
                     Expanded(
                       child: Text(
                         "Total Deaths",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: paleta.royalBlue,
-                          // decoration: TextDecoration.underline,
-                          // decorationStyle: TextDecorationStyle.dotted,
-                        ),
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
                     Text(
@@ -236,12 +224,7 @@ class _PerfilState extends State<Perfil> {
                     Expanded(
                       child: Text(
                         "Horas de jogo",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: paleta.royalBlue,
-                          // decoration: TextDecoration.underline,
-                          // decorationStyle: TextDecorationStyle.dotted,
-                        ),
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
                     Text(
@@ -262,12 +245,7 @@ class _PerfilState extends State<Perfil> {
                     Expanded(
                       child: Text(
                         "Vitórias",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: paleta.royalBlue,
-                          // decoration: TextDecoration.underline,
-                          // decorationStyle: TextDecorationStyle.dotted,
-                        ),
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
                     Text(
@@ -288,12 +266,7 @@ class _PerfilState extends State<Perfil> {
                     Expanded(
                       child: Text(
                         "MVPs",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: paleta.royalBlue,
-                          // decoration: TextDecoration.underline,
-                          // decorationStyle: TextDecorationStyle.dotted,
-                        ),
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
                     Text(
@@ -314,12 +287,7 @@ class _PerfilState extends State<Perfil> {
                     Expanded(
                       child: Text(
                         "HeadShots",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: paleta.royalBlue,
-                          // decoration: TextDecoration.underline,
-                          // decorationStyle: TextDecorationStyle.dotted,
-                        ),
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
                     Text(

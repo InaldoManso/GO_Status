@@ -15,6 +15,7 @@ class _CassificacaoState extends State<Cassificacao> {
   String _idUsuarioLogado;
   Paleta paleta = Paleta();
   User _user;
+  Color _corKD;
 
   Future<List<ClassifUser>> _recuperarContatos() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
@@ -35,6 +36,7 @@ class _CassificacaoState extends State<Cassificacao> {
       classifUser.urlimage = dados["urlimage"];
       classifUser.resultkd = dados["resultkd"];
       classifUser.kill = dados["kill"];
+      classifUser.death = dados["death"];
       classifUser.mvps = dados["mvps"];
       classifUser.timeplay = dados["timeplay"];
 
@@ -49,13 +51,31 @@ class _CassificacaoState extends State<Cassificacao> {
     int minutos = int.parse(classifUser.timeplay);
     String horas = Duration(minutes: minutos).toString().split(':00')[0];
 
+    double kdcor = double.parse(classifUser.resultkd);
+    if (kdcor >= 0.00 && kdcor <= 0.74) {
+      setState(() {
+        _corKD = Colors.red;
+      });
+    } else if (kdcor >= 0.75 && kdcor <= 0.99) {
+      setState(() {
+        _corKD = Colors.orange;
+      });
+    } else if (kdcor >= 1.00) {
+      setState(() {
+        _corKD = Colors.green;
+      });
+    }
+
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: paleta.grey850,
+          elevation: 0,
           actionsAlignment: MainAxisAlignment.spaceAround,
           title: Text(
             classifUser.nome,
+            style: TextStyle(color: Colors.white),
             textAlign: TextAlign.center,
           ),
           content: Column(
@@ -77,14 +97,11 @@ class _CassificacaoState extends State<Cassificacao> {
                   Expanded(
                     child: Text(
                       "Kill/ Death",
-                      style: TextStyle(
-                        color: paleta.royalBlue,
-                      ),
                     ),
                   ),
                   Text(
                     classifUser.resultkd,
-                    style: TextStyle(color: paleta.royalBlue),
+                    style: TextStyle(color: _corKD),
                   ),
                 ],
               ),
@@ -93,16 +110,24 @@ class _CassificacaoState extends State<Cassificacao> {
                   Expanded(
                     child: Text(
                       "Total Kills",
-                      style: TextStyle(
-                        color: paleta.royalBlue,
-                        // decoration: TextDecoration.underline,
-                        // decorationStyle: TextDecorationStyle.dotted,
-                      ),
                     ),
                   ),
                   Text(
                     classifUser.kill,
-                    style: TextStyle(color: paleta.royalBlue),
+                    style: TextStyle(color: Colors.green[200]),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Total Deaths",
+                    ),
+                  ),
+                  Text(
+                    classifUser.death,
+                    style: TextStyle(color: Colors.red[200]),
                   ),
                 ],
               ),
@@ -111,14 +136,11 @@ class _CassificacaoState extends State<Cassificacao> {
                   Expanded(
                     child: Text(
                       "Mvps",
-                      style: TextStyle(
-                        color: paleta.royalBlue,
-                      ),
                     ),
                   ),
                   Text(
                     classifUser.mvps,
-                    style: TextStyle(color: paleta.royalBlue),
+                    style: TextStyle(color: Colors.blue[200]),
                   ),
                 ],
               ),
@@ -127,14 +149,11 @@ class _CassificacaoState extends State<Cassificacao> {
                   Expanded(
                     child: Text(
                       "Horas de jogo",
-                      style: TextStyle(
-                        color: paleta.royalBlue,
-                      ),
                     ),
                   ),
                   Text(
                     horas,
-                    style: TextStyle(color: paleta.royalBlue),
+                    style: TextStyle(color: Colors.blue[200]),
                   ),
                 ],
               ),
