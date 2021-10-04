@@ -124,6 +124,28 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
+          icon: Icon(Icons.compare_arrows_outlined),
+          onPressed: () {
+            // _apresentarTela(4);
+          },
+        ),
+      ),
+      Container(
+        margin: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
+        child: IconButton(
+          icon: Icon(Icons.map_outlined),
+          onPressed: () {
+            // _apresentarTela(4);
+          },
+        ),
+      ),
+      Container(
+        margin: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
+        child: IconButton(
             icon: Icon(Icons.people_alt_outlined),
             onPressed: () {
               _apresentarTela(5);

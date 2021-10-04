@@ -1,7 +1,7 @@
 class Postagem {
-  int _idpostagem;
   int _idtime;
-  int _idtipo;
+  String _idpostagem;
+  String _idtipo;
   String _iduser;
   String _nomeuser;
   String _imageuser;

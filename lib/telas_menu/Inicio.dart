@@ -158,9 +158,7 @@ class _InicioState extends State<Inicio> {
                               )
                             ],
                           ),
-                          Divider(
-                            color: paleta.royalBlue,
-                          ),
+                          Divider(color: paleta.royalBlue),
                           Container(
                             height: telaHeight / 7,
                             child: SingleChildScrollView(
@@ -170,9 +168,7 @@ class _InicioState extends State<Inicio> {
                               ),
                             ),
                           ),
-                          Divider(
-                            color: paleta.royalBlue,
-                          ),
+                          Divider(color: paleta.royalBlue),
                         ],
                       ),
                     ),
