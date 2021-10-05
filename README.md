@@ -1,16 +1,19 @@
-# go_status
+# GO_Status
 
-A new Flutter project.
+Um projeto de código aberto feito em flutter com foco na comunidade de Counter Strike.
 
-## Getting Started
+## Fase Alpha
 
-This project is a starting point for a Flutter application.
+O App é alimentado por meio das API's SteamWorks.
 
-A few resources to get you started if this is your first Flutter project:
+Hoje o App contém:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Rastreamento de estatísticas.
+- Inicio com noticias do CSGO.
+- Ranking de KD (participação opcional).
+- Guia de posições no mapa.
+- Aba com o Canal do Youtube da comunidade.
+- Chat da comunidade.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+FEm breve seráo implementadas novas tecnologias.
+Até mais!
