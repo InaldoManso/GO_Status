@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/model/MapDetails.dart';
 import 'package:go_status/telas_menu/Cassificacao.dart';
 import 'package:go_status/telas_menu/Chat.dart';
 import 'package:go_status/telas_menu/Configs.dart';
 import 'package:go_status/telas_menu/Grupos.dart';
 import 'package:go_status/telas_menu/Inicio.dart';
+import 'package:go_status/telas_menu/Maps.dart';
 import 'package:go_status/telas_menu/Perfil.dart';
 import 'package:go_status/telas_menu/ReportBug.dart';
 import 'package:go_status/telas_menu/Videos.dart';
@@ -37,9 +39,11 @@ class _HomeState extends State<Home> {
       Cassificacao(), //2
       Videos(_resultado), //1
       Chat(), //4
-      Grupos(), //5
-      ReportBug(), //6
-      Configs(), //7
+      Chat(), //5
+      Maps(), //6
+      Grupos(), //7
+      ReportBug(), //8
+      Configs(), //9
     ];
 
     return Scaffold(
@@ -126,7 +130,7 @@ class _HomeState extends State<Home> {
         child: IconButton(
           icon: Icon(Icons.compare_arrows_outlined),
           onPressed: () {
-            // _apresentarTela(4);
+            // _apresentarTela(5);
           },
         ),
       ),
@@ -137,7 +141,7 @@ class _HomeState extends State<Home> {
         child: IconButton(
           icon: Icon(Icons.map_outlined),
           onPressed: () {
-            // _apresentarTela(4);
+            _apresentarTela(6);
           },
         ),
       ),
@@ -148,7 +152,7 @@ class _HomeState extends State<Home> {
         child: IconButton(
             icon: Icon(Icons.people_alt_outlined),
             onPressed: () {
-              _apresentarTela(5);
+              _apresentarTela(7);
             }),
       ),
       Container(
@@ -158,7 +162,7 @@ class _HomeState extends State<Home> {
         child: IconButton(
             icon: Icon(Icons.bug_report_outlined),
             onPressed: () {
-              _apresentarTela(6);
+              _apresentarTela(8);
             }),
       ),
       Container(
@@ -168,7 +172,7 @@ class _HomeState extends State<Home> {
         child: IconButton(
             icon: Icon(Icons.settings_outlined),
             onPressed: () {
-              _apresentarTela(7);
+              _apresentarTela(9);
             }),
       ),
     ]);

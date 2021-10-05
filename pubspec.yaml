@@ -73,6 +73,16 @@ flutter:
     - images/maps/map_train.jpg
     - images/maps/map_vertigo.jpg
 
+    - images/capas/capa_cache.png
+    - images/capas/capa_cobblestone.png
+    - images/capas/capa_dustii.png
+    - images/capas/capa_inferno.png
+    - images/capas/capa_mirage.png
+    - images/capas/capa_nuke.png
+    - images/capas/capa_overpass.png
+    - images/capas/capa_train.png
+    - images/capas/capa_vertigo.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
