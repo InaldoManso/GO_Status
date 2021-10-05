@@ -103,7 +103,7 @@ class _InicioState extends State<Inicio> {
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
                 actions: [
-                  IconButton(
+                  /*IconButton(
                     icon: Icon(
                       Icons.post_add_outlined,
                       color: paleta.royalBlue,
@@ -112,7 +112,7 @@ class _InicioState extends State<Inicio> {
                       Navigator.pushNamed(
                           context, RouteGenerator.CRIARPOST_ROTA);
                     },
-                  ),
+                  ),*/
                 ],
               ),
               body: ListView.builder(

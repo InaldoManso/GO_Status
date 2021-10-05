@@ -62,6 +62,16 @@ flutter:
     - images/helpers/steamidzoom.jpg
     - images/helpers/steamurl.jpg
     - images/helpers/steamurlzoom.jpg
+    
+    - images/maps/map_cache.jpg
+    - images/maps/map_cobblestone.jpg
+    - images/maps/map_dust2.jpg
+    - images/maps/map_inferno.jpg
+    - images/maps/map_mirage.jpg
+    - images/maps/map_nuke.jpg
+    - images/maps/map_overpass.jpg
+    - images/maps/map_train.jpg
+    - images/maps/map_vertigo.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
