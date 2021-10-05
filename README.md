@@ -15,5 +15,5 @@ Hoje o App contém:
 - Aba com o Canal do Youtube da comunidade.
 - Chat da comunidade.
 
-FEm breve seráo implementadas novas tecnologias.
+FEm breve seráo implementadas novas tecnologias. <br/>
 Até mais!
