@@ -36,7 +36,7 @@ class _MapsState extends State<Maps> {
     return Scaffold(
       body: Container(
         child: ListView.builder(
-          padding: EdgeInsets.only(bottom: 60),
+          padding: EdgeInsets.only(top: 40, bottom: 60),
           itemCount: listaMapas.length,
           itemBuilder: (context, index) {
             MapDetails mapDetails = listaMapas[index];

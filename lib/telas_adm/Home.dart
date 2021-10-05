@@ -3,6 +3,7 @@ import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/model/MapDetails.dart';
 import 'package:go_status/telas_menu/Cassificacao.dart';
 import 'package:go_status/telas_menu/Chat.dart';
+import 'package:go_status/telas_menu/CompareGun.dart';
 import 'package:go_status/telas_menu/Configs.dart';
 import 'package:go_status/telas_menu/Grupos.dart';
 import 'package:go_status/telas_menu/Inicio.dart';
@@ -37,9 +38,9 @@ class _HomeState extends State<Home> {
       Inicio(), //0
       Perfil(), //1
       Cassificacao(), //2
-      Videos(_resultado), //1
+      Videos(_resultado), //3
       Chat(), //4
-      Chat(), //5
+      CompareGun(), //5
       Maps(), //6
       Grupos(), //7
       ReportBug(), //8
@@ -130,7 +131,7 @@ class _HomeState extends State<Home> {
         child: IconButton(
           icon: Icon(Icons.compare_arrows_outlined),
           onPressed: () {
-            // _apresentarTela(5);
+            _apresentarTela(5);
           },
         ),
       ),

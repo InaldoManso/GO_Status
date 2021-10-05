@@ -105,7 +105,7 @@ class _PerfilState extends State<Perfil> {
                         child: _image == ""
                             ? CircularProgressIndicator()
                             : ClipOval(child: Image.network(_image)),
-                        radius: 60,
+                        radius: 50,
                         backgroundColor: Colors.grey,
                       ),
                     ),
@@ -137,16 +137,10 @@ class _PerfilState extends State<Perfil> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(8, 20, 8, 20),
-                child: Divider(
-                  color: paleta.royalBlue,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.only(top: 30, bottom: 20),
                 child: Text(
                   "Status geral",
-                  style: TextStyle(fontSize: 24, color: paleta.royalBlue),
+                  style: TextStyle(fontSize: 20, color: paleta.royalBlue),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -155,7 +149,7 @@ class _PerfilState extends State<Perfil> {
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
                     color: paleta.grey850,
-                    borderRadius: BorderRadius.circular(16)),
+                    borderRadius: BorderRadius.circular(8)),
                 child: Row(
                   children: [
                     Expanded(
@@ -176,7 +170,7 @@ class _PerfilState extends State<Perfil> {
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
                     color: paleta.grey850,
-                    borderRadius: BorderRadius.circular(16)),
+                    borderRadius: BorderRadius.circular(8)),
                 child: Row(
                   children: [
                     Expanded(
@@ -197,7 +191,7 @@ class _PerfilState extends State<Perfil> {
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
                     color: paleta.grey850,
-                    borderRadius: BorderRadius.circular(16)),
+                    borderRadius: BorderRadius.circular(8)),
                 child: Row(
                   children: [
                     Expanded(
@@ -218,7 +212,7 @@ class _PerfilState extends State<Perfil> {
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
                     color: paleta.grey850,
-                    borderRadius: BorderRadius.circular(16)),
+                    borderRadius: BorderRadius.circular(8)),
                 child: Row(
                   children: [
                     Expanded(
@@ -239,7 +233,7 @@ class _PerfilState extends State<Perfil> {
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
                     color: paleta.grey850,
-                    borderRadius: BorderRadius.circular(16)),
+                    borderRadius: BorderRadius.circular(8)),
                 child: Row(
                   children: [
                     Expanded(
@@ -260,7 +254,7 @@ class _PerfilState extends State<Perfil> {
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
                     color: paleta.grey850,
-                    borderRadius: BorderRadius.circular(16)),
+                    borderRadius: BorderRadius.circular(8)),
                 child: Row(
                   children: [
                     Expanded(
@@ -281,7 +275,7 @@ class _PerfilState extends State<Perfil> {
                 margin: EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
                     color: paleta.grey850,
-                    borderRadius: BorderRadius.circular(16)),
+                    borderRadius: BorderRadius.circular(8)),
                 child: Row(
                   children: [
                     Expanded(
