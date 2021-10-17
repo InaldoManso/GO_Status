@@ -65,7 +65,7 @@ class _MapsState extends State<Maps> {
                           : MediaQuery.of(context).size.width / 2,
                       alignment: Alignment.topLeft,
                       decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        color: paleta.grey850,
                         image: DecorationImage(
                           image: AssetImage(
                             mapDetails.exibirimage
