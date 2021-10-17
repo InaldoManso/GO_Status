@@ -83,6 +83,9 @@ flutter:
     - images/capas/capa_train.png
     - images/capas/capa_vertigo.png
 
+    - images/logos/logolmc.png
+    - images/logos/logolmctrsp.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

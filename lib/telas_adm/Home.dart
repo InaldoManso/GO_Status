@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/model/MapDetails.dart';
 import 'package:go_status/telas_menu/Cassificacao.dart';
 import 'package:go_status/telas_menu/Chat.dart';
 import 'package:go_status/telas_menu/CompareGun.dart';
@@ -124,7 +123,7 @@ class _HomeState extends State<Home> {
               _apresentarTela(4);
             }),
       ),
-      Container(
+      /*Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
             color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
@@ -134,7 +133,7 @@ class _HomeState extends State<Home> {
             _apresentarTela(5);
           },
         ),
-      ),
+      ),*/
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
@@ -146,7 +145,7 @@ class _HomeState extends State<Home> {
           },
         ),
       ),
-      Container(
+      /*Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
             color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
@@ -165,7 +164,7 @@ class _HomeState extends State<Home> {
             onPressed: () {
               _apresentarTela(8);
             }),
-      ),
+      ),*/
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(

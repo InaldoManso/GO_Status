@@ -1,5 +1,6 @@
 class Usuario {
   // Atributos
+  int _admin = 0;
   String _nome = "";
   String _email = "";
   String _senha = "";
@@ -8,6 +9,7 @@ class Usuario {
   String _time = "";
   String _urlimage = "";
   String _pais = "";
+  String _version = "";
   bool _exibirclass = false;
 
   //Contrutor
@@ -16,6 +18,7 @@ class Usuario {
   //conversor em Map
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
+      "admin": this.admin,
       "nome": this.nome,
       "email": this.email,
       "senha": this.senha,
@@ -24,12 +27,17 @@ class Usuario {
       "time": this.time,
       "urlimage": this.urlimage,
       "pais": this.pais,
+      "version": this.version,
       "exibirclass": this.exibirclass
     };
     return map;
   }
 
   //Getters e Setters
+
+  get admin => this._admin;
+
+  set admin(value) => this._admin = value;
 
   get nome => this._nome;
 
@@ -62,6 +70,10 @@ class Usuario {
   get pais => this._pais;
 
   set pais(value) => this._pais = value;
+
+  get version => this._version;
+
+  set version(value) => this._version = value;
 
   get exibirclass => this._exibirclass;
 

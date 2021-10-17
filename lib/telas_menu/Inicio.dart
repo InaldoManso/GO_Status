@@ -18,6 +18,7 @@ class _InicioState extends State<Inicio> {
   String steamapikey;
   String youtubeapikey;
   String _nomeUser = "";
+  int _admin;
 
   Future<List<Postagem>> _recuperarPostagens() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
@@ -39,6 +40,7 @@ class _InicioState extends State<Inicio> {
       postagem.nomeuser = dados["nomeuser"];
       postagem.imageuser = dados["imageuser"];
       postagem.texto = dados["texto"];
+      postagem.urlimage = dados["urlimage"];
       postagem.horario = dados["horario"];
 
       listaPosts.add(postagem);
@@ -61,6 +63,7 @@ class _InicioState extends State<Inicio> {
         await db.collection("usuarios").doc(user.uid).get();
 
     setState(() {
+      _admin = snapshot["admin"];
       _nomeUser = snapshot["nome"];
     });
   }
@@ -103,16 +106,18 @@ class _InicioState extends State<Inicio> {
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
                 actions: [
-                  /*IconButton(
-                    icon: Icon(
-                      Icons.post_add_outlined,
-                      color: paleta.royalBlue,
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(
-                          context, RouteGenerator.CRIARPOST_ROTA);
-                    },
-                  ),*/
+                  _admin > 0
+                      ? IconButton(
+                          icon: Icon(
+                            Icons.post_add_outlined,
+                            color: paleta.royalBlue,
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, RouteGenerator.CRIARPOST_ROTA);
+                          },
+                        )
+                      : Container()
                 ],
               ),
               body: ListView.builder(
@@ -121,55 +126,71 @@ class _InicioState extends State<Inicio> {
                   List<Postagem> listaItens = snapshot.data;
                   Postagem postagem = listaItens[indice];
 
-                  return GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      margin: EdgeInsets.only(top: 8, bottom: 8),
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: paleta.grey850,
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(right: 10),
-                                child: CircleAvatar(
-                                  child: postagem.imageuser == ""
-                                      ? CircularProgressIndicator()
-                                      : ClipOval(
-                                          child: Image.network(
-                                            postagem.imageuser,
-                                            fit: BoxFit.fill,
-                                          ),
+                  return Container(
+                    margin: EdgeInsets.only(top: 8, bottom: 8),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: paleta.grey850,
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 10),
+                              child: CircleAvatar(
+                                child: postagem.imageuser == ""
+                                    ? CircularProgressIndicator()
+                                    : ClipOval(
+                                        child: Image.network(
+                                          postagem.imageuser,
+                                          fit: BoxFit.fill,
                                         ),
-                                  radius: 20,
-                                  backgroundColor: Colors.grey,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  child: Text(
-                                    postagem.nomeuser,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Divider(color: paleta.royalBlue),
-                          Container(
-                            child: SingleChildScrollView(
-                              child: Text(
-                                postagem.texto,
-                                style: TextStyle(color: Colors.white),
+                                      ),
+                                radius: 20,
+                                backgroundColor: Colors.grey,
                               ),
                             ),
+                            Expanded(
+                              child: Container(
+                                child: Text(
+                                  postagem.nomeuser,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Divider(color: paleta.royalBlue),
+                        Container(
+                          child: SingleChildScrollView(
+                            child: Text(
+                              postagem.texto,
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
-                          Divider(color: paleta.royalBlue),
-                        ],
-                      ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, RouteGenerator.POSTIMAGE_ROTA,
+                                arguments: postagem.urlimage);
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            height: MediaQuery.of(context).size.width * 0.6,
+                            alignment: Alignment.topLeft,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(8),
+                              image: DecorationImage(
+                                  image: NetworkImage(postagem.urlimage),
+                                  fit: BoxFit.cover),
+                            ),
+                          ),
+                        ),
+                        Divider(color: paleta.royalBlue),
+                      ],
                     ),
                   );
                 },

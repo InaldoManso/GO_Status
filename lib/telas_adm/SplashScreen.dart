@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_status/helper/RouteGenerator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_status/helper/version_control.dart';
 import 'package:go_status/model/CsgoStats.dart';
 import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/helper/Api.dart';
@@ -97,7 +98,7 @@ class _SplashScreenState extends State<SplashScreen> {
         setState(() {
           _carregando = false;
         });
-        Navigator.pushReplacementNamed(context, RouteGenerator.HOME_ROTA);
+        _validarVersaoCadastral();
       });
     } else {
       _snackBarInfo("Resultado: Erro ao recuperar seus dados");
@@ -120,6 +121,21 @@ class _SplashScreenState extends State<SplashScreen> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  _validarVersaoCadastral() async {
+    VersionControl versionControl = VersionControl();
+    User user = auth.currentUser;
+    DocumentSnapshot snapshot =
+        await db.collection("usuarios").doc(user.uid).get();
+
+    String version = snapshot["version"];
+    bool updated = await versionControl.versionCheck(version, user.uid);
+    if (updated == true) {
+      Navigator.pushReplacementNamed(context, RouteGenerator.HOME_ROTA);
+    } else {
+      _validarVersaoCadastral();
+    }
+  }
+
   @override
   void initState() {
     _verificarLogado();
@@ -131,10 +147,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
+              flex: 2,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -155,12 +171,64 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               ),
             ),
-            Container(
-              height: 60,
-              child: Center(
-                child: _carregando ? CircularProgressIndicator() : Container(),
+            Expanded(
+              flex: 1,
+              child: Container(
+                height: 60,
+                child: Center(
+                  child:
+                      _carregando ? CircularProgressIndicator() : Container(),
+                ),
               ),
-            )
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: Center(
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  height: 70,
+                  width: 70,
+                  decoration: BoxDecoration(
+                    color: paleta.grey900,
+                    image: DecorationImage(
+                      image: AssetImage(
+                        "images/logos/logolmctrsp.png",
+                      ),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            /*Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "distributed by:\n\n",
+                    style: TextStyle(
+                        color: paleta.orange,
+                        fontSize: 8,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "Snipers of War",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "distributed by:\n\n",
+                    style: TextStyle(
+                        color: paleta.grey900,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),*/
           ],
         ),
       ),

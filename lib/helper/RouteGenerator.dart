@@ -8,6 +8,7 @@ import 'package:go_status/telas_pop/CriarPostagem.dart';
 import 'package:go_status/telas_pop/HelpID.dart';
 import 'package:go_status/telas_pop/HelpURL.dart';
 import 'package:go_status/telas_pop/Logout.dart';
+import 'package:go_status/telas_pop/PostImageView.dart';
 import 'package:go_status/telas_pop/TelaReset.dart';
 
 class RouteGenerator {
@@ -22,6 +23,7 @@ class RouteGenerator {
   static const String HELPURL_ROTA = "/helpurl";
   static const String HELPID_ROTA = "/helpid";
   static const String CRIARPOST_ROTA = "/criarpost";
+  static const String POSTIMAGE_ROTA = "/postimage";
 
   //Retorna uma Rpta de valor dinamico
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -61,6 +63,9 @@ class RouteGenerator {
 
       case CRIARPOST_ROTA:
         return MaterialPageRoute(builder: (_) => CriarPostagem());
+
+      case POSTIMAGE_ROTA:
+        return MaterialPageRoute(builder: (_) => PostImageView(args));
 
       /*case ITEM_ROTA:
         return MaterialPageRoute(builder: (_) => Item(args));*/

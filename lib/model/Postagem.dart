@@ -6,6 +6,7 @@ class Postagem {
   String _nomeuser;
   String _imageuser;
   String _texto;
+  String _urlimage;
   String _horario;
 
   Postagem();
@@ -19,6 +20,7 @@ class Postagem {
       "nomeuser": this.nomeuser,
       "imageuser": this.imageuser,
       "texto": this.texto,
+      "urlimage": this.urlimage,
       "horario": this.horario,
     };
     return map;
@@ -44,6 +46,9 @@ class Postagem {
 
   get texto => this._texto;
   set texto(value) => this._texto = value;
+
+  get urlimage => this._urlimage;
+  set urlimage(value) => this._urlimage = value;
 
   get horario => this._horario;
   set horario(value) => this._horario = value;
