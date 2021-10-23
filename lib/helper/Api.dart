@@ -49,6 +49,17 @@ class Api {
     }
   }
 
+  validarSteamPublica(String keyApi, String steamid) async {
+    http.Response response = await http
+        .get(link_Stats1 + keyApi + link_Stats2 + steamid + link_Stats3);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<Usuario> resgatarDadosSteamID(String keyApi, String steamID) async {
     Usuario usuario = Usuario();
     http.Response response =

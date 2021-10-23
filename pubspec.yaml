@@ -37,6 +37,15 @@ dependencies:
   youtube_player_flutter: ^7.0.0+7
   intl: ^0.16.1
   shared_preferences: ^0.5.2
+  image_picker: ^0.6.7+15
+  flutter_launcher_icons: ^0.8.1
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "images/logos/icon_app_oval.png"
+  adaptive_icon_background: "images/logos/icon_app_oval.png"
+  android/ios: true
 
 dev_dependencies:
   flutter_test:
@@ -62,7 +71,7 @@ flutter:
     - images/helpers/steamidzoom.jpg
     - images/helpers/steamurl.jpg
     - images/helpers/steamurlzoom.jpg
-    
+
     - images/maps/map_cache.jpg
     - images/maps/map_cobblestone.jpg
     - images/maps/map_dust2.jpg

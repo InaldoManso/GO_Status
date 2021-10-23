@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/model/Postagem.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class CriarPostagem extends StatefulWidget {
   @override
@@ -18,12 +21,68 @@ class _CriarPostagemState extends State<CriarPostagem> {
   TextEditingController _controllerTexto = TextEditingController();
   Paleta paleta = Paleta();
   Postagem postagem = Postagem();
+  final _picker = ImagePicker();
+  File _imagem;
 
   String _iduser;
   String _nomeuser;
   String _imageuser;
   String _texto;
+  String _urlImage;
   String _horario;
+
+  String _urlImagemRecuperada = null;
+
+  Future _recuperarImagem(bool daCamera) async {
+    PickedFile imagemSelecionada;
+    if (daCamera) {
+      _picker.getImage(source: ImageSource.camera);
+      // _uploadImage();
+    } else {
+      _picker.getImage(source: ImageSource.gallery);
+      // _uploadImage();
+    }
+
+    final File file = File(imagemSelecionada.path);
+
+    setState(() {
+      _imagem = file;
+    });
+  }
+
+  Future _uploadImage() async {
+    //Instancia do Storage
+    firebase_storage.FirebaseStorage storage =
+        firebase_storage.FirebaseStorage.instance;
+
+    //Refernciar Arquivo
+    firebase_storage.Reference pastaRaiz = storage.ref();
+
+    firebase_storage.Reference arquivos = pastaRaiz
+        .child("previewPost")
+        .child(_iduser)
+        .child("postagemPreview.jpg");
+
+    //Fazer Upload da imagem
+    firebase_storage.UploadTask task = arquivos.putFile(_imagem);
+
+    //Controlar progresso da tarefa de Upload
+    task.snapshotEvents.listen((firebase_storage.TaskSnapshot storageEvent) {
+      if (storageEvent.state == firebase_storage.TaskState.running) {
+        setState(() {});
+      } else if (storageEvent.state == firebase_storage.TaskState.success) {
+        setState(() {});
+      }
+    });
+
+    //Recuperando a URL da imagem
+    String url = await (await task).ref.getDownloadURL();
+    print("URL: " + url.toString());
+
+    setState(() {
+      _urlImagemRecuperada = url;
+    });
+  }
 
   recuperarDadosUser() async {
     User user = auth.currentUser;
@@ -114,7 +173,39 @@ class _CriarPostagemState extends State<CriarPostagem> {
                             borderSide: BorderSide(color: Colors.grey)),
                       ),
                     ),
-                    Image.asset("images/steamidzoom.jpg"),
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: paleta.grey900,
+                        image: _urlImagemRecuperada == null
+                            ? DecorationImage(
+                                image: NetworkImage(
+                                    "https://hiperjoias.com.br/wp-content/plugins/gutentor/assets/img/default-image.jpg"),
+                                fit: BoxFit.cover,
+                              )
+                            : DecorationImage(
+                                image: NetworkImage(_urlImagemRecuperada),
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RaisedButton(
+                              child: Text("Camera"),
+                              onPressed: () {
+                                _recuperarImagem(true);
+                              }),
+                          RaisedButton(
+                              child: Text("Galeria"),
+                              onPressed: () {
+                                _recuperarImagem(false);
+                              }),
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(top: 8, bottom: 8),
                       child: Divider(color: paleta.royalBlue),
@@ -133,7 +224,9 @@ class _CriarPostagemState extends State<CriarPostagem> {
                       ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
-                      onPressed: () {}),
+                      onPressed: () {
+                        _uploadImage();
+                      }),
                   padding: EdgeInsets.all(20))
             ],
           ),

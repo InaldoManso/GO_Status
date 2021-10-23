@@ -28,6 +28,17 @@ class _SteamIdState extends State<SteamId> {
   //Atributos User
   String _steamInfo = "";
 
+  _validarPublico() async {
+    bool perfilPublico = false;
+    perfilPublico = await api.validarSteamPublica(steamapikey, usuario.steamid);
+    if (perfilPublico) {
+      _enviarCadastro();
+    } else {
+      _snackBarInfo(
+          "Altere as configurações do seu perfil para publicas na steam!");
+    }
+  }
+
   _enviarCadastro() {
     Navigator.pushNamed(context, RouteGenerator.CADASTRO_ROTA,
         arguments: usuario);
@@ -35,8 +46,8 @@ class _SteamIdState extends State<SteamId> {
 
   void _snackBarInfo(String mensagem) {
     final snackBar = SnackBar(
-      backgroundColor: paleta.orange,
-      duration: Duration(seconds: 4),
+      backgroundColor: Colors.red,
+      duration: Duration(seconds: 5),
       content: Text(mensagem,
           style: TextStyle(fontSize: 18, color: Colors.white),
           textAlign: TextAlign.center),
@@ -135,6 +146,7 @@ class _SteamIdState extends State<SteamId> {
                             style: TextStyle(fontSize: 16),
                             decoration: InputDecoration(
                               labelText: _labelTextField,
+                              labelStyle: TextStyle(color: Colors.white),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(16)),
                               enabledBorder: OutlineInputBorder(
@@ -236,7 +248,7 @@ class _SteamIdState extends State<SteamId> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8)),
                                     onPressed: () {
-                                      _enviarCadastro();
+                                      _validarPublico();
                                     },
                                   )
                                 ],

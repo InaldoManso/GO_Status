@@ -48,6 +48,7 @@ class _CadastroState extends State<Cadastro> {
         usuario.time = timeEditingController.text;
         usuario.urlimage = widget.usuario.urlimage;
         usuario.pais = widget.usuario.pais;
+        usuario.version = "1.0.0";
         _salvarCadastro(usuario);
       } else {
         _snackBarInfo("Senhas diferentes!");
@@ -228,6 +229,7 @@ class _CadastroState extends State<Cadastro> {
                   style: TextStyle(fontSize: 16),
                   decoration: InputDecoration(
                     labelText: "Seu e-mail",
+                    labelStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16)),
                     enabledBorder: OutlineInputBorder(
@@ -254,6 +256,7 @@ class _CadastroState extends State<Cadastro> {
                         style: TextStyle(fontSize: 16),
                         decoration: InputDecoration(
                           labelText: "Sua senha",
+                          labelStyle: TextStyle(color: Colors.white),
                           counterStyle: TextStyle(color: paleta.royalBlue),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16)),
@@ -276,6 +279,7 @@ class _CadastroState extends State<Cadastro> {
                         style: TextStyle(fontSize: 16),
                         decoration: InputDecoration(
                           labelText: "Confirme a senha",
+                          labelStyle: TextStyle(color: Colors.white),
                           counterStyle: TextStyle(color: paleta.royalBlue),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16)),
@@ -298,6 +302,7 @@ class _CadastroState extends State<Cadastro> {
                   style: TextStyle(fontSize: 16),
                   decoration: InputDecoration(
                     labelText: "Tag do seu time (se tiver)",
+                    labelStyle: TextStyle(color: Colors.white),
                     prefixIcon: Icon(
                       Icons.group_outlined,
                       color: paleta.orange,
