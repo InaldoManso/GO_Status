@@ -14,6 +14,15 @@ class DateFormatter {
     return resultadoFormatado;
   }
 
+  exibirDiaMesAnoHoraMin(String datetime) {
+    initializeDateFormatting("pt_BR");
+    var formatador = DateFormat("dd-MM-yyyy HH:mm");
+
+    DateTime dataConvertida = DateTime.parse(datetime);
+    String resultadoFormatado = formatador.format(dataConvertida);
+    return resultadoFormatado;
+  }
+
   exibirDiaMesAno(String datetime) {
     initializeDateFormatting("pt_BR");
     var formatador = DateFormat("dd-MM-yyyy");
@@ -41,11 +50,11 @@ class DateFormatter {
     return resultadoFormatado;
   }
 
-  gerarHoraIdMensagem(String datetime) {
+  gerarHoraId() {
     initializeDateFormatting("pt_BR");
     var formatador = DateFormat("yyyyMMddHHmmss");
 
-    DateTime dataConvertida = DateTime.parse(datetime);
+    DateTime dataConvertida = DateTime.now();
     int resultadoFormatado = int.parse(formatador.format(dataConvertida));
     return resultadoFormatado;
   }

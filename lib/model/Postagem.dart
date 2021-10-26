@@ -13,8 +13,8 @@ class Postagem {
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
-      "idpostagem": this.idpostagem,
       "idtime": this.idtime,
+      "idpostagem": this.idpostagem,
       "idtipo": this.idtipo,
       "iduser": this.iduser,
       "nomeuser": this.nomeuser,

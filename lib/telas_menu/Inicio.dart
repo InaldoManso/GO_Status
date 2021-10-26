@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ class Inicio extends StatefulWidget {
 }
 
 class _InicioState extends State<Inicio> {
+  final _controller = StreamController<QuerySnapshot>.broadcast();
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   Paleta paleta = Paleta();
@@ -20,33 +23,15 @@ class _InicioState extends State<Inicio> {
   String _nomeUser = "";
   int _admin;
 
-  Future<List<Postagem>> _recuperarPostagens() async {
-    FirebaseFirestore db = FirebaseFirestore.instance;
-
-    QuerySnapshot querySnapshot = await db
+  Stream<QuerySnapshot> _adicionarListenerMensagens() {
+    final stream = db
         .collection("postagens")
         .orderBy("idtime", descending: true)
-        .get();
+        .snapshots();
 
-    List<Postagem> listaPosts = [];
-    for (DocumentSnapshot item in querySnapshot.docs) {
-      var dados = item.data();
-
-      Postagem postagem = Postagem();
-      postagem.idpostagem = dados["idpostagem"];
-      postagem.idtime = dados["idtime"];
-      postagem.iduser = dados["iduser"];
-      postagem.idtipo = dados["idtipo"];
-      postagem.nomeuser = dados["nomeuser"];
-      postagem.imageuser = dados["imageuser"];
-      postagem.texto = dados["texto"];
-      postagem.urlimage = dados["urlimage"];
-      postagem.horario = dados["horario"];
-
-      listaPosts.add(postagem);
-    }
-
-    return listaPosts;
+    stream.listen((dados) {
+      _controller.add(dados);
+    });
   }
 
   _recuperarAdmKeys() async {
@@ -61,6 +46,7 @@ class _InicioState extends State<Inicio> {
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
         await db.collection("usuarios").doc(user.uid).get();
+    _adicionarListenerMensagens();
 
     setState(() {
       _admin = snapshot["admin"];
@@ -77,9 +63,153 @@ class _InicioState extends State<Inicio> {
 
   @override
   Widget build(BuildContext context) {
-    double telaHeight = MediaQuery.of(context).size.height;
-    double telaWidth = MediaQuery.of(context).size.width;
-    return FutureBuilder<List<Postagem>>(
+    return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text(
+          "Olá " + _nomeUser + "!",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        actions: [
+          _admin > 0
+              ? IconButton(
+                  icon: Icon(
+                    Icons.post_add_outlined,
+                    color: paleta.royalBlue,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, RouteGenerator.CRIARPOST_ROTA);
+                  },
+                )
+              : Container()
+        ],
+      ),
+      body: Container(
+        child: StreamBuilder(
+          stream: _controller.stream,
+          // ignore: missing_return
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+                break;
+              case ConnectionState.active:
+              case ConnectionState.done:
+                QuerySnapshot querySnapshot = snapshot.data;
+
+                if (snapshot.hasError) {
+                  return Container(
+                    child: Text("Erro ao carregar dados"),
+                  );
+                } else {
+                  return ListView.builder(
+                    itemCount: querySnapshot.docs.length,
+                    itemBuilder: (context, index) {
+                      //Recuperar mensagens
+                      List<DocumentSnapshot> postagens =
+                          querySnapshot.docs.toList();
+
+                      DocumentSnapshot item = postagens[index];
+                      Postagem postagem = Postagem();
+                      postagem.idtime = item["idtime"];
+                      postagem.idpostagem = item["idpostagem"];
+                      postagem.idtipo = item["idtipo"];
+                      postagem.iduser = item["iduser"];
+                      postagem.nomeuser = item["nomeuser"];
+                      postagem.imageuser = item["imageuser"];
+                      postagem.texto = item["texto"];
+                      postagem.urlimage = item["urlimage"];
+                      postagem.horario = item["horario"];
+
+                      return Container(
+                        margin: EdgeInsets.only(top: 8, bottom: 8),
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: paleta.grey850,
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 16, right: 16),
+                                  child: CircleAvatar(
+                                    child: postagem.imageuser == ""
+                                        ? CircularProgressIndicator()
+                                        : ClipOval(
+                                            child: Image.network(
+                                              postagem.imageuser,
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                    radius: 20,
+                                    backgroundColor: Colors.grey,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    child: Text(
+                                      postagem.nomeuser,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Divider(
+                              color: Colors.black,
+                            ),
+                            Container(
+                              child: SingleChildScrollView(
+                                child: Text(
+                                  postagem.texto,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RouteGenerator.POSTIMAGE_ROTA,
+                                    arguments: postagem.urlimage);
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 8),
+                                height: MediaQuery.of(context).size.width * 0.6,
+                                alignment: Alignment.topLeft,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(8),
+                                  image: DecorationImage(
+                                      image: NetworkImage(postagem.urlimage),
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                }
+                break;
+            }
+            return null;
+          },
+        ),
+      ),
+    );
+  }
+}
+
+/*
+FutureBuilder<List<Postagem>>(
       future: _recuperarPostagens(),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
@@ -200,6 +330,5 @@ class _InicioState extends State<Inicio> {
         }
         return null;
       },
-    );
-  }
-}
+    )
+*/

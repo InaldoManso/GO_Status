@@ -38,8 +38,7 @@ class _ChatState extends State<Chat> {
       mensagem.urlimage = "urlExemplo";
       mensagem.tipo = "1";
       mensagem.horaexibir = DateTime.now().toString();
-      mensagem.time =
-          dateFormatter.gerarHoraIdMensagem(DateTime.now().toString());
+      mensagem.time = dateFormatter.gerarHoraId();
       _salvarMensagem(mensagem);
     }
   }

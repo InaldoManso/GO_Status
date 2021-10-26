@@ -1,10 +1,11 @@
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/model/Postagem.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:go_status/helper/DateFormatter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:go_status/model/Postagem.dart';
+import 'package:go_status/helper/Paleta.dart';
+import 'package:flutter/material.dart';
 import 'dart:io';
 
 class CriarPostagem extends StatefulWidget {
@@ -13,92 +14,181 @@ class CriarPostagem extends StatefulWidget {
 }
 
 class _CriarPostagemState extends State<CriarPostagem> {
-  //Atributos Firebase
+  //Classes end Especial Attributes
   FirebaseFirestore db = FirebaseFirestore.instance;
+  DateFormatter dateFormatter = DateFormatter();
   FirebaseAuth auth = FirebaseAuth.instance;
-
-  //Atributos
-  TextEditingController _controllerTexto = TextEditingController();
-  Paleta paleta = Paleta();
   Postagem postagem = Postagem();
+  Paleta paleta = Paleta();
+
+  //Image attributes
+  File _image;
   final _picker = ImagePicker();
-  File _imagem;
+  bool _uploadingImage = false;
+  String _urlImagRecovered = "";
 
+  //General attributes
+  TextEditingController _controllerTexto = TextEditingController();
   String _iduser;
-  String _nomeuser;
+  String _nameuser;
   String _imageuser;
-  String _texto;
+  String _message;
   String _urlImage;
-  String _horario;
+  String _publicationTime;
 
-  String _urlImagemRecuperada = null;
+  Future _selectLocalImage(String originImage) async {
+    PickedFile imageSelected;
 
-  Future _recuperarImagem(bool daCamera) async {
-    PickedFile imagemSelecionada;
-    if (daCamera) {
-      _picker.getImage(source: ImageSource.camera);
-      // _uploadImage();
-    } else {
-      _picker.getImage(source: ImageSource.gallery);
-      // _uploadImage();
+    switch (originImage) {
+      case "camera":
+        imageSelected = await _picker.getImage(source: ImageSource.camera);
+        break;
+
+      case "galeria":
+        imageSelected = await _picker.getImage(source: ImageSource.gallery);
+        break;
     }
 
-    final File file = File(imagemSelecionada.path);
+    final File fileImageConvert = File(imageSelected.path);
 
     setState(() {
-      _imagem = file;
+      _image = fileImageConvert;
+      if (_image != null) {
+        _uploadingImage = true;
+        _uploadImagePreviw();
+      }
     });
   }
 
-  Future _uploadImage() async {
-    //Instancia do Storage
+  Future _uploadImagePreviw() async {
     firebase_storage.FirebaseStorage storage =
         firebase_storage.FirebaseStorage.instance;
 
-    //Refernciar Arquivo
+    // String imageId = Timestamp.now().toString();
+
+    //Reference archive
     firebase_storage.Reference pastaRaiz = storage.ref();
+    firebase_storage.Reference arquivos =
+        pastaRaiz.child("previewPost").child(_iduser).child("preview.jpg");
 
-    firebase_storage.Reference arquivos = pastaRaiz
-        .child("previewPost")
-        .child(_iduser)
-        .child("postagemPreview.jpg");
+    //Uploade image and lister progres: .UploadTask
+    firebase_storage.UploadTask task = arquivos.putFile(_image);
 
-    //Fazer Upload da imagem
-    firebase_storage.UploadTask task = arquivos.putFile(_imagem);
-
-    //Controlar progresso da tarefa de Upload
+    //Controller progress
     task.snapshotEvents.listen((firebase_storage.TaskSnapshot storageEvent) {
       if (storageEvent.state == firebase_storage.TaskState.running) {
-        setState(() {});
+        setState(() {
+          _uploadingImage = true;
+        });
       } else if (storageEvent.state == firebase_storage.TaskState.success) {
-        setState(() {});
+        setState(() {
+          _uploadingImage = false;
+        });
       }
     });
 
-    //Recuperando a URL da imagem
-    String url = await (await task).ref.getDownloadURL();
-    print("URL: " + url.toString());
-
-    setState(() {
-      _urlImagemRecuperada = url;
+    //Recovering url ImagePreview
+    task.then((firebase_storage.TaskSnapshot snapshot) {
+      _recoveringUrlImage(snapshot);
     });
   }
 
-  recuperarDadosUser() async {
+  _recoveringUrlImage(firebase_storage.TaskSnapshot snapshot) async {
+    String url = await snapshot.ref.getDownloadURL();
+
+    //Retrieving url to display
+    setState(() {
+      _urlImagRecovered = url;
+    });
+  }
+
+  _createPosting() {
+    print("XXXXXXXXXXXXXXXXXXXX");
+    _uploadImageOFC();
+    Postagem postagem = Postagem();
+    _message = _controllerTexto.text;
+    print("GGGGG" + _message);
+
+    if (_message.isNotEmpty) {
+      print("ZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
+      postagem.idtime = dateFormatter.gerarHoraId();
+      postagem.idpostagem = _iduser;
+      postagem.idtipo = "1";
+      postagem.iduser = _iduser;
+      postagem.nomeuser = _nameuser;
+      postagem.imageuser = _imageuser;
+      postagem.texto = _message;
+      postagem.urlimage = _urlImagRecovered;
+      postagem.horario = DateTime.now().toString();
+      _publishPost(postagem);
+    }
+  }
+
+  Future _uploadImageOFC() async {
+    firebase_storage.FirebaseStorage storage =
+        firebase_storage.FirebaseStorage.instance;
+
+    String imageId = dateFormatter.gerarHoraId().toString();
+
+    //Reference archive
+    firebase_storage.Reference pastaRaiz = storage.ref();
+    firebase_storage.Reference arquivos =
+        pastaRaiz.child("publicPost").child(_iduser).child("$imageId.jpg");
+
+    //Uploade image and lister progres: .UploadTask
+    firebase_storage.UploadTask task = arquivos.putFile(_image);
+
+    //Controller progress
+    task.snapshotEvents.listen((firebase_storage.TaskSnapshot storageEvent) {
+      if (storageEvent.state == firebase_storage.TaskState.running) {
+        setState(() {
+          _uploadingImage = true;
+        });
+      } else if (storageEvent.state == firebase_storage.TaskState.success) {
+        setState(() {
+          _uploadingImage = false;
+        });
+      }
+    });
+
+    //Recovering url ImagePreview
+    task.then((firebase_storage.TaskSnapshot snapshot) {
+      _recoveringUrlImageOFC(snapshot);
+    });
+  }
+
+  _recoveringUrlImageOFC(firebase_storage.TaskSnapshot snapshot) async {
+    String url = await snapshot.ref.getDownloadURL();
+
+    //Retrieving url to display
+    setState(() {
+      _urlImagRecovered = url;
+    });
+  }
+
+  _publishPost(Postagem postagem) async {
+    await db.collection("postagens").add(postagem.toMap()).then((referenceId) {
+      Map<String, dynamic> postingId = {"idpostagem": referenceId.id};
+      db.collection("postagens").doc(referenceId.id).update(postingId);
+      Navigator.pop(context);
+    });
+  }
+
+  _recoveringUserData() async {
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
         await db.collection("usuarios").doc(user.uid).get();
 
     setState(() {
       _iduser = snapshot["userid"];
-      _nomeuser = snapshot["nome"];
+      _nameuser = snapshot["nome"];
       _imageuser = snapshot["urlimage"];
     });
   }
 
   @override
   void initState() {
-    recuperarDadosUser();
+    _recoveringUserData();
     super.initState();
   }
 
@@ -142,7 +232,7 @@ class _CriarPostagemState extends State<CriarPostagem> {
                         Expanded(
                           child: Container(
                             child: Text(
-                              _nomeuser,
+                              _nameuser,
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -179,32 +269,35 @@ class _CriarPostagemState extends State<CriarPostagem> {
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         color: paleta.grey900,
-                        image: _urlImagemRecuperada == null
+                        image: _urlImagRecovered != ""
                             ? DecorationImage(
-                                image: NetworkImage(
-                                    "https://hiperjoias.com.br/wp-content/plugins/gutentor/assets/img/default-image.jpg"),
+                                image: NetworkImage(_urlImagRecovered),
                                 fit: BoxFit.cover,
                               )
                             : DecorationImage(
-                                image: NetworkImage(_urlImagemRecuperada),
+                                image: NetworkImage(""),
                                 fit: BoxFit.cover,
                               ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          RaisedButton(
-                              child: Text("Camera"),
-                              onPressed: () {
-                                _recuperarImagem(true);
-                              }),
-                          RaisedButton(
-                              child: Text("Galeria"),
-                              onPressed: () {
-                                _recuperarImagem(false);
-                              }),
-                        ],
-                      ),
+                      child: _uploadingImage
+                          ? CircularProgressIndicator()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                FlatButton(
+                                    child: Text("Camera",
+                                        style: TextStyle(color: Colors.white)),
+                                    onPressed: () {
+                                      _selectLocalImage("camera");
+                                    }),
+                                FlatButton(
+                                    child: Text("Galeria",
+                                        style: TextStyle(color: Colors.white)),
+                                    onPressed: () {
+                                      _selectLocalImage("galeria");
+                                    }),
+                              ],
+                            ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8, bottom: 8),
@@ -225,7 +318,9 @@ class _CriarPostagemState extends State<CriarPostagem> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                       onPressed: () {
-                        _uploadImage();
+                        if (_urlImagRecovered != "") {
+                          _createPosting();
+                        }
                       }),
                   padding: EdgeInsets.all(20))
             ],
