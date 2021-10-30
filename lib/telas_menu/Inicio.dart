@@ -21,7 +21,7 @@ class _InicioState extends State<Inicio> {
   String steamapikey;
   String youtubeapikey;
   String _nomeUser = "";
-  int _admin;
+  int _admin = 0;
 
   Stream<QuerySnapshot> _adicionarListenerMensagens() {
     final stream = db
@@ -74,7 +74,7 @@ class _InicioState extends State<Inicio> {
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         actions: [
-          _admin > 0
+          _admin >= 0
               ? IconButton(
                   icon: Icon(
                     Icons.post_add_outlined,
@@ -94,6 +94,8 @@ class _InicioState extends State<Inicio> {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
+                return Container();
+                break;
               case ConnectionState.waiting:
                 return Center(
                   child: CircularProgressIndicator(),
