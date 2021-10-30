@@ -2,7 +2,7 @@
     package="com.inaldomanso.dev.go_status">
    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="go_status"
+        android:label="GO Status"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
