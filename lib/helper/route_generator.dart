@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_status/telas_cadastro/Cadastro.dart';
+import 'package:go_status/screen_adm/login.dart';
+import 'package:go_status/screen_adm/registration_steam_id.dart';
+import 'package:go_status/screen_adm/registration_user.dart';
+import 'package:go_status/screen_adm/splash_screen.dart';
 import 'package:go_status/telas_adm/Home.dart';
-import 'package:go_status/telas_adm/Login.dart';
-import 'package:go_status/telas_adm/SplashScreen.dart';
-import 'package:go_status/telas_cadastro/SteamId.dart';
 import 'package:go_status/telas_pop/CriarPostagem.dart';
 import 'package:go_status/telas_pop/HelpID.dart';
 import 'package:go_status/telas_pop/HelpURL.dart';
@@ -41,10 +41,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Login());
 
       case registrationRoute:
-        return MaterialPageRoute(builder: (_) => Cadastro(argument));
+        return MaterialPageRoute(builder: (_) => RegistrationUser(argument));
 
       case registerStemIdRoute:
-        return MaterialPageRoute(builder: (_) => SteamId());
+        return MaterialPageRoute(builder: (_) => RegistrationSteamId());
 
       case logoutRoute:
         return MaterialPageRoute(builder: (_) => Logout());

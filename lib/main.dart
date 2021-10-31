@@ -1,5 +1,5 @@
 import 'package:go_status/helper/route_generator.dart';
-import 'package:go_status/telas_adm/SplashScreen.dart';
+import 'package:go_status/screen_adm/splash_screen.dart';
 import 'package:go_status/helper/color_pallete.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

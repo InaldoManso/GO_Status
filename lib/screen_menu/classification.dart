@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/model/user_classification.dart';
 
-class Cassificacao extends StatefulWidget {
+class Classification extends StatefulWidget {
   @override
-  _CassificacaoState createState() => _CassificacaoState();
+  _ClassificationState createState() => _ClassificationState();
 }
 
-class _CassificacaoState extends State<Cassificacao> {
+class _ClassificationState extends State<Classification> {
   FirebaseAuth auth = FirebaseAuth.instance;
   String _emailUsuarioLogado;
   String _idUsuarioLogado;

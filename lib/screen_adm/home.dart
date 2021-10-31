@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/color_pallete.dart';
-import 'package:go_status/telas_menu/Cassificacao.dart';
-import 'package:go_status/telas_menu/Chat.dart';
-import 'package:go_status/telas_menu/CompareGun.dart';
-import 'package:go_status/telas_menu/Configs.dart';
-import 'package:go_status/telas_menu/Grupos.dart';
-import 'package:go_status/telas_menu/Inicio.dart';
-import 'package:go_status/telas_menu/Maps.dart';
-import 'package:go_status/telas_menu/Perfil.dart';
-import 'package:go_status/telas_menu/ReportBug.dart';
-import 'package:go_status/telas_menu/Videos.dart';
+import 'package:go_status/screen_menu/classification.dart';
+import 'package:go_status/screen_menu/chat.dart';
+import 'package:go_status/screen_menu/Configs.dart';
+import 'package:go_status/screen_menu/Grupos.dart';
+import 'package:go_status/screen_menu/Inicio.dart';
+import 'package:go_status/screen_menu/Maps.dart';
+import 'package:go_status/screen_menu/Perfil.dart';
+import 'package:go_status/screen_menu/ReportBug.dart';
+import 'package:go_status/screen_menu/Videos.dart';
+import 'package:go_status/screen_menu/compare_gun.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
     List<Widget> telas = [
       Inicio(), //0
       Perfil(), //1
-      Cassificacao(), //2
+      Classification(), //2
       Videos(_resultado), //3
       Chat(), //4
       CompareGun(), //5

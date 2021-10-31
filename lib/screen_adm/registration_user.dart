@@ -10,14 +10,14 @@ import 'package:go_status/model/user_stats.dart';
 import 'package:go_status/model/user_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Cadastro extends StatefulWidget {
+class RegistrationUser extends StatefulWidget {
   UserProfile usuario;
-  Cadastro(this.usuario);
+  RegistrationUser(this.usuario);
   @override
-  _CadastroState createState() => _CadastroState();
+  _RegistrationUserState createState() => _RegistrationUserState();
 }
 
-class _CadastroState extends State<Cadastro> {
+class _RegistrationUserState extends State<RegistrationUser> {
   //Referencias Firebase
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;

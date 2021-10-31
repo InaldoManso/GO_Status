@@ -5,12 +5,12 @@ import 'package:go_status/helper/api.dart';
 import 'package:go_status/model/user_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SteamId extends StatefulWidget {
+class RegistrationSteamId extends StatefulWidget {
   @override
-  _SteamIdState createState() => _SteamIdState();
+  _RegistrationSteamIdState createState() => _RegistrationSteamIdState();
 }
 
-class _SteamIdState extends State<SteamId> {
+class _RegistrationSteamIdState extends State<RegistrationSteamId> {
   //Models&Helpers
   ColorPallete paleta = ColorPallete();
   Api api = Api();
