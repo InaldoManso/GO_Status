@@ -1,4 +1,4 @@
-class ClassifUser {
+class UserClassification {
   // Atributos
   String _nome;
   String _email;
@@ -17,7 +17,7 @@ class ClassifUser {
   String _headshots;
 
   //Contrutor
-  ClassifUser();
+  UserClassification();
 
   //conversor em Map
   Map<String, dynamic> toMap() {

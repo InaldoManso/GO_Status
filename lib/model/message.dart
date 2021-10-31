@@ -1,4 +1,4 @@
-class Mensagem {
+class Message {
   // Atributos
   String _iduser = "";
   String _nome = "";
@@ -9,7 +9,7 @@ class Mensagem {
   int _time = 0;
 
   //Contrutor
-  Mensagem();
+  Message();
 
   //conversor em Map
   Map<String, dynamic> toMap() {

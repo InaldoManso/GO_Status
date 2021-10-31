@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:go_status/helper/api.dart';
 import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/helper/route_generator.dart';
-import 'package:go_status/model/CsgoStats.dart';
-import 'package:go_status/model/Usuario.dart';
+import 'package:go_status/model/user_stats.dart';
+import 'package:go_status/model/user_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Cadastro extends StatefulWidget {
@@ -129,7 +129,7 @@ class _CadastroState extends State<Cadastro> {
   }
 
   _recuperarCsgoStats(String steamid, String nome, String urlimage) async {
-    CsgoStats csgoStats = CsgoStats();
+    UserStats csgoStats = UserStats();
     Api api = Api();
     csgoStats = await api.updateUserStats(steamapikey, steamid, nome, urlimage);
 

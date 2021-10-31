@@ -1,7 +1,7 @@
-class ConfigUser {
+class UserSettings {
   bool exibirclass;
 
-  ConfigUser();
+  UserSettings();
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {

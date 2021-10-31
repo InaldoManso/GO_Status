@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_status/helper/date_formatter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:go_status/model/Postagem.dart';
+import 'package:go_status/model/publication.dart';
 import 'package:go_status/helper/color_pallete.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -18,7 +18,7 @@ class _CriarPostagemState extends State<CriarPostagem> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   DateFormatter dateFormatter = DateFormatter();
   FirebaseAuth auth = FirebaseAuth.instance;
-  Postagem postagem = Postagem();
+  Publication postagem = Publication();
   ColorPallete paleta = ColorPallete();
 
   //Image attributes
@@ -105,7 +105,7 @@ class _CriarPostagemState extends State<CriarPostagem> {
   _createPosting() {
     print("XXXXXXXXXXXXXXXXXXXX");
     _uploadImageOFC();
-    Postagem postagem = Postagem();
+    Publication postagem = Publication();
     _message = _controllerTexto.text;
     print("GGGGG" + _message);
 
@@ -166,7 +166,7 @@ class _CriarPostagemState extends State<CriarPostagem> {
     });
   }
 
-  _publishPost(Postagem postagem) async {
+  _publishPost(Publication postagem) async {
     await db.collection("postagens").add(postagem.toMap()).then((referenceId) {
       Map<String, dynamic> postingId = {"idpostagem": referenceId.id};
       db.collection("postagens").doc(referenceId.id).update(postingId);

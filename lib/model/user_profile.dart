@@ -11,10 +11,8 @@ class UserProfile {
   String _version = "";
   bool _showKillDeath = false;
 
-  //Contrutor
   UserProfile();
 
-  //conversor em Map
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       "admin": this.admin,
@@ -31,8 +29,6 @@ class UserProfile {
     };
     return map;
   }
-
-  //Getters e Setters
 
   get admin => this._admin;
 

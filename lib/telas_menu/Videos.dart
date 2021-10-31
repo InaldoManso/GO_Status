@@ -3,7 +3,7 @@ import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:go_status/helper/api.dart';
 import 'package:go_status/helper/custom_search_delegate.dart';
 import 'package:go_status/helper/color_pallete.dart';
-import 'package:go_status/model/Video.dart';
+import 'package:go_status/model/video.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Videos extends StatefulWidget {

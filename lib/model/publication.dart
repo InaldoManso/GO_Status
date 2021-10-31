@@ -1,4 +1,4 @@
-class Postagem {
+class Publication {
   int _idtime;
   String _idpostagem;
   String _idtipo;
@@ -9,7 +9,7 @@ class Postagem {
   String _urlimage;
   String _horario;
 
-  Postagem();
+  Publication();
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {

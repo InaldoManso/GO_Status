@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_status/helper/route_generator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_status/helper/version_control.dart';
-import 'package:go_status/model/CsgoStats.dart';
+import 'package:go_status/model/user_stats.dart';
 import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/helper/api.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/model/Usuario.dart';
+import 'package:go_status/model/user_profile.dart';
 import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool _carregando = false;
 
   //Dados a atualizar do User
-  CsgoStats csgoStats = CsgoStats();
+  UserStats csgoStats = UserStats();
   UserProfile usuario = UserProfile();
   String steamapikey;
   String youtubeapikey;

@@ -1,6 +1,6 @@
-import 'package:go_status/model/CsgoStats.dart';
-import 'package:go_status/model/Usuario.dart';
-import 'package:go_status/model/Video.dart';
+import 'package:go_status/model/user_profile.dart';
+import 'package:go_status/model/user_stats.dart';
+import 'package:go_status/model/video.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -92,9 +92,9 @@ class Api {
     }
   }
 
-  Future<CsgoStats> updateUserStats(
+  Future<UserStats> updateUserStats(
       String keyApi, String steamid, String name, String urlimage) async {
-    CsgoStats csgoStats = CsgoStats();
+    UserStats csgoStats = UserStats();
     http.Response response = await http.get(
         getStatsUser[0] + keyApi + getStatsUser[1] + steamid + getStatsUser[2]);
 

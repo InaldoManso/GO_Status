@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/color_pallete.dart';
-import 'package:go_status/model/CassifUser.dart';
+import 'package:go_status/model/user_classification.dart';
 
 class Cassificacao extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class _CassificacaoState extends State<Cassificacao> {
   User _user;
   Color _corKD;
 
-  Future<List<ClassifUser>> _recuperarContatos() async {
+  Future<List<UserClassification>> _recuperarContatos() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
 
     QuerySnapshot querySnapshot = await db
@@ -25,12 +25,12 @@ class _CassificacaoState extends State<Cassificacao> {
         .orderBy("resultkd", descending: true)
         .get();
 
-    List<ClassifUser> listaUsuarios = List();
+    List<UserClassification> listaUsuarios = List();
     for (DocumentSnapshot item in querySnapshot.docs) {
       var dados = item.data();
       if (dados["exibirclass"] == false) continue;
 
-      ClassifUser classifUser = ClassifUser();
+      UserClassification classifUser = UserClassification();
       classifUser.email = dados["email"];
       classifUser.nome = dados["nome"];
       classifUser.urlimage = dados["urlimage"];
@@ -46,7 +46,7 @@ class _CassificacaoState extends State<Cassificacao> {
     return listaUsuarios;
   }
 
-  _exibirMiniPerfil(ClassifUser classifUser) {
+  _exibirMiniPerfil(UserClassification classifUser) {
     //Calcular Horas
     int minutos = int.parse(classifUser.timeplay);
     String horas = Duration(minutes: minutos).toString().split(':00')[0];
@@ -191,7 +191,7 @@ class _CassificacaoState extends State<Cassificacao> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<ClassifUser>>(
+    return FutureBuilder<List<UserClassification>>(
       future: _recuperarContatos(),
       // ignore: missing_return
       builder: (context, snapshot) {
@@ -215,8 +215,8 @@ class _CassificacaoState extends State<Cassificacao> {
               body: ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (_, indice) {
-                  List<ClassifUser> listaItens = snapshot.data;
-                  ClassifUser classifUser = listaItens[indice];
+                  List<UserClassification> listaItens = snapshot.data;
+                  UserClassification classifUser = listaItens[indice];
 
                   return GestureDetector(
                     child: Container(

@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/helper/route_generator.dart';
-import 'package:go_status/model/Postagem.dart';
+import 'package:go_status/model/publication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Inicio extends StatefulWidget {
@@ -119,7 +119,7 @@ class _InicioState extends State<Inicio> {
                           querySnapshot.docs.toList();
 
                       DocumentSnapshot item = postagens[index];
-                      Postagem postagem = Postagem();
+                      Publication postagem = Publication();
                       postagem.idtime = item["idtime"];
                       postagem.idpostagem = item["idpostagem"];
                       postagem.idtipo = item["idtipo"];

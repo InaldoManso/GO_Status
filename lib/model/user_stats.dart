@@ -1,4 +1,4 @@
-class CsgoStats {
+class UserStats {
   String _nome = "";
   String _urlimage = "";
   String _resultkd = "";
@@ -9,7 +9,7 @@ class CsgoStats {
   String _mvps = "";
   String _headshots = "";
 
-  CsgoStats();
+  UserStats();
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {

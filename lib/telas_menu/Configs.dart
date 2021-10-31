@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/helper/route_generator.dart';
-import 'package:go_status/model/ConfigUser.dart';
+import 'package:go_status/model/user_settings.dart';
 
 class Configs extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class Configs extends StatefulWidget {
 class _ConfigsState extends State<Configs> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
-  ConfigUser configUser = ConfigUser();
+  UserSettings configUser = UserSettings();
   ColorPallete paleta = ColorPallete();
   User user;
 

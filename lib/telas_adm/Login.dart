@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/helper/route_generator.dart';
-import 'package:go_status/model/Usuario.dart';
+import 'package:go_status/model/user_profile.dart';
 
 class Login extends StatefulWidget {
   @override

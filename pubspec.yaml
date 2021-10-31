@@ -67,33 +67,33 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - images/helpers/steamid.jpg
-    - images/helpers/steamidzoom.jpg
-    - images/helpers/steamurl.jpg
-    - images/helpers/steamurlzoom.jpg
+    - assets/image/helpers/steamid.jpg
+    - assets/image/helpers/steamidzoom.jpg
+    - assets/image/helpers/steamurl.jpg
+    - assets/image/helpers/steamurlzoom.jpg
 
-    - images/maps/map_cache.jpg
-    - images/maps/map_cobblestone.jpg
-    - images/maps/map_dust2.jpg
-    - images/maps/map_inferno.jpg
-    - images/maps/map_mirage.jpg
-    - images/maps/map_nuke.jpg
-    - images/maps/map_overpass.jpg
-    - images/maps/map_train.jpg
-    - images/maps/map_vertigo.jpg
+    - assets/image/maps/map_cache.jpg
+    - assets/image/maps/map_cobblestone.jpg
+    - assets/image/maps/map_dust2.jpg
+    - assets/image/maps/map_inferno.jpg
+    - assets/image/maps/map_mirage.jpg
+    - assets/image/maps/map_nuke.jpg
+    - assets/image/maps/map_overpass.jpg
+    - assets/image/maps/map_train.jpg
+    - assets/image/maps/map_vertigo.jpg
 
-    - images/capas/capa_cache.png
-    - images/capas/capa_cobblestone.png
-    - images/capas/capa_dustii.png
-    - images/capas/capa_inferno.png
-    - images/capas/capa_mirage.png
-    - images/capas/capa_nuke.png
-    - images/capas/capa_overpass.png
-    - images/capas/capa_train.png
-    - images/capas/capa_vertigo.png
+    - assets/image/capas/capa_cache.png
+    - assets/image/capas/capa_cobblestone.png
+    - assets/image/capas/capa_dustii.png
+    - assets/image/capas/capa_inferno.png
+    - assets/image/capas/capa_mirage.png
+    - assets/image/capas/capa_nuke.png
+    - assets/image/capas/capa_overpass.png
+    - assets/image/capas/capa_train.png
+    - assets/image/capas/capa_vertigo.png
 
-    - images/logos/logolmc.png
-    - images/logos/logolmctrsp.png
+    - assets/image/logos/logolmc.png
+    - assets/image/logos/logolmctrsp.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -5,8 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/date_formatter.dart';
 import 'package:go_status/helper/color_pallete.dart';
-import 'package:go_status/model/Mensagem.dart';
-import 'package:go_status/model/Usuario.dart';
+import 'package:go_status/model/message.dart';
+import 'package:go_status/model/user_profile.dart';
 
 class Chat extends StatefulWidget {
   @override
@@ -29,7 +29,7 @@ class _ChatState extends State<Chat> {
 
   _enviarMensagem() {
     String texto = _controllerMensagem.text;
-    Mensagem mensagem = Mensagem();
+    Message mensagem = Message();
 
     if (texto.isNotEmpty) {
       mensagem.iduser = _idUser;
@@ -43,7 +43,7 @@ class _ChatState extends State<Chat> {
     }
   }
 
-  _salvarMensagem(Mensagem mensagem) async {
+  _salvarMensagem(Message mensagem) async {
     await db
         .collection("chatgeral")
         .add(mensagem.toMap())
