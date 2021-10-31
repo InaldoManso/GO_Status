@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/helper/Api.dart';
+import 'package:go_status/helper/api.dart';
 
 class Perfil extends StatefulWidget {
   @override

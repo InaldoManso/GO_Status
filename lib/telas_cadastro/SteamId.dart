@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/helper/RouteGenerator.dart';
-import 'package:go_status/helper/Api.dart';
+import 'package:go_status/helper/api.dart';
 import 'package:go_status/model/Usuario.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,7 +14,7 @@ class _SteamIdState extends State<SteamId> {
   //Models&Helpers
   Paleta paleta = Paleta();
   Api api = Api();
-  Usuario usuario = Usuario();
+  UserProfile usuario = UserProfile();
 
   //Atributos
   TextEditingController nomeEditingController = TextEditingController();
@@ -183,17 +183,16 @@ class _SteamIdState extends State<SteamId> {
                                   });
                                   if (_idSelecionado == "url") {
                                     // _recSteamURL(_steamInfo);
-                                    String dados =
-                                        await api.resgatarDadosSteamURL(
-                                            steamapikey, _steamInfo);
+                                    String dados = await api.recSteamIdFromUrl(
+                                        steamapikey, _steamInfo);
 
-                                    usuario = await api.resgatarDadosSteamID(
+                                    usuario = await api.recDataUserFromSteamID(
                                         steamapikey, dados);
                                     _procurando = false;
                                     setState(() {});
                                   } else {
                                     // _recSteamID(_steamInfo);
-                                    usuario = await api.resgatarDadosSteamID(
+                                    usuario = await api.recDataUserFromSteamID(
                                         steamapikey, _steamInfo);
                                     _procurando = false;
                                     setState(() {});

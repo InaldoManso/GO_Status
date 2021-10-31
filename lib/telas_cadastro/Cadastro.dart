@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Api.dart';
+import 'package:go_status/helper/api.dart';
 import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/helper/RouteGenerator.dart';
 import 'package:go_status/model/CsgoStats.dart';
@@ -11,7 +11,7 @@ import 'package:go_status/model/Usuario.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Cadastro extends StatefulWidget {
-  Usuario usuario;
+  UserProfile usuario;
   Cadastro(this.usuario);
   @override
   _CadastroState createState() => _CadastroState();
@@ -22,7 +22,7 @@ class _CadastroState extends State<Cadastro> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   Paleta paleta = Paleta();
-  Usuario usuario = Usuario();
+  UserProfile usuario = UserProfile();
 
   //Atributos
   bool _editando = true;
@@ -98,7 +98,7 @@ class _CadastroState extends State<Cadastro> {
     }
   }
 
-  _salvarCadastro(Usuario usuario) {
+  _salvarCadastro(UserProfile usuario) {
     String email = emailEditingController.text;
     String senha = senhaEditingController.text;
     setState(() {
@@ -131,8 +131,7 @@ class _CadastroState extends State<Cadastro> {
   _recuperarCsgoStats(String steamid, String nome, String urlimage) async {
     CsgoStats csgoStats = CsgoStats();
     Api api = Api();
-    csgoStats =
-        await api.atualizarStatsCsgo(steamapikey, steamid, nome, urlimage);
+    csgoStats = await api.updateUserStats(steamapikey, steamid, nome, urlimage);
 
     if (csgoStats != null) {
       User user = auth.currentUser;

@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_status/helper/version_control.dart';
 import 'package:go_status/model/CsgoStats.dart';
 import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/helper/Api.dart';
+import 'package:go_status/helper/api.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/model/Usuario.dart';
 import 'dart:async';
@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   //Dados a atualizar do User
   CsgoStats csgoStats = CsgoStats();
-  Usuario usuario = Usuario();
+  UserProfile usuario = UserProfile();
   String steamapikey;
   String youtubeapikey;
 
@@ -70,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     String steamid = snapshot["steamid"];
 
-    usuario = await api.resgatarDadosSteamID(steamapikey, steamid);
+    usuario = await api.recDataUserFromSteamID(steamapikey, steamid);
 
     // _recSteamID(steamid);
     if (usuario != null) {
@@ -84,8 +84,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _recuperarCsgoStats(String steamid, String nome, String urlimage) async {
-    csgoStats =
-        await api.atualizarStatsCsgo(steamapikey, steamid, nome, urlimage);
+    csgoStats = await api.updateUserStats(steamapikey, steamid, nome, urlimage);
 
     if (csgoStats != null) {
       User user = auth.currentUser;

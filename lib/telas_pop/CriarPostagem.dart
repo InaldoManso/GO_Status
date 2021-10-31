@@ -111,7 +111,7 @@ class _CriarPostagemState extends State<CriarPostagem> {
 
     if (_message.isNotEmpty) {
       print("ZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
-      postagem.idtime = dateFormatter.gerarHoraId();
+      postagem.idtime = dateFormatter.generateDateTimeIdentification();
       postagem.idpostagem = _iduser;
       postagem.idtipo = "1";
       postagem.iduser = _iduser;
@@ -128,7 +128,7 @@ class _CriarPostagemState extends State<CriarPostagem> {
     firebase_storage.FirebaseStorage storage =
         firebase_storage.FirebaseStorage.instance;
 
-    String imageId = dateFormatter.gerarHoraId().toString();
+    String imageId = dateFormatter.generateDateTimeIdentification().toString();
 
     //Reference archive
     firebase_storage.Reference pastaRaiz = storage.ref();

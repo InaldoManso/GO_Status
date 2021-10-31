@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
 
     if (email.isNotEmpty && email.contains("@")) {
       if (senha.isNotEmpty) {
-        Usuario usuario = Usuario();
+        UserProfile usuario = UserProfile();
         usuario.email = email;
         usuario.senha = senha;
         _logarUsuario(usuario);
@@ -49,7 +49,7 @@ class _LoginState extends State<Login> {
     }
   }
 
-  _logarUsuario(Usuario usuario) {
+  _logarUsuario(UserProfile usuario) {
     FirebaseAuth auth = FirebaseAuth.instance;
 
     auth

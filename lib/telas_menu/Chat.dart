@@ -21,7 +21,7 @@ class _ChatState extends State<Chat> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   DateFormatter dateFormatter = DateFormatter();
-  Usuario usuario = Usuario();
+  UserProfile usuario = UserProfile();
   Paleta paleta = Paleta();
 
   String _idUser;
@@ -38,7 +38,7 @@ class _ChatState extends State<Chat> {
       mensagem.urlimage = "urlExemplo";
       mensagem.tipo = "1";
       mensagem.horaexibir = DateTime.now().toString();
-      mensagem.time = dateFormatter.gerarHoraId();
+      mensagem.time = dateFormatter.generateDateTimeIdentification();
       _salvarMensagem(mensagem);
     }
   }
@@ -154,7 +154,7 @@ class _ChatState extends State<Chat> {
                                     style: TextStyle(fontSize: 16)),
                                 Text(
                                     dateFormatter
-                                        .exibirHoraMin(item["horaexibir"]),
+                                        .showHoursMin(item["horaexibir"]),
                                     textAlign: TextAlign.right,
                                     style: TextStyle(fontSize: 10))
                               ],

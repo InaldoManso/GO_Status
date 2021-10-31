@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
-import 'package:go_status/helper/Api.dart';
+import 'package:go_status/helper/api.dart';
 import 'package:go_status/helper/CustomSearchDelegate.dart';
 import 'package:go_status/helper/Paleta.dart';
 import 'package:go_status/model/Video.dart';
@@ -22,7 +22,7 @@ class _VideosState extends State<Videos> {
 
   _listarVideos(String pesquisa) {
     Api api = Api();
-    return api.pesquisaYoutube(pesquisa, youtubeapikey);
+    return api.searchOnYoutube(pesquisa, youtubeapikey);
   }
 
   _recuperarAdmKeys() async {

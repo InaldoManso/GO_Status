@@ -1,19 +1,18 @@
-class Usuario {
-  // Atributos
+class UserProfile {
   int _admin = 0;
-  String _nome = "";
+  String _name = "";
   String _email = "";
-  String _senha = "";
+  String _password = "";
   String _steamid = "";
   String _userid = "";
-  String _time = "";
+  String _team = "";
   String _urlimage = "";
-  String _pais = "";
+  String _country = "";
   String _version = "";
-  bool _exibirclass = false;
+  bool _showKillDeath = false;
 
   //Contrutor
-  Usuario();
+  UserProfile();
 
   //conversor em Map
   Map<String, dynamic> toMap() {
@@ -39,17 +38,17 @@ class Usuario {
 
   set admin(value) => this._admin = value;
 
-  get nome => this._nome;
+  get nome => this._name;
 
-  set nome(value) => this._nome = value;
+  set nome(value) => this._name = value;
 
   get email => this._email;
 
   set email(value) => this._email = value;
 
-  get senha => this._senha;
+  get senha => this._password;
 
-  set senha(value) => this._senha = value;
+  set senha(value) => this._password = value;
 
   get steamid => this._steamid;
 
@@ -59,23 +58,23 @@ class Usuario {
 
   set userid(value) => this._userid = value;
 
-  get time => this._time;
+  get time => this._team;
 
-  set time(value) => this._time = value;
+  set time(value) => this._team = value;
 
   get urlimage => this._urlimage;
 
   set urlimage(value) => this._urlimage = value;
 
-  get pais => this._pais;
+  get pais => this._country;
 
-  set pais(value) => this._pais = value;
+  set pais(value) => this._country = value;
 
   get version => this._version;
 
   set version(value) => this._version = value;
 
-  get exibirclass => this._exibirclass;
+  get exibirclass => this._showKillDeath;
 
-  set exibirclass(value) => this._exibirclass = value;
+  set exibirclass(value) => this._showKillDeath = value;
 }

@@ -5,52 +5,52 @@ import 'package:intl/intl.dart';
 //Hour = H /Minute = m / Second = s
 
 class DateFormatter {
-  exibirDiaMesAnoHoraMinSeg(String datetime) {
+  showDayMonthYearHoursMinSec(String datetime) {
     initializeDateFormatting("pt_BR");
-    var formatador = DateFormat("dd-MM-yyyy HH:mm:ss");
+    var formatter = DateFormat("dd-MM-yyyy HH:mm:ss");
 
-    DateTime dataConvertida = DateTime.parse(datetime);
-    String resultadoFormatado = formatador.format(dataConvertida);
-    return resultadoFormatado;
+    DateTime convertedDate = DateTime.parse(datetime);
+    String formattedResult = formatter.format(convertedDate);
+    return formattedResult;
   }
 
-  exibirDiaMesAnoHoraMin(String datetime) {
+  showDayMonthYearHoursMin(String datetime) {
     initializeDateFormatting("pt_BR");
-    var formatador = DateFormat("dd-MM-yyyy HH:mm");
+    var formatter = DateFormat("dd-MM-yyyy HH:mm");
 
-    DateTime dataConvertida = DateTime.parse(datetime);
-    String resultadoFormatado = formatador.format(dataConvertida);
-    return resultadoFormatado;
+    DateTime convertedDate = DateTime.parse(datetime);
+    String formattedResult = formatter.format(convertedDate);
+    return formattedResult;
   }
 
-  exibirDiaMesAno(String datetime) {
+  showDayMonthYear(String datetime) {
     initializeDateFormatting("pt_BR");
-    var formatador = DateFormat("dd-MM-yyyy");
+    var formatter = DateFormat("dd-MM-yyyy");
 
-    DateTime dataConvertida = DateTime.parse(datetime);
-    String resultadoFormatado = formatador.format(dataConvertida);
-    return resultadoFormatado;
+    DateTime convertedDate = DateTime.parse(datetime);
+    String formattedResult = formatter.format(convertedDate);
+    return formattedResult;
   }
 
-  exibirHoraMinSeg(String datetime) {
+  showHoursMinSec(String datetime) {
     initializeDateFormatting("pt_BR");
-    var formatador = DateFormat("HH:mm:ss");
+    var formatter = DateFormat("HH:mm:ss");
 
-    DateTime dataConvertida = DateTime.parse(datetime);
-    String resultadoFormatado = formatador.format(dataConvertida);
-    return resultadoFormatado;
+    DateTime convertedDate = DateTime.parse(datetime);
+    String formattedResult = formatter.format(convertedDate);
+    return formattedResult;
   }
 
-  exibirHoraMin(String datetime) {
+  showHoursMin(String datetime) {
     initializeDateFormatting("pt_BR");
-    var formatador = DateFormat("HH:mm");
+    var formatter = DateFormat("HH:mm");
 
-    DateTime dataConvertida = DateTime.parse(datetime);
-    String resultadoFormatado = formatador.format(dataConvertida);
-    return resultadoFormatado;
+    DateTime convertedDate = DateTime.parse(datetime);
+    String formattedResult = formatter.format(convertedDate);
+    return formattedResult;
   }
 
-  gerarHoraId() {
+  generateDateTimeIdentification() {
     initializeDateFormatting("pt_BR");
     var formatador = DateFormat("yyyyMMddHHmmss");
 
