@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/color_pallete.dart';
-import 'package:go_status/screen_menu/classification.dart';
-import 'package:go_status/screen_menu/chat.dart';
-import 'package:go_status/screen_menu/Configs.dart';
-import 'package:go_status/screen_menu/Grupos.dart';
-import 'package:go_status/screen_menu/Inicio.dart';
-import 'package:go_status/screen_menu/Maps.dart';
-import 'package:go_status/screen_menu/Perfil.dart';
-import 'package:go_status/screen_menu/ReportBug.dart';
-import 'package:go_status/screen_menu/Videos.dart';
 import 'package:go_status/screen_menu/compare_gun.dart';
+import 'package:go_status/screen_menu/videos.dart';
+import 'package:go_status/screen_menu/report.dart';
+import 'package:go_status/screen_menu/profile.dart';
+import 'package:go_status/screen_menu/timeline.dart';
+import 'package:go_status/screen_menu/classification.dart';
+import 'package:go_status/screen_menu/general_chat.dart';
+import 'package:go_status/screen_menu/groups.dart';
+import 'package:go_status/screen_menu/maps.dart';
+import 'package:go_status/screen_menu/settings.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -34,16 +34,16 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     //Telas apresentadas
     List<Widget> telas = [
-      Inicio(), //0
-      Perfil(), //1
+      TimeLine(), //0
+      Profile(), //1
       Classification(), //2
       Videos(_resultado), //3
-      Chat(), //4
+      GeneralChat(), //4
       CompareGun(), //5
       Maps(), //6
-      Grupos(), //7
-      ReportBug(), //8
-      Configs(), //9
+      Groups(), //7
+      Report(), //8
+      Settings(), //9
     ];
 
     return Scaffold(

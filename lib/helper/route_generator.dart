@@ -3,13 +3,13 @@ import 'package:go_status/screen_adm/login.dart';
 import 'package:go_status/screen_adm/registration_steam_id.dart';
 import 'package:go_status/screen_adm/registration_user.dart';
 import 'package:go_status/screen_adm/splash_screen.dart';
-import 'package:go_status/telas_adm/Home.dart';
-import 'package:go_status/telas_pop/CriarPostagem.dart';
-import 'package:go_status/telas_pop/HelpID.dart';
-import 'package:go_status/telas_pop/HelpURL.dart';
-import 'package:go_status/telas_pop/Logout.dart';
-import 'package:go_status/telas_pop/PostImageView.dart';
-import 'package:go_status/telas_pop/TelaReset.dart';
+import 'package:go_status/screen_adm/Home.dart';
+import 'package:go_status/screen_pop/publication_creator.dart';
+import 'package:go_status/screen_pop/help_id.dart';
+import 'package:go_status/screen_pop/help_url.dart';
+import 'package:go_status/screen_pop/logout.dart';
+import 'package:go_status/screen_pop/post_image_view.dart';
+import 'package:go_status/screen_pop/reset_password.dart';
 
 class RouteGenerator {
   static const String splashRoute = "/splash";
@@ -19,7 +19,7 @@ class RouteGenerator {
   static const String registerStemIdRoute = "/steamid";
   static const String logoutRoute = "/logout";
   static const String resetPasswordRoute = "/resetpassword";
-  static const String gelpUrlRoute = "/helpurl";
+  static const String helpUrlRoute = "/helpurl";
   static const String helpIdRoute = "/helpid";
   static const String postCreatorRoute = "/postcreator";
   static const String viewPostRoute = "/postimage";
@@ -50,16 +50,16 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Logout());
 
       case resetPasswordRoute:
-        return MaterialPageRoute(builder: (_) => TelaReset());
+        return MaterialPageRoute(builder: (_) => ResetPassword());
 
-      case gelpUrlRoute:
-        return MaterialPageRoute(builder: (_) => HelpURL());
+      case helpUrlRoute:
+        return MaterialPageRoute(builder: (_) => HelpUrl());
 
       case helpIdRoute:
         return MaterialPageRoute(builder: (_) => HelpId());
 
       case postCreatorRoute:
-        return MaterialPageRoute(builder: (_) => CriarPostagem());
+        return MaterialPageRoute(builder: (_) => PublicationCreator());
 
       case viewPostRoute:
         return MaterialPageRoute(builder: (_) => PostImageView(argument));

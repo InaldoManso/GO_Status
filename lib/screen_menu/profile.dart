@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/helper/api.dart';
 
-class Perfil extends StatefulWidget {
+class Profile extends StatefulWidget {
   @override
-  _PerfilState createState() => _PerfilState();
+  _ProfileState createState() => _ProfileState();
 }
 
-class _PerfilState extends State<Perfil> {
+class _ProfileState extends State<Profile> {
   //Atributos Firebase
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;

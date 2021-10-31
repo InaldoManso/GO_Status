@@ -8,12 +8,12 @@ import 'package:go_status/helper/color_pallete.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-class CriarPostagem extends StatefulWidget {
+class PublicationCreator extends StatefulWidget {
   @override
-  _CriarPostagemState createState() => _CriarPostagemState();
+  _PublicationCreatorState createState() => _PublicationCreatorState();
 }
 
-class _CriarPostagemState extends State<CriarPostagem> {
+class _PublicationCreatorState extends State<PublicationCreator> {
   //Classes end Especial Attributes
   FirebaseFirestore db = FirebaseFirestore.instance;
   DateFormatter dateFormatter = DateFormatter();

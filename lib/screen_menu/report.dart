@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ReportBug extends StatefulWidget {
+class Report extends StatefulWidget {
   @override
-  _ReportBugState createState() => _ReportBugState();
+  _ReportState createState() => _ReportState();
 }
 
-class _ReportBugState extends State<ReportBug> {
+class _ReportState extends State<Report> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

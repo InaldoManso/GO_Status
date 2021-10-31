@@ -8,12 +8,12 @@ import 'package:go_status/helper/route_generator.dart';
 import 'package:go_status/model/publication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Inicio extends StatefulWidget {
+class TimeLine extends StatefulWidget {
   @override
-  _InicioState createState() => _InicioState();
+  _TimeLineState createState() => _TimeLineState();
 }
 
-class _InicioState extends State<Inicio> {
+class _TimeLineState extends State<TimeLine> {
   final _controller = StreamController<QuerySnapshot>.broadcast();
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;

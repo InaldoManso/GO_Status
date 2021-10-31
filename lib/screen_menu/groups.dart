@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Grupos extends StatefulWidget {
+class Groups extends StatefulWidget {
   @override
-  _GruposState createState() => _GruposState();
+  _GroupsState createState() => _GroupsState();
 }
 
-class _GruposState extends State<Grupos> {
+class _GroupsState extends State<Groups> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

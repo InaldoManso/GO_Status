@@ -119,7 +119,7 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
                             onPressed: () {
                               if (_idSelecionado == "url") {
                                 Navigator.pushNamed(
-                                    context, RouteGenerator.gelpUrlRoute);
+                                    context, RouteGenerator.helpUrlRoute);
                               } else {
                                 Navigator.pushNamed(
                                     context, RouteGenerator.helpIdRoute);

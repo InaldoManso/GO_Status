@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/color_pallete.dart';
 
-class HelpURL extends StatefulWidget {
+class HelpUrl extends StatefulWidget {
   @override
-  _HelpURLState createState() => _HelpURLState();
+  _HelpUrlState createState() => _HelpUrlState();
 }
 
-class _HelpURLState extends State<HelpURL> {
+class _HelpUrlState extends State<HelpUrl> {
   ColorPallete paleta = ColorPallete();
   @override
   Widget build(BuildContext context) {

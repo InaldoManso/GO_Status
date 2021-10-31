@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class TelaReset extends StatefulWidget {
+class ResetPassword extends StatefulWidget {
   @override
-  _TelaResetState createState() => _TelaResetState();
+  _ResetPasswordState createState() => _ResetPasswordState();
 }
 
-class _TelaResetState extends State<TelaReset> {
+class _ResetPasswordState extends State<ResetPassword> {
   _delayPopTela() {
     //Delay pop da tela
     Timer(Duration(seconds: 4), () {

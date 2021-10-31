@@ -8,12 +8,12 @@ import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/model/message.dart';
 import 'package:go_status/model/user_profile.dart';
 
-class Chat extends StatefulWidget {
+class GeneralChat extends StatefulWidget {
   @override
-  _ChatState createState() => _ChatState();
+  _GeneralChatState createState() => _GeneralChatState();
 }
 
-class _ChatState extends State<Chat> {
+class _GeneralChatState extends State<GeneralChat> {
   //Atributos
   final _controller = StreamController<QuerySnapshot>.broadcast();
   ScrollController _scrollController = ScrollController();

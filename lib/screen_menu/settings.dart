@@ -5,12 +5,12 @@ import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/helper/route_generator.dart';
 import 'package:go_status/model/user_settings.dart';
 
-class Configs extends StatefulWidget {
+class Settings extends StatefulWidget {
   @override
-  _ConfigsState createState() => _ConfigsState();
+  _SettingsState createState() => _SettingsState();
 }
 
-class _ConfigsState extends State<Configs> {
+class _SettingsState extends State<Settings> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   UserSettings configUser = UserSettings();
