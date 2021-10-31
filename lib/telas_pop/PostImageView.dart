@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/helper/color_pallete.dart';
 
 class PostImageView extends StatefulWidget {
   // const PostImageView({ Key? key }) : super(key: key);
@@ -11,7 +11,7 @@ class PostImageView extends StatefulWidget {
 }
 
 class _PostImageViewState extends State<PostImageView> {
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

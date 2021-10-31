@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/helper/api.dart';
-import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/helper/RouteGenerator.dart';
+import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/helper/route_generator.dart';
 import 'package:go_status/model/CsgoStats.dart';
 import 'package:go_status/model/Usuario.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,7 +21,7 @@ class _CadastroState extends State<Cadastro> {
   //Referencias Firebase
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
   UserProfile usuario = UserProfile();
 
   //Atributos
@@ -142,7 +142,7 @@ class _CadastroState extends State<Cadastro> {
           .update(csgoStats.toMap())
           .then((value) {
         Timer(Duration(seconds: 2), () {
-          Navigator.pushReplacementNamed(context, RouteGenerator.HOME_ROTA);
+          Navigator.pushReplacementNamed(context, RouteGenerator.homeRoute);
         });
       });
     } else {
@@ -196,7 +196,7 @@ class _CadastroState extends State<Cadastro> {
                 child: Text(
                   "Estamos quase lá...",
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: paleta.royalBlue, fontSize: 24),
+                  style: TextStyle(color: paleta.dodgerBlue, fontSize: 24),
                 ),
               ),
               Padding(
@@ -256,7 +256,7 @@ class _CadastroState extends State<Cadastro> {
                         decoration: InputDecoration(
                           labelText: "Sua senha",
                           labelStyle: TextStyle(color: Colors.white),
-                          counterStyle: TextStyle(color: paleta.royalBlue),
+                          counterStyle: TextStyle(color: paleta.dodgerBlue),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16)),
                           enabledBorder: OutlineInputBorder(
@@ -279,7 +279,7 @@ class _CadastroState extends State<Cadastro> {
                         decoration: InputDecoration(
                           labelText: "Confirme a senha",
                           labelStyle: TextStyle(color: Colors.white),
-                          counterStyle: TextStyle(color: paleta.royalBlue),
+                          counterStyle: TextStyle(color: paleta.dodgerBlue),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16)),
                           enabledBorder: OutlineInputBorder(
@@ -318,7 +318,7 @@ class _CadastroState extends State<Cadastro> {
                 padding:
                     EdgeInsets.only(top: 50, bottom: 50, left: 40, right: 40),
                 child: RaisedButton(
-                  color: paleta.royalBlue,
+                  color: paleta.dodgerBlue,
                   textColor: Colors.white,
                   padding: EdgeInsets.all(15),
                   child: Text(_buttonText, style: TextStyle(fontSize: 18)),

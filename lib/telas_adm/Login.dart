@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/helper/RouteGenerator.dart';
+import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/helper/route_generator.dart';
 import 'package:go_status/model/Usuario.dart';
 
 class Login extends StatefulWidget {
@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
 
   //
   IconData _iconSenha = Icons.visibility_off_outlined;
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
   bool _esconderSenha = true;
   bool _carregando = false;
 
@@ -57,7 +57,7 @@ class _LoginState extends State<Login> {
             email: usuario.email, password: usuario.senha)
         .then((firebaseUser) {
       Timer(Duration(seconds: 1), () {
-        Navigator.pushReplacementNamed(context, RouteGenerator.HOME_ROTA);
+        Navigator.pushReplacementNamed(context, RouteGenerator.homeRoute);
       });
     }).catchError((error) {
       _snackBarInfo(
@@ -82,7 +82,7 @@ class _LoginState extends State<Login> {
 
   _iniciarCadastro() {
     //Enviar para cadastro
-    Navigator.pushNamed(context, RouteGenerator.STEAMID_ROTA);
+    Navigator.pushNamed(context, RouteGenerator.registerStemIdRoute);
   }
 
   _exibirSenha() {
@@ -123,7 +123,7 @@ class _LoginState extends State<Login> {
     if (email.isNotEmpty && email.contains("@")) {
       FirebaseAuth auth = FirebaseAuth.instance;
       auth.sendPasswordResetEmail(email: email).then((value) {
-        Navigator.pushNamed(context, RouteGenerator.TELARESET_ROTA);
+        Navigator.pushNamed(context, RouteGenerator.resetPasswordRoute);
       }).catchError((onError) {
         _snackBarInfo(
             "Erro ao realizar o reset, verifique seus dados e tente novamente");
@@ -157,7 +157,7 @@ class _LoginState extends State<Login> {
                   Text(
                     "Status",
                     style: TextStyle(
-                        color: paleta.royalBlue,
+                        color: paleta.dodgerBlue,
                         fontSize: 32,
                         fontWeight: FontWeight.bold),
                   )
@@ -171,7 +171,7 @@ class _LoginState extends State<Login> {
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: "Digite seu e-mail",
-                    labelStyle: TextStyle(color: paleta.royalBlue),
+                    labelStyle: TextStyle(color: paleta.dodgerBlue),
                     //Borda externa
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16)),
@@ -191,8 +191,8 @@ class _LoginState extends State<Login> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: "Senha de 6 dígitos",
-                    labelStyle: TextStyle(color: paleta.royalBlue),
-                    counterStyle: TextStyle(color: paleta.royalBlue),
+                    labelStyle: TextStyle(color: paleta.dodgerBlue),
+                    counterStyle: TextStyle(color: paleta.dodgerBlue),
                     suffixIcon: IconButton(
                         icon: Icon(
                           _iconSenha,
@@ -212,7 +212,7 @@ class _LoginState extends State<Login> {
               Padding(
                 padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
                 child: RaisedButton(
-                    color: paleta.royalBlue,
+                    color: paleta.dodgerBlue,
                     textColor: Colors.white,
                     padding: EdgeInsets.all(15),
                     child: _exibirCarregando(),

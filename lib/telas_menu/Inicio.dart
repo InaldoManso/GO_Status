@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/helper/RouteGenerator.dart';
+import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/helper/route_generator.dart';
 import 'package:go_status/model/Postagem.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +17,7 @@ class _InicioState extends State<Inicio> {
   final _controller = StreamController<QuerySnapshot>.broadcast();
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
   String steamapikey;
   String youtubeapikey;
   String _nomeUser = "";
@@ -78,10 +78,11 @@ class _InicioState extends State<Inicio> {
               ? IconButton(
                   icon: Icon(
                     Icons.post_add_outlined,
-                    color: paleta.royalBlue,
+                    color: paleta.dodgerBlue,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, RouteGenerator.CRIARPOST_ROTA);
+                    Navigator.pushNamed(
+                        context, RouteGenerator.postCreatorRoute);
                   },
                 )
               : Container()
@@ -178,7 +179,7 @@ class _InicioState extends State<Inicio> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, RouteGenerator.POSTIMAGE_ROTA,
+                                    context, RouteGenerator.viewPostRoute,
                                     arguments: postagem.urlimage);
                               },
                               child: Container(

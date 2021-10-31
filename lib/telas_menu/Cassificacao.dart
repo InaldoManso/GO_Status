@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/model/CassifUser.dart';
 
 class Cassificacao extends StatefulWidget {
@@ -13,7 +13,7 @@ class _CassificacaoState extends State<Cassificacao> {
   FirebaseAuth auth = FirebaseAuth.instance;
   String _emailUsuarioLogado;
   String _idUsuarioLogado;
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
   User _user;
   Color _corKD;
 
@@ -91,7 +91,7 @@ class _CassificacaoState extends State<Cassificacao> {
                   backgroundColor: Colors.grey,
                 ),
               ),
-              Divider(color: paleta.royalBlue),
+              Divider(color: paleta.dodgerBlue),
               Row(
                 children: [
                   Expanded(
@@ -157,7 +157,7 @@ class _CassificacaoState extends State<Cassificacao> {
                   ),
                 ],
               ),
-              Divider(color: paleta.royalBlue),
+              Divider(color: paleta.dodgerBlue),
             ],
           ),
           /*actions: [

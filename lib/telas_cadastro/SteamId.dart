@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/helper/RouteGenerator.dart';
+import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/helper/route_generator.dart';
 import 'package:go_status/helper/api.dart';
 import 'package:go_status/model/Usuario.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +12,7 @@ class SteamId extends StatefulWidget {
 
 class _SteamIdState extends State<SteamId> {
   //Models&Helpers
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
   Api api = Api();
   UserProfile usuario = UserProfile();
 
@@ -40,7 +40,7 @@ class _SteamIdState extends State<SteamId> {
   }
 
   _enviarCadastro() {
-    Navigator.pushNamed(context, RouteGenerator.CADASTRO_ROTA,
+    Navigator.pushNamed(context, RouteGenerator.registrationRoute,
         arguments: usuario);
   }
 
@@ -85,7 +85,7 @@ class _SteamIdState extends State<SteamId> {
                 child: Text(
                   "Vamos encontrar seu perfil!",
                   textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 18, color: paleta.royalBlue),
+                  style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
                 ),
               ),
               Padding(
@@ -119,10 +119,10 @@ class _SteamIdState extends State<SteamId> {
                             onPressed: () {
                               if (_idSelecionado == "url") {
                                 Navigator.pushNamed(
-                                    context, RouteGenerator.HELPURL_ROTA);
+                                    context, RouteGenerator.gelpUrlRoute);
                               } else {
                                 Navigator.pushNamed(
-                                    context, RouteGenerator.HELPID_ROTA);
+                                    context, RouteGenerator.helpIdRoute);
                               }
                             }),
                       ),
@@ -165,7 +165,7 @@ class _SteamIdState extends State<SteamId> {
                           height: 60,
                           width: 60,
                           child: RaisedButton(
-                              color: paleta.royalBlue,
+                              color: paleta.dodgerBlue,
                               textColor: Colors.white,
                               padding: EdgeInsets.all(15),
                               child: _procurando
@@ -240,7 +240,7 @@ class _SteamIdState extends State<SteamId> {
                                     style: TextStyle(fontSize: 16),
                                   ),
                                   RaisedButton(
-                                    color: paleta.royalBlue,
+                                    color: paleta.dodgerBlue,
                                     textColor: Colors.white,
                                     padding: EdgeInsets.all(15),
                                     child: Text("Acessar como " + usuario.nome),

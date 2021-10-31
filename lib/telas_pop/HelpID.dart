@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/helper/color_pallete.dart';
 
 class HelpId extends StatefulWidget {
   @override
@@ -7,7 +7,7 @@ class HelpId extends StatefulWidget {
 }
 
 class _HelpIdState extends State<HelpId> {
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +20,7 @@ class _HelpIdState extends State<HelpId> {
               padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
               child: Text(
                 "Como encontrar seu Steam ID",
-                style: TextStyle(fontSize: 24, color: paleta.royalBlue),
+                style: TextStyle(fontSize: 24, color: paleta.dodgerBlue),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -55,7 +55,7 @@ class _HelpIdState extends State<HelpId> {
               ),
             ),
             RaisedButton(
-                color: paleta.royalBlue,
+                color: paleta.dodgerBlue,
                 textColor: Colors.white,
                 padding: EdgeInsets.all(15),
                 child: Text("Entendi"),

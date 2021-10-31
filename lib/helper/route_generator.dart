@@ -12,60 +12,57 @@ import 'package:go_status/telas_pop/PostImageView.dart';
 import 'package:go_status/telas_pop/TelaReset.dart';
 
 class RouteGenerator {
-  //Rotas cadastradas
-  static const String SPLASH_ROTA = "/splash";
-  static const String HOME_ROTA = "/home";
-  static const String LOGIN_ROTA = "/login";
-  static const String CADASTRO_ROTA = "/cadastro";
-  static const String STEAMID_ROTA = "/steamid";
-  static const String LOGOUT_ROTA = "/logout";
-  static const String TELARESET_ROTA = "/telareset";
-  static const String HELPURL_ROTA = "/helpurl";
-  static const String HELPID_ROTA = "/helpid";
-  static const String CRIARPOST_ROTA = "/criarpost";
-  static const String POSTIMAGE_ROTA = "/postimage";
+  static const String splashRoute = "/splash";
+  static const String homeRoute = "/home";
+  static const String loginRoute = "/login";
+  static const String registrationRoute = "/registrationRoute";
+  static const String registerStemIdRoute = "/steamid";
+  static const String logoutRoute = "/logout";
+  static const String resetPasswordRoute = "/resetpassword";
+  static const String gelpUrlRoute = "/helpurl";
+  static const String helpIdRoute = "/helpid";
+  static const String postCreatorRoute = "/postcreator";
+  static const String viewPostRoute = "/postimage";
 
-  //Retorna uma Rpta de valor dinamico
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    //Capturamos os argumentos a serem passados aqui
-    final args = settings.arguments;
+    final argument = settings.arguments;
 
     switch (settings.name) {
       case "/":
         return MaterialPageRoute(builder: (_) => SplashScreen());
 
-      case SPLASH_ROTA:
+      case splashRoute:
         return MaterialPageRoute(builder: (_) => SplashScreen());
 
-      case HOME_ROTA:
+      case homeRoute:
         return MaterialPageRoute(builder: (_) => Home());
 
-      case LOGIN_ROTA:
+      case loginRoute:
         return MaterialPageRoute(builder: (_) => Login());
 
-      case CADASTRO_ROTA:
-        return MaterialPageRoute(builder: (_) => Cadastro(args));
+      case registrationRoute:
+        return MaterialPageRoute(builder: (_) => Cadastro(argument));
 
-      case STEAMID_ROTA:
+      case registerStemIdRoute:
         return MaterialPageRoute(builder: (_) => SteamId());
 
-      case LOGOUT_ROTA:
+      case logoutRoute:
         return MaterialPageRoute(builder: (_) => Logout());
 
-      case TELARESET_ROTA:
+      case resetPasswordRoute:
         return MaterialPageRoute(builder: (_) => TelaReset());
 
-      case HELPURL_ROTA:
+      case gelpUrlRoute:
         return MaterialPageRoute(builder: (_) => HelpURL());
 
-      case HELPID_ROTA:
+      case helpIdRoute:
         return MaterialPageRoute(builder: (_) => HelpId());
 
-      case CRIARPOST_ROTA:
+      case postCreatorRoute:
         return MaterialPageRoute(builder: (_) => CriarPostagem());
 
-      case POSTIMAGE_ROTA:
-        return MaterialPageRoute(builder: (_) => PostImageView(args));
+      case viewPostRoute:
+        return MaterialPageRoute(builder: (_) => PostImageView(argument));
 
       /*case ITEM_ROTA:
         return MaterialPageRoute(builder: (_) => Item(args));*/

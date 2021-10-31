@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:go_status/helper/RouteGenerator.dart';
+import 'package:go_status/helper/route_generator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_status/helper/version_control.dart';
 import 'package:go_status/model/CsgoStats.dart';
-import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/helper/api.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/model/Usuario.dart';
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   //Atributos
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
   Api api = Api();
   bool _carregando = false;
 
@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
       _recuperarAdmKeys();
     } else {
       Future.delayed(Duration(milliseconds: 2000), () {
-        Navigator.pushReplacementNamed(context, RouteGenerator.LOGIN_ROTA);
+        Navigator.pushReplacementNamed(context, RouteGenerator.loginRoute);
       });
     }
   }
@@ -129,7 +129,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String version = snapshot["version"];
     bool updated = await versionControl.versionCheck(version, user.uid);
     if (updated == true) {
-      Navigator.pushReplacementNamed(context, RouteGenerator.HOME_ROTA);
+      Navigator.pushReplacementNamed(context, RouteGenerator.homeRoute);
     } else {
       _validarVersaoCadastral();
     }
@@ -163,7 +163,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Text(
                     "Status",
                     style: TextStyle(
-                        color: paleta.royalBlue,
+                        color: paleta.dodgerBlue,
                         fontSize: 32,
                         fontWeight: FontWeight.bold),
                   )

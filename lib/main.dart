@@ -1,8 +1,8 @@
+import 'package:go_status/helper/route_generator.dart';
+import 'package:go_status/telas_adm/SplashScreen.dart';
+import 'package:go_status/helper/color_pallete.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/helper/RouteGenerator.dart';
-import 'package:go_status/telas_adm/SplashScreen.dart';
 
 void main() async {
   //Iniciar Firebase
@@ -10,7 +10,7 @@ void main() async {
   await Firebase.initializeApp();
 
   final ThemeData theme = ThemeData();
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
 
   runApp(
     MaterialApp(
@@ -22,10 +22,10 @@ void main() async {
         appBarTheme: AppBarTheme(backgroundColor: Colors.transparent),
         colorScheme: theme.colorScheme.copyWith(secondary: paleta.orange),
         accentColor: paleta.orange,
-        primaryColor: paleta.royalBlue,
+        primaryColor: paleta.dodgerBlue,
         backgroundColor: paleta.grey850,
         scaffoldBackgroundColor: paleta.grey900,
-        iconTheme: IconThemeData(color: paleta.royalBlue),
+        iconTheme: IconThemeData(color: paleta.dodgerBlue),
         textTheme: const TextTheme(
           subtitle1: TextStyle(color: Colors.white),
           subtitle2: TextStyle(color: Colors.white),

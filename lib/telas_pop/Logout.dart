@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/helper/RouteGenerator.dart';
+import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/helper/route_generator.dart';
 
 class Logout extends StatefulWidget {
   @override
@@ -9,11 +9,11 @@ class Logout extends StatefulWidget {
 }
 
 class _LogoutState extends State<Logout> {
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
 
   _logout() {
     Timer(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, RouteGenerator.LOGIN_ROTA);
+      Navigator.pushReplacementNamed(context, RouteGenerator.loginRoute);
     });
   }
 
@@ -29,7 +29,7 @@ class _LogoutState extends State<Logout> {
       body: Container(
         child: Center(
           child: Text("Até breve!",
-              style: TextStyle(color: paleta.royalBlue, fontSize: 16)),
+              style: TextStyle(color: paleta.dodgerBlue, fontSize: 16)),
         ),
       ),
     );

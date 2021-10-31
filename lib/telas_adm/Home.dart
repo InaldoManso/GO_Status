@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/telas_menu/Cassificacao.dart';
 import 'package:go_status/telas_menu/Chat.dart';
 import 'package:go_status/telas_menu/CompareGun.dart';
@@ -18,7 +18,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   //atributos
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
 
   //Atributos das telas
   int _indiceAtual = 0;

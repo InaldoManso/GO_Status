@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/model/MapDetails.dart';
 
 class Maps extends StatefulWidget {
@@ -8,7 +8,7 @@ class Maps extends StatefulWidget {
 }
 
 class _MapsState extends State<Maps> {
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
 
   List<MapDetails> listaMapas = [
     MapDetails("images/capas/capa_dustii.png", "images/maps/map_dust2.jpg",

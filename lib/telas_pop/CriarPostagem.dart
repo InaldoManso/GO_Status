@@ -1,10 +1,10 @@
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:go_status/helper/DateFormatter.dart';
+import 'package:go_status/helper/date_formatter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:go_status/model/Postagem.dart';
-import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/helper/color_pallete.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -19,7 +19,7 @@ class _CriarPostagemState extends State<CriarPostagem> {
   DateFormatter dateFormatter = DateFormatter();
   FirebaseAuth auth = FirebaseAuth.instance;
   Postagem postagem = Postagem();
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
 
   //Image attributes
   File _image;
@@ -197,7 +197,7 @@ class _CriarPostagemState extends State<CriarPostagem> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Criar postagem"),
-        iconTheme: IconThemeData(color: paleta.royalBlue),
+        iconTheme: IconThemeData(color: paleta.dodgerBlue),
         elevation: 0,
         centerTitle: true,
       ),
@@ -241,7 +241,7 @@ class _CriarPostagemState extends State<CriarPostagem> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8, bottom: 8),
-                      child: Divider(color: paleta.royalBlue),
+                      child: Divider(color: paleta.dodgerBlue),
                     ),
                     TextField(
                       minLines: 3,
@@ -301,14 +301,14 @@ class _CriarPostagemState extends State<CriarPostagem> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8, bottom: 8),
-                      child: Divider(color: paleta.royalBlue),
+                      child: Divider(color: paleta.dodgerBlue),
                     ),
                   ],
                 ),
               ),
               Padding(
                   child: RaisedButton(
-                      color: paleta.royalBlue,
+                      color: paleta.dodgerBlue,
                       textColor: Colors.white,
                       padding: EdgeInsets.all(15),
                       child: Text(

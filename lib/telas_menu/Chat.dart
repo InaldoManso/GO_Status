@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/DateFormatter.dart';
-import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/helper/date_formatter.dart';
+import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/model/Mensagem.dart';
 import 'package:go_status/model/Usuario.dart';
 
@@ -22,7 +22,7 @@ class _ChatState extends State<Chat> {
   FirebaseAuth auth = FirebaseAuth.instance;
   DateFormatter dateFormatter = DateFormatter();
   UserProfile usuario = UserProfile();
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
 
   String _idUser;
   String _nomeUser;
@@ -124,7 +124,7 @@ class _ChatState extends State<Chat> {
                           MediaQuery.of(context).size.width * 0.8;
 
                       if (_idUser != item["iduser"]) {
-                        color = paleta.royalBlue;
+                        color = paleta.dodgerBlue;
                         alinhamento = Alignment.centerLeft;
                       }
                       return Align(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/helper/color_pallete.dart';
 
 class HelpURL extends StatefulWidget {
   @override
@@ -7,7 +7,7 @@ class HelpURL extends StatefulWidget {
 }
 
 class _HelpURLState extends State<HelpURL> {
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +20,7 @@ class _HelpURLState extends State<HelpURL> {
               padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
               child: Text(
                 "Como encontrar sua URL personalizada",
-                style: TextStyle(fontSize: 24, color: paleta.royalBlue),
+                style: TextStyle(fontSize: 24, color: paleta.dodgerBlue),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -58,7 +58,7 @@ class _HelpURLState extends State<HelpURL> {
               ),
             ),
             RaisedButton(
-                color: paleta.royalBlue,
+                color: paleta.dodgerBlue,
                 textColor: Colors.white,
                 padding: EdgeInsets.all(15),
                 child: Text("Entendi"),

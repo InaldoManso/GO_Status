@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:go_status/helper/api.dart';
-import 'package:go_status/helper/CustomSearchDelegate.dart';
-import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/helper/custom_search_delegate.dart';
+import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/model/Video.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,7 +16,7 @@ class Videos extends StatefulWidget {
 class _VideosState extends State<Videos> {
   //Atributos
   String _pesquisa = "";
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
   String steamapikey;
   String youtubeapikey;
 
@@ -56,7 +56,7 @@ class _VideosState extends State<Videos> {
               : IconButton(
                   icon: Icon(
                     Icons.delete_forever_outlined,
-                    color: paleta.royalBlue,
+                    color: paleta.dodgerBlue,
                   ),
                   onPressed: () async {
                     setState(
@@ -69,7 +69,7 @@ class _VideosState extends State<Videos> {
           IconButton(
             icon: Icon(
               Icons.search_outlined,
-              color: paleta.royalBlue,
+              color: paleta.dodgerBlue,
             ),
             onPressed: () async {
               String res = await showSearch(
@@ -128,7 +128,7 @@ class _VideosState extends State<Videos> {
                                   child: Icon(
                                     Icons.play_circle_outline_outlined,
                                     size: 50,
-                                    color: paleta.royalBlue,
+                                    color: paleta.dodgerBlue,
                                   ),
                                 ),
                               ),

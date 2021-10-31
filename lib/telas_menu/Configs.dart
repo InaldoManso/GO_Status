@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
-import 'package:go_status/helper/RouteGenerator.dart';
+import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/helper/route_generator.dart';
 import 'package:go_status/model/ConfigUser.dart';
 
 class Configs extends StatefulWidget {
@@ -14,7 +14,7 @@ class _ConfigsState extends State<Configs> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   ConfigUser configUser = ConfigUser();
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
   User user;
 
   //Atributos
@@ -38,7 +38,7 @@ class _ConfigsState extends State<Configs> {
 
   _deslogarUser() async {
     await FirebaseAuth.instance.signOut().then((value) {
-      Navigator.pushReplacementNamed(context, RouteGenerator.LOGOUT_ROTA);
+      Navigator.pushReplacementNamed(context, RouteGenerator.logoutRoute);
     });
   }
 
@@ -96,7 +96,7 @@ class _ConfigsState extends State<Configs> {
                 padding: EdgeInsets.all(10),
                 width: MediaQuery.of(context).size.width / 3,
                 decoration: BoxDecoration(
-                    color: paleta.royalBlue,
+                    color: paleta.dodgerBlue,
                     borderRadius: BorderRadius.circular(8)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

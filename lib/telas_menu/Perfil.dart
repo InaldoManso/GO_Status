@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/Paleta.dart';
+import 'package:go_status/helper/color_pallete.dart';
 import 'package:go_status/helper/api.dart';
 
 class Perfil extends StatefulWidget {
@@ -20,7 +20,7 @@ class _PerfilState extends State<Perfil> {
   String _pais = "";
 
   //Atributos Interface
-  Paleta paleta = Paleta();
+  ColorPallete paleta = ColorPallete();
   Api api = Api();
   Color _corKD;
   String _resultadoKD = "--";
@@ -34,7 +34,7 @@ class _PerfilState extends State<Perfil> {
   String label = "0";
 
   recuperarDadosUser() async {
-    _corKD = paleta.royalBlue;
+    _corKD = paleta.dodgerBlue;
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
         await db.collection("usuarios").doc(user.uid).get();
@@ -140,7 +140,7 @@ class _PerfilState extends State<Perfil> {
                 padding: EdgeInsets.only(top: 30, bottom: 20),
                 child: Text(
                   "Status geral",
-                  style: TextStyle(fontSize: 20, color: paleta.royalBlue),
+                  style: TextStyle(fontSize: 20, color: paleta.dodgerBlue),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -181,7 +181,7 @@ class _PerfilState extends State<Perfil> {
                     ),
                     Text(
                       _totalKills,
-                      style: TextStyle(fontSize: 18, color: paleta.royalBlue),
+                      style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
                     ),
                   ],
                 ),
@@ -202,7 +202,7 @@ class _PerfilState extends State<Perfil> {
                     ),
                     Text(
                       _totalDeaths,
-                      style: TextStyle(fontSize: 18, color: paleta.royalBlue),
+                      style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
                     ),
                   ],
                 ),
@@ -223,7 +223,7 @@ class _PerfilState extends State<Perfil> {
                     ),
                     Text(
                       _totalTime,
-                      style: TextStyle(fontSize: 18, color: paleta.royalBlue),
+                      style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
                     ),
                   ],
                 ),
@@ -244,7 +244,7 @@ class _PerfilState extends State<Perfil> {
                     ),
                     Text(
                       _totalWins,
-                      style: TextStyle(fontSize: 18, color: paleta.royalBlue),
+                      style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
                     ),
                   ],
                 ),
@@ -265,7 +265,7 @@ class _PerfilState extends State<Perfil> {
                     ),
                     Text(
                       _totalMvps,
-                      style: TextStyle(fontSize: 18, color: paleta.royalBlue),
+                      style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
                     ),
                   ],
                 ),
@@ -286,7 +286,7 @@ class _PerfilState extends State<Perfil> {
                     ),
                     Text(
                       _totalHShots,
-                      style: TextStyle(fontSize: 18, color: paleta.royalBlue),
+                      style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
                     ),
                   ],
                 ),
