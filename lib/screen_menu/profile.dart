@@ -37,14 +37,28 @@ class _ProfileState extends State<Profile> {
     _corKD = paleta.dodgerBlue;
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
-        await db.collection("usuarios").doc(user.uid).get();
+        await db.collection("users").doc(user.uid).get();
+
+    /*
+      "admin": this.admin,
+      "name": this.name,
+      "email": this.email,
+      "password": this.password,
+      "steamid": this.steamid,
+      "userid": this.userid,
+      "team": this.team,
+      "urlimage": this.urlimage,
+      "country": this.country,
+      "version": this.version,
+      "showkilldeath": this.showKillDeath
+        */
 
     int horas = int.parse(snapshot["timeplay"]);
 
     setState(() {
-      _nome = snapshot["nome"];
+      _nome = snapshot["name"];
       _image = snapshot["urlimage"];
-      _pais = snapshot["pais"];
+      _pais = snapshot["country"];
 
       _totalKills = snapshot["kill"];
       _totalDeaths = snapshot["death"];
@@ -52,7 +66,7 @@ class _ProfileState extends State<Profile> {
       _totalWins = snapshot["wins"];
       _totalMvps = snapshot["mvps"];
       _totalHShots = snapshot["headshots"];
-      _resultadoKD = snapshot["resultkd"];
+      _resultadoKD = snapshot["killdeath"];
     });
 
     int gg = int.parse(snapshot["timeplay"]);
@@ -60,8 +74,8 @@ class _ProfileState extends State<Profile> {
     var g2 = Duration(minutes: g1);
     print("HORASS " + g2.toString());
 
-    valorkd = double.parse(snapshot["resultkd"]);
-    double kdcor = double.parse(snapshot["resultkd"]);
+    valorkd = double.parse(snapshot["killdeath"]);
+    double kdcor = double.parse(snapshot["killdeath"]);
     if (kdcor >= 0.00 && kdcor <= 0.74) {
       setState(() {
         _corKD = Colors.red;

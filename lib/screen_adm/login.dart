@@ -13,11 +13,11 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   //Atributos
   TextEditingController _controllerEmail =
-      TextEditingController(text: "inaldo@gmail.com");
-  // TextEditingController();
+      // TextEditingController(text: "inaldo@gmail.com");
+      TextEditingController();
   TextEditingController _controllerSenha =
-      TextEditingController(text: "123456");
-  // TextEditingController();
+      // TextEditingController(text: "123456");
+      TextEditingController();
 
   //
   IconData _iconSenha = Icons.visibility_off_outlined;
@@ -69,7 +69,7 @@ class _LoginState extends State<Login> {
 
   void _snackBarInfo(String campoVazio) {
     final snackBar = SnackBar(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.red,
       content:
           Text(campoVazio, style: TextStyle(fontSize: 16, color: Colors.white)),
       action: SnackBarAction(

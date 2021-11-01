@@ -25,7 +25,7 @@ class UserProfile {
       "urlimage": this.urlimage,
       "country": this.country,
       "version": this.version,
-      "showKillDeath": this.showKillDeath
+      "showkilldeath": this.showKillDeath
     };
     return map;
   }

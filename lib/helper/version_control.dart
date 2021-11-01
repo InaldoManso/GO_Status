@@ -11,7 +11,7 @@ class VersionControl {
           "version": "1.0.1",
           "admin": 0,
         };
-        db.collection("usuarios").doc(userid).update(updates);
+        db.collection("users").doc(userid).update(updates);
         return false;
         break;
 

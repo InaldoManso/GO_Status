@@ -38,14 +38,13 @@ class Api {
         await http.get(getSteamUrl[0] + keyApi + getSteamUrl[1] + steamName);
 
     Map<String, dynamic> returnData = json.decode(response.body);
+    print("GG " + response.body.toString());
 
     String success = returnData["response"]["success"].toString();
 
     if (success == "1") {
       return returnData["response"]["steamid"].toString();
-    } else {
-      return null;
-    }
+    } else {}
   }
 
   validarSteamPublica(String keyApi, String steamid) async {
@@ -122,7 +121,7 @@ class Api {
       int death = int.parse(csgoStats.death);
       double killDeath = kill / death;
 
-      csgoStats.resultkd = killDeath.toStringAsPrecision(2);
+      csgoStats.killdeath = killDeath.toStringAsPrecision(2);
       csgoStats.nome = name;
       csgoStats.urlimage = urlimage;
 

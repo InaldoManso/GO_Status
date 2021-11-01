@@ -36,10 +36,32 @@ class _SplashScreenState extends State<SplashScreen> {
     if (user != null) {
       _recuperarAdmKeys();
     } else {
-      Future.delayed(Duration(milliseconds: 2000), () {
-        Navigator.pushReplacementNamed(context, RouteGenerator.loginRoute);
-      });
+      recApisKeys();
     }
+  }
+
+  recApisKeys() async {
+    DocumentSnapshot snapshot = await db
+        .collection("admgostatus")
+        .doc("credentials")
+        .get()
+        .then((snapshot) async {
+      steamapikey = snapshot["steamapikey"];
+      print("Resultado: 1 " + steamapikey);
+      youtubeapikey = snapshot["youtubeapikey"];
+      print("Resultado: 2 " + youtubeapikey);
+      print("teste: 01 apis keys recuperadas");
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("steamapikey", steamapikey);
+      await prefs.setString("youtubeapikey", youtubeapikey);
+    }).catchError((onError) {
+      _snackBarInfo("Resultado: Erro ao conectar com os servidores");
+    });
+
+    Future.delayed(Duration(milliseconds: 2000), () {
+      Navigator.pushReplacementNamed(context, RouteGenerator.loginRoute);
+    });
   }
 
   _recuperarAdmKeys() async {
@@ -52,6 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
       print("Resultado: 1 " + steamapikey);
       youtubeapikey = snapshot["youtubeapikey"];
       print("Resultado: 2 " + youtubeapikey);
+      print("teste: 01 apis keys recuperadas");
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString("steamapikey", steamapikey);
@@ -69,8 +92,10 @@ class _SplashScreenState extends State<SplashScreen> {
         await db.collection("users").doc(user.uid).get();
 
     String steamid = snapshot["steamid"];
+    print("teste: 02 steam id" + steamid);
 
     usuario = await api.recDataUserFromSteamID(steamapikey, steamid);
+    print("teste: 03 recuperar user " + usuario.name);
 
     // _recSteamID(steamid);
     if (usuario != null) {
@@ -85,6 +110,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _recuperarCsgoStats(String steamid, String nome, String urlimage) async {
     csgoStats = await api.updateUserStats(steamapikey, steamid, nome, urlimage);
+    print("teste: 04 atualizando stats " + csgoStats.killdeath);
 
     if (csgoStats != null) {
       User user = auth.currentUser;
@@ -127,6 +153,7 @@ class _SplashScreenState extends State<SplashScreen> {
         await db.collection("users").doc(user.uid).get();
 
     String version = snapshot["version"];
+    print("teste: 03 version" + version);
     bool updated = await versionControl.versionCheck(version, user.uid);
     if (updated == true) {
       Navigator.pushReplacementNamed(context, RouteGenerator.homeRoute);

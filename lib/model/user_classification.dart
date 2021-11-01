@@ -8,7 +8,7 @@ class UserClassification {
   String _time;
   String _urlimage;
   String _pais;
-  String _resultkd;
+  String _killdeath;
   String _kill;
   String _death;
   String _timeplay;
@@ -30,7 +30,7 @@ class UserClassification {
       "time": this.time,
       "urlimage": this.urlimage,
       "pais": this.pais,
-      "resultkd": this.resultkd,
+      "killdeath": this.killdeath,
       "kill": this.kill,
       "death": this.death,
       "timeplay": this.timeplay,
@@ -75,9 +75,9 @@ class UserClassification {
 
   set pais(value) => this._pais = value;
 
-  get resultkd => this._resultkd;
+  get killdeath => this._killdeath;
 
-  set resultkd(value) => this._resultkd = value;
+  set killdeath(value) => this._killdeath = value;
 
   get kill => this._kill;
 

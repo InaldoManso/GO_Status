@@ -21,20 +21,20 @@ class _ClassificationState extends State<Classification> {
     FirebaseFirestore db = FirebaseFirestore.instance;
 
     QuerySnapshot querySnapshot = await db
-        .collection("usuarios")
-        .orderBy("resultkd", descending: true)
+        .collection("users")
+        .orderBy("killdeath", descending: true)
         .get();
 
-    List<UserClassification> listaUsuarios = List();
+    List<UserClassification> listaUsuarios = [];
     for (DocumentSnapshot item in querySnapshot.docs) {
       var dados = item.data();
-      if (dados["exibirclass"] == false) continue;
+      if (dados["showkilldeath"] == false) continue;
 
       UserClassification classifUser = UserClassification();
       classifUser.email = dados["email"];
       classifUser.nome = dados["nome"];
       classifUser.urlimage = dados["urlimage"];
-      classifUser.resultkd = dados["resultkd"];
+      classifUser.killdeath = dados["killdeath"];
       classifUser.kill = dados["kill"];
       classifUser.death = dados["death"];
       classifUser.mvps = dados["mvps"];
@@ -51,7 +51,7 @@ class _ClassificationState extends State<Classification> {
     int minutos = int.parse(classifUser.timeplay);
     String horas = Duration(minutes: minutos).toString().split(':00')[0];
 
-    double kdcor = double.parse(classifUser.resultkd);
+    double kdcor = double.parse(classifUser.killdeath);
     if (kdcor >= 0.00 && kdcor <= 0.74) {
       setState(() {
         _corKD = Colors.red;
@@ -100,7 +100,7 @@ class _ClassificationState extends State<Classification> {
                     ),
                   ),
                   Text(
-                    classifUser.resultkd,
+                    classifUser.killdeath,
                     style: TextStyle(color: _corKD),
                   ),
                 ],
@@ -245,7 +245,7 @@ class _ClassificationState extends State<Classification> {
                           Expanded(
                             flex: 1,
                             child: Text(
-                              classifUser.resultkd,
+                              classifUser.killdeath,
                               textAlign: TextAlign.center,
                             ),
                           ),

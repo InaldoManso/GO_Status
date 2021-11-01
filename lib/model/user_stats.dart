@@ -1,7 +1,7 @@
 class UserStats {
   String _nome = "";
   String _urlimage = "";
-  String _resultkd = "";
+  String _killdeath = "";
   String _kill = "";
   String _death = "";
   String _timeplay = "";
@@ -15,7 +15,7 @@ class UserStats {
     Map<String, dynamic> map = {
       "nome": this.nome,
       "urlimage": this.urlimage,
-      "resultkd": this.resultkd,
+      "killdeath": this.killdeath,
       "kill": this.kill,
       "death": this.death,
       "timeplay": this.timeplay,
@@ -34,9 +34,9 @@ class UserStats {
 
   set urlimage(value) => this._urlimage = value;
 
-  get resultkd => this._resultkd;
+  get killdeath => this._killdeath;
 
-  set resultkd(value) => this._resultkd = value;
+  set killdeath(value) => this._killdeath = value;
 
   get kill => this._kill;
 

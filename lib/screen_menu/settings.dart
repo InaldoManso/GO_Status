@@ -22,15 +22,15 @@ class _SettingsState extends State<Settings> {
   bool _carregado = false;
 
   _atualizarConfig() {
-    configUser.exibirclass = _exibirclassificacao;
-    db.collection("usuarios").doc(user.uid).update(configUser.toMap());
+    configUser.showkilldeath = _exibirclassificacao;
+    db.collection("users").doc(user.uid).update(configUser.toMap());
   }
 
   _recuperarConfig(String uid) async {
-    DocumentSnapshot snapshot = await db.collection("usuarios").doc(uid).get();
+    DocumentSnapshot snapshot = await db.collection("users").doc(uid).get();
 
-    configUser.exibirclass = snapshot["exibirclass"];
-    _exibirclassificacao = configUser.exibirclass == false ? false : true;
+    configUser.showkilldeath = snapshot["showkilldeath"];
+    _exibirclassificacao = configUser.showkilldeath == false ? false : true;
     _carregado = true;
 
     setState(() {});

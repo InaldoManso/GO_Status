@@ -12,6 +12,8 @@ void main() async {
   final ThemeData theme = ThemeData();
   ColorPallete paleta = ColorPallete();
 
+  print("teste: inicio");
+
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
