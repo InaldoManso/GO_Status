@@ -45,13 +45,13 @@ class _SplashScreenState extends State<SplashScreen> {
   _recuperarAdmKeys() async {
     DocumentSnapshot snapshot = await db
         .collection("admgostatus")
-        .doc("credenciais")
+        .doc("credentials")
         .get()
         .then((snapshot) async {
       steamapikey = snapshot["steamapikey"];
-      // print("Resultado: 1 " + steamapikey);
+      print("Resultado: 1 " + steamapikey);
       youtubeapikey = snapshot["youtubeapikey"];
-      // print("Resultado: 2 " + youtubeapikey);
+      print("Resultado: 2 " + youtubeapikey);
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString("steamapikey", steamapikey);
@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
   _recuperarDadosUser() async {
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
-        await db.collection("usuarios").doc(user.uid).get();
+        await db.collection("users").doc(user.uid).get();
 
     String steamid = snapshot["steamid"];
 
@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // _recSteamID(steamid);
     if (usuario != null) {
-      _recuperarCsgoStats(steamid, usuario.nome, usuario.urlimage);
+      _recuperarCsgoStats(steamid, usuario.name, usuario.urlimage);
       setState(() {
         _carregando = true;
       });
@@ -90,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
       User user = auth.currentUser;
 
       db
-          .collection("usuarios")
+          .collection("users")
           .doc(user.uid)
           .update(csgoStats.toMap())
           .then((value) {
@@ -124,7 +124,7 @@ class _SplashScreenState extends State<SplashScreen> {
     VersionControl versionControl = VersionControl();
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
-        await db.collection("usuarios").doc(user.uid).get();
+        await db.collection("users").doc(user.uid).get();
 
     String version = snapshot["version"];
     bool updated = await versionControl.versionCheck(version, user.uid);
@@ -191,7 +191,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     color: paleta.grey900,
                     image: DecorationImage(
                       image: AssetImage(
-                        "images/logos/logolmctrsp.png",
+                        "assets/image/logos/logolmctrsp.png",
                       ),
                       fit: BoxFit.fill,
                     ),

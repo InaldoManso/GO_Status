@@ -1,12 +1,11 @@
-import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:go_status/helper/color_pallete.dart';
-import 'package:go_status/helper/route_generator.dart';
-import 'package:go_status/model/publication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_status/helper/route_generator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:go_status/helper/color_pallete.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_status/model/publication.dart';
+import 'package:flutter/material.dart';
+import 'dart:async';
 
 class TimeLine extends StatefulWidget {
   @override
@@ -14,18 +13,21 @@ class TimeLine extends StatefulWidget {
 }
 
 class _TimeLineState extends State<TimeLine> {
-  final _controller = StreamController<QuerySnapshot>.broadcast();
+  //Classes and packages
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   ColorPallete paleta = ColorPallete();
-  String steamapikey;
+
+  //Attributes
+  final _controller = StreamController<QuerySnapshot>.broadcast();
+  String _nameUser = "";
   String youtubeapikey;
-  String _nomeUser = "";
+  String steamapikey;
   int _admin = 0;
 
-  Stream<QuerySnapshot> _adicionarListenerMensagens() {
+  Stream<QuerySnapshot> _addListenerPublications() {
     final stream = db
-        .collection("postagens")
+        .collection("publications")
         .orderBy("idtime", descending: true)
         .snapshots();
 
@@ -45,12 +47,12 @@ class _TimeLineState extends State<TimeLine> {
   _recuperarDadosUsuario() async {
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
-        await db.collection("usuarios").doc(user.uid).get();
-    _adicionarListenerMensagens();
+        await db.collection("users").doc(user.uid).get();
+    _addListenerPublications();
 
     setState(() {
       _admin = snapshot["admin"];
-      _nomeUser = snapshot["nome"];
+      _nameUser = snapshot["name"];
     });
   }
 
@@ -68,13 +70,13 @@ class _TimeLineState extends State<TimeLine> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(
-          "Olá " + _nomeUser + "!",
+          "Olá " + _nameUser + "!",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         actions: [
-          _admin >= 0
+          _admin > 0
               ? IconButton(
                   icon: Icon(
                     Icons.post_add_outlined,
@@ -119,16 +121,17 @@ class _TimeLineState extends State<TimeLine> {
                           querySnapshot.docs.toList();
 
                       DocumentSnapshot item = postagens[index];
+
                       Publication postagem = Publication();
                       postagem.idtime = item["idtime"];
-                      postagem.idpostagem = item["idpostagem"];
-                      postagem.idtipo = item["idtipo"];
+                      postagem.idpublication = item["idpublication"];
                       postagem.iduser = item["iduser"];
-                      postagem.nomeuser = item["nomeuser"];
+                      postagem.type = item["type"];
+                      postagem.nameuser = item["nameuser"];
                       postagem.imageuser = item["imageuser"];
-                      postagem.texto = item["texto"];
+                      postagem.message = item["message"];
                       postagem.urlimage = item["urlimage"];
-                      postagem.horario = item["horario"];
+                      postagem.timeshow = item["timeshow"];
 
                       return Container(
                         margin: EdgeInsets.only(top: 8, bottom: 8),
@@ -158,7 +161,7 @@ class _TimeLineState extends State<TimeLine> {
                                 Expanded(
                                   child: Container(
                                     child: Text(
-                                      postagem.nomeuser,
+                                      postagem.nameuser,
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
@@ -171,7 +174,7 @@ class _TimeLineState extends State<TimeLine> {
                             Container(
                               child: SingleChildScrollView(
                                 child: Text(
-                                  postagem.texto,
+                                  postagem.message,
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
@@ -210,128 +213,3 @@ class _TimeLineState extends State<TimeLine> {
     );
   }
 }
-
-/*
-FutureBuilder<List<Postagem>>(
-      future: _recuperarPostagens(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.waiting:
-            return Center(
-              child: Column(
-                children: <Widget>[
-                  Text("Carregando contatos"),
-                  CircularProgressIndicator()
-                ],
-              ),
-            );
-            break;
-          case ConnectionState.active:
-          case ConnectionState.done:
-            return Scaffold(
-              extendBodyBehindAppBar: true,
-              appBar: AppBar(
-                title: Text(
-                  "Olá " + _nomeUser + "!",
-                  style: TextStyle(color: paleta.royalBlue),
-                ),
-                backgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-                actions: [
-                  _admin > 0
-                      ? IconButton(
-                          icon: Icon(
-                            Icons.post_add_outlined,
-                            color: paleta.royalBlue,
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, RouteGenerator.CRIARPOST_ROTA);
-                          },
-                        )
-                      : Container()
-                ],
-              ),
-              body: ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (_, indice) {
-                  List<Postagem> listaItens = snapshot.data;
-                  Postagem postagem = listaItens[indice];
-
-                  return Container(
-                    margin: EdgeInsets.only(top: 8, bottom: 8),
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: paleta.grey850,
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(right: 10),
-                              child: CircleAvatar(
-                                child: postagem.imageuser == ""
-                                    ? CircularProgressIndicator()
-                                    : ClipOval(
-                                        child: Image.network(
-                                          postagem.imageuser,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                radius: 20,
-                                backgroundColor: Colors.grey,
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                child: Text(
-                                  postagem.nomeuser,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        Divider(color: paleta.royalBlue),
-                        Container(
-                          child: SingleChildScrollView(
-                            child: Text(
-                              postagem.texto,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, RouteGenerator.POSTIMAGE_ROTA,
-                                arguments: postagem.urlimage);
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 8),
-                            height: MediaQuery.of(context).size.width * 0.6,
-                            alignment: Alignment.topLeft,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(8),
-                              image: DecorationImage(
-                                  image: NetworkImage(postagem.urlimage),
-                                  fit: BoxFit.cover),
-                            ),
-                          ),
-                        ),
-                        Divider(color: paleta.royalBlue),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            );
-            break;
-        }
-        return null;
-      },
-    )
-*/

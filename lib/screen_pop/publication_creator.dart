@@ -1,10 +1,10 @@
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_status/helper/date_formatter.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:go_status/model/publication.dart';
 import 'package:go_status/helper/color_pallete.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_status/model/publication.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -14,27 +14,27 @@ class PublicationCreator extends StatefulWidget {
 }
 
 class _PublicationCreatorState extends State<PublicationCreator> {
-  //Classes end Especial Attributes
+  //Classes and Packages
   FirebaseFirestore db = FirebaseFirestore.instance;
   DateFormatter dateFormatter = DateFormatter();
   FirebaseAuth auth = FirebaseAuth.instance;
   Publication postagem = Publication();
   ColorPallete paleta = ColorPallete();
+  File _image;
 
   //Image attributes
-  File _image;
-  final _picker = ImagePicker();
-  bool _uploadingImage = false;
-  String _urlImagRecovered = "";
 
-  //General attributes
   TextEditingController _controllerTexto = TextEditingController();
-  String _iduser;
-  String _nameuser;
-  String _imageuser;
-  String _message;
-  String _urlImage;
+  final _picker = ImagePicker();
+
+  String _urlImagRecovered = "";
+  bool _uploadingImage = false;
   String _publicationTime;
+  String _imageuser;
+  String _urlImage;
+  String _nameuser;
+  String _message;
+  String _iduser;
 
   Future _selectLocalImage(String originImage) async {
     PickedFile imageSelected;
@@ -103,23 +103,20 @@ class _PublicationCreatorState extends State<PublicationCreator> {
   }
 
   _createPosting() {
-    print("XXXXXXXXXXXXXXXXXXXX");
     _uploadImageOFC();
     Publication postagem = Publication();
     _message = _controllerTexto.text;
-    print("GGGGG" + _message);
 
     if (_message.isNotEmpty) {
-      print("ZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
       postagem.idtime = dateFormatter.generateDateTimeIdentification();
-      postagem.idpostagem = _iduser;
-      postagem.idtipo = "1";
+      postagem.idpublication = "empty";
       postagem.iduser = _iduser;
-      postagem.nomeuser = _nameuser;
+      postagem.type = Publication.typeImage;
+      postagem.nameuser = _nameuser;
       postagem.imageuser = _imageuser;
-      postagem.texto = _message;
+      postagem.message = _message;
       postagem.urlimage = _urlImagRecovered;
-      postagem.horario = DateTime.now().toString();
+      postagem.timeshow = DateTime.now().toString();
       _publishPost(postagem);
     }
   }
@@ -167,9 +164,12 @@ class _PublicationCreatorState extends State<PublicationCreator> {
   }
 
   _publishPost(Publication postagem) async {
-    await db.collection("postagens").add(postagem.toMap()).then((referenceId) {
+    await db
+        .collection("publications")
+        .add(postagem.toMap())
+        .then((referenceId) {
       Map<String, dynamic> postingId = {"idpostagem": referenceId.id};
-      db.collection("postagens").doc(referenceId.id).update(postingId);
+      db.collection("publications").doc(referenceId.id).update(postingId);
       Navigator.pop(context);
     });
   }
@@ -177,11 +177,11 @@ class _PublicationCreatorState extends State<PublicationCreator> {
   _recoveringUserData() async {
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
-        await db.collection("usuarios").doc(user.uid).get();
+        await db.collection("users").doc(user.uid).get();
 
     setState(() {
       _iduser = snapshot["userid"];
-      _nameuser = snapshot["nome"];
+      _nameuser = snapshot["name"];
       _imageuser = snapshot["urlimage"];
     });
   }

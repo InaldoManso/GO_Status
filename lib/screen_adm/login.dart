@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
       if (senha.isNotEmpty) {
         UserProfile usuario = UserProfile();
         usuario.email = email;
-        usuario.senha = senha;
+        usuario.password = senha;
         _logarUsuario(usuario);
       } else {
         _carregando = false;
@@ -54,7 +54,7 @@ class _LoginState extends State<Login> {
 
     auth
         .signInWithEmailAndPassword(
-            email: usuario.email, password: usuario.senha)
+            email: usuario.email, password: usuario.password)
         .then((firebaseUser) {
       Timer(Duration(seconds: 1), () {
         Navigator.pushReplacementNamed(context, RouteGenerator.homeRoute);

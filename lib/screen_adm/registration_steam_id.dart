@@ -12,25 +12,25 @@ class RegistrationSteamId extends StatefulWidget {
 
 class _RegistrationSteamIdState extends State<RegistrationSteamId> {
   //Models&Helpers
-  ColorPallete paleta = ColorPallete();
+  ColorPallete colorPallete = ColorPallete();
+  UserProfile userProfile = UserProfile();
   Api api = Api();
-  UserProfile usuario = UserProfile();
 
   //Atributos
   TextEditingController nomeEditingController = TextEditingController();
   String _labelTextField = "exemplo: MeuNome123";
-
   String _idSelecionado = "url";
   bool _procurando = false;
-  String steamapikey;
   String youtubeapikey;
+  String steamapikey;
 
   //Atributos User
   String _steamInfo = "";
 
   _validarPublico() async {
     bool perfilPublico = false;
-    perfilPublico = await api.validarSteamPublica(steamapikey, usuario.steamid);
+    perfilPublico =
+        await api.validarSteamPublica(steamapikey, userProfile.steamid);
     if (perfilPublico) {
       _enviarCadastro();
     } else {
@@ -41,7 +41,7 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
 
   _enviarCadastro() {
     Navigator.pushNamed(context, RouteGenerator.registrationRoute,
-        arguments: usuario);
+        arguments: userProfile);
   }
 
   void _snackBarInfo(String mensagem) {
@@ -85,7 +85,8 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
                 child: Text(
                   "Vamos encontrar seu perfil!",
                   textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
+                  style:
+                      TextStyle(fontSize: 18, color: colorPallete.dodgerBlue),
                 ),
               ),
               Padding(
@@ -165,7 +166,7 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
                           height: 60,
                           width: 60,
                           child: RaisedButton(
-                              color: paleta.dodgerBlue,
+                              color: colorPallete.dodgerBlue,
                               textColor: Colors.white,
                               padding: EdgeInsets.all(15),
                               child: _procurando
@@ -186,14 +187,16 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
                                     String dados = await api.recSteamIdFromUrl(
                                         steamapikey, _steamInfo);
 
-                                    usuario = await api.recDataUserFromSteamID(
-                                        steamapikey, dados);
+                                    userProfile =
+                                        await api.recDataUserFromSteamID(
+                                            steamapikey, dados);
                                     _procurando = false;
                                     setState(() {});
                                   } else {
                                     // _recSteamID(_steamInfo);
-                                    usuario = await api.recDataUserFromSteamID(
-                                        steamapikey, _steamInfo);
+                                    userProfile =
+                                        await api.recDataUserFromSteamID(
+                                            steamapikey, _steamInfo);
                                     _procurando = false;
                                     setState(() {});
                                   }
@@ -205,7 +208,7 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
                   )),
               Padding(
                 padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                child: usuario.nome != "" && usuario.nome != null
+                child: userProfile.name != "" && userProfile.name != null
                     ? Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -215,7 +218,7 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
                             decoration: BoxDecoration(
                                 color: Colors.grey[200],
                                 image: DecorationImage(
-                                    image: NetworkImage(usuario.urlimage),
+                                    image: NetworkImage(userProfile.urlimage),
                                     fit: BoxFit.cover),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
@@ -232,18 +235,19 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   Text(
-                                    usuario.nome,
+                                    userProfile.name,
                                     style: TextStyle(fontSize: 24),
                                   ),
                                   Text(
-                                    "id: " + usuario.steamid,
+                                    "id: " + userProfile.steamid,
                                     style: TextStyle(fontSize: 16),
                                   ),
                                   RaisedButton(
-                                    color: paleta.dodgerBlue,
+                                    color: colorPallete.dodgerBlue,
                                     textColor: Colors.white,
                                     padding: EdgeInsets.all(15),
-                                    child: Text("Acessar como " + usuario.nome),
+                                    child: Text(
+                                        "Acessar como " + userProfile.name),
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8)),
                                     onPressed: () {

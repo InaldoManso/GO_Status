@@ -65,20 +65,22 @@ class Api {
     http.Response response =
         await http.get(getSteamId[0] + keyApi + getSteamId[1] + steamID);
 
+    print(response.body.toString());
+
     if (response.statusCode == 200) {
       Map<String, dynamic> returnData = json.decode(response.body);
       if (returnData["response"]["players"].toString() != "[]") {
         userProfile.email = "";
-        userProfile.senha = "";
-        userProfile.time = "";
+        userProfile.password = "";
+        userProfile.team = "";
         userProfile.userid = steamID;
         userProfile.steamid =
             returnData["response"]["players"][0]["steamid"].toString();
         userProfile.urlimage =
             returnData["response"]["players"][0]["avatarfull"].toString();
-        userProfile.nome =
+        userProfile.name =
             returnData["response"]["players"][0]["personaname"].toString();
-        userProfile.pais =
+        userProfile.country =
             returnData["response"]["players"][0]["loccountrycode"].toString();
 
         return userProfile;

@@ -1,55 +1,58 @@
 class Publication {
+  //Types of messages
+  static const int typeImage = 1;
+
   int _idtime;
-  String _idpostagem;
-  String _idtipo;
+  String _idpublication;
   String _iduser;
-  String _nomeuser;
+  int _type;
+  String _nameuser;
   String _imageuser;
-  String _texto;
+  String _message;
   String _urlimage;
-  String _horario;
+  String _timeshow;
 
   Publication();
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       "idtime": this.idtime,
-      "idpostagem": this.idpostagem,
-      "idtipo": this.idtipo,
+      "idpublication": this.idpublication,
       "iduser": this.iduser,
-      "nomeuser": this.nomeuser,
+      "type": this.type,
+      "nameuser": this.nameuser,
       "imageuser": this.imageuser,
-      "texto": this.texto,
+      "message": this.message,
       "urlimage": this.urlimage,
-      "horario": this.horario,
+      "timeshow": this.timeshow,
     };
     return map;
   }
 
-  get idpostagem => this._idpostagem;
-  set idpostagem(value) => this._idpostagem = value;
-
   get idtime => this._idtime;
   set idtime(value) => this._idtime = value;
 
-  get idtipo => this._idtipo;
-  set idtipo(value) => this._idtipo = value;
+  get idpublication => this._idpublication;
+  set idpublication(value) => this._idpublication = value;
 
   get iduser => this._iduser;
   set iduser(value) => this._iduser = value;
 
-  get nomeuser => this._nomeuser;
-  set nomeuser(value) => this._nomeuser = value;
+  get type => this._type;
+  set type(value) => this._type = value;
+
+  get nameuser => this._nameuser;
+  set nameuser(value) => this._nameuser = value;
 
   get imageuser => this._imageuser;
   set imageuser(value) => this._imageuser = value;
 
-  get texto => this._texto;
-  set texto(value) => this._texto = value;
+  get message => this._message;
+  set message(value) => this._message = value;
 
   get urlimage => this._urlimage;
   set urlimage(value) => this._urlimage = value;
 
-  get horario => this._horario;
-  set horario(value) => this._horario = value;
+  get timeshow => this._timeshow;
+  set timeshow(value) => this._timeshow = value;
 }

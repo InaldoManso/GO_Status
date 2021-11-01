@@ -1,36 +1,35 @@
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_status/helper/route_generator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/model/user_profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_status/model/user_stats.dart';
+import 'package:go_status/helper/api.dart';
+import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:go_status/helper/api.dart';
-import 'package:go_status/helper/color_pallete.dart';
-import 'package:go_status/helper/route_generator.dart';
-import 'package:go_status/model/user_stats.dart';
-import 'package:go_status/model/user_profile.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 class RegistrationUser extends StatefulWidget {
-  UserProfile usuario;
-  RegistrationUser(this.usuario);
+  UserProfile userProfile;
+  RegistrationUser(this.userProfile);
   @override
   _RegistrationUserState createState() => _RegistrationUserState();
 }
 
 class _RegistrationUserState extends State<RegistrationUser> {
-  //Referencias Firebase
+  //Classes and Packages
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   ColorPallete paleta = ColorPallete();
-  UserProfile usuario = UserProfile();
+  UserProfile userProfile = UserProfile();
 
-  //Atributos
+  //Attributes
   bool _editando = true;
   String _buttonText = "Criar conta!";
   String steamapikey;
   String youtubeapikey;
 
-  //Controladores
+  //Controllers
   TextEditingController emailEditingController = TextEditingController();
   TextEditingController senhaEditingController = TextEditingController();
   TextEditingController confirmaEditingController = TextEditingController();
@@ -41,15 +40,15 @@ class _RegistrationUserState extends State<RegistrationUser> {
     if (_validarCampos()) {
       if (_validarSenha()) {
         //Configurar os dados
-        usuario.nome = widget.usuario.nome;
-        usuario.email = emailEditingController.text;
-        usuario.senha = senhaEditingController.text;
-        usuario.steamid = widget.usuario.steamid;
-        usuario.time = timeEditingController.text;
-        usuario.urlimage = widget.usuario.urlimage;
-        usuario.pais = widget.usuario.pais;
-        usuario.version = "1.0.0";
-        _salvarCadastro(usuario);
+        userProfile.name = widget.userProfile.name;
+        userProfile.email = emailEditingController.text;
+        userProfile.password = senhaEditingController.text;
+        userProfile.steamid = widget.userProfile.steamid;
+        userProfile.team = timeEditingController.text;
+        userProfile.urlimage = widget.userProfile.urlimage;
+        userProfile.country = widget.userProfile.country;
+        userProfile.version = "1.0.0";
+        _salvarCadastro(userProfile);
       } else {
         _snackBarInfo("Senhas diferentes!");
         senhaEditingController.text = "";
@@ -110,14 +109,14 @@ class _RegistrationUserState extends State<RegistrationUser> {
       //Definir o UID a ser salvo
       usuario.userid = firebaseUser.user.uid;
       db
-          .collection("usuarios")
+          .collection("users")
           .doc(firebaseUser.user.uid)
           .set(usuario.toMap())
           .then((value) {
         setState(() {
           _buttonText = "Conta Salva!";
         });
-        _recuperarCsgoStats(usuario.steamid, usuario.nome, usuario.urlimage);
+        _recuperarCsgoStats(usuario.steamid, usuario.name, usuario.urlimage);
       });
     }).catchError((error) {
       print("erro: " + error.toString());
@@ -137,7 +136,7 @@ class _RegistrationUserState extends State<RegistrationUser> {
       User user = auth.currentUser;
 
       db
-          .collection("usuarios")
+          .collection("users")
           .doc(user.uid)
           .update(csgoStats.toMap())
           .then((value) {
@@ -209,9 +208,10 @@ class _RegistrationUserState extends State<RegistrationUser> {
                     decoration: BoxDecoration(
                         color: Colors.grey[200],
                         image: DecorationImage(
-                            image: NetworkImage(widget.usuario.urlimage != null
-                                ? widget.usuario.urlimage
-                                : null),
+                            image: NetworkImage(
+                                widget.userProfile.urlimage != null
+                                    ? widget.userProfile.urlimage
+                                    : null),
                             fit: BoxFit.cover),
                         borderRadius: BorderRadius.all(Radius.circular(16))),
                   ),

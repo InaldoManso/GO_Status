@@ -14,46 +14,46 @@ class GeneralChat extends StatefulWidget {
 }
 
 class _GeneralChatState extends State<GeneralChat> {
-  //Atributos
-  final _controller = StreamController<QuerySnapshot>.broadcast();
-  ScrollController _scrollController = ScrollController();
-  TextEditingController _controllerMensagem = TextEditingController();
+  //Classes and Packages
   FirebaseFirestore db = FirebaseFirestore.instance;
-  FirebaseAuth auth = FirebaseAuth.instance;
   DateFormatter dateFormatter = DateFormatter();
-  UserProfile usuario = UserProfile();
+  FirebaseAuth auth = FirebaseAuth.instance;
   ColorPallete paleta = ColorPallete();
+  UserProfile usuario = UserProfile();
 
+  //Attributes
+  StreamController _controller = StreamController<QuerySnapshot>.broadcast();
+  TextEditingController _controllerMensagem = TextEditingController();
+  ScrollController _scrollController = ScrollController();
+  String _nameUser;
   String _idUser;
-  String _nomeUser;
 
-  _enviarMensagem() {
-    String texto = _controllerMensagem.text;
-    Message mensagem = Message();
+  _archiveMessage(messageuser) {
+    Message message = Message();
 
-    if (texto.isNotEmpty) {
-      mensagem.iduser = _idUser;
-      mensagem.nome = _nomeUser;
-      mensagem.mensagem = texto;
-      mensagem.urlimage = "urlExemplo";
-      mensagem.tipo = "1";
-      mensagem.horaexibir = DateTime.now().toString();
-      mensagem.time = dateFormatter.generateDateTimeIdentification();
-      _salvarMensagem(mensagem);
+    if (messageuser.isNotEmpty) {
+      message.messageid = dateFormatter.generateDateTimeIdentification();
+      message.iduser = _idUser;
+      message.name = _nameUser;
+      message.message = messageuser;
+      message.urlimage = "empty";
+      message.type = Message.typeMessage;
+      message.timeshow = dateFormatter.generateDateTimeIdentification();
+      _sendMessage(message);
     }
   }
 
-  _salvarMensagem(Message mensagem) async {
+  _sendMessage(Message message) async {
     await db
-        .collection("chatgeral")
-        .add(mensagem.toMap())
+        .collection("generalchat")
+        .add(message.toMap())
         .then((value) => _controllerMensagem.clear());
   }
 
-  Stream<QuerySnapshot> _adicionarListenerMensagens() {
+  Stream<QuerySnapshot> _addListenerMessages() {
     final stream = db
-        .collection("chatgeral")
-        .orderBy("time", descending: false)
+        .collection("generalchat")
+        .orderBy("timeshow", descending: false)
         .snapshots();
 
     stream.listen((dados) {
@@ -69,16 +69,16 @@ class _GeneralChatState extends State<GeneralChat> {
     FirebaseFirestore db = FirebaseFirestore.instance;
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
-        await db.collection("usuarios").doc(user.uid).get();
-    _adicionarListenerMensagens();
+        await db.collection("users").doc(user.uid).get();
 
     _idUser = user.uid;
-    _nomeUser = snapshot["nome"];
+    _nameUser = snapshot["name"];
   }
 
   @override
   void initState() {
     _recuperarDadosUser();
+    _addListenerMessages();
     super.initState();
   }
 
@@ -142,19 +142,19 @@ class _GeneralChatState extends State<GeneralChat> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 _idUser != item["iduser"]
-                                    ? Text(item["nome"],
+                                    ? Text(item["name"],
                                         textAlign: TextAlign.left,
                                         style: TextStyle(fontSize: 12))
                                     : Container(),
                                 _idUser != item["iduser"]
                                     ? Divider(color: Colors.grey[100])
                                     : Container(),
-                                Text(item["mensagem"],
+                                Text(item["message"],
                                     textAlign: TextAlign.center,
                                     style: TextStyle(fontSize: 16)),
                                 Text(
                                     dateFormatter
-                                        .showHoursMin(item["horaexibir"]),
+                                        .showHoursMin(item["timeshow"]),
                                     textAlign: TextAlign.right,
                                     style: TextStyle(fontSize: 10))
                               ],
@@ -215,7 +215,7 @@ class _GeneralChatState extends State<GeneralChat> {
                   child: IconButton(
                       icon: Icon(Icons.send_outlined),
                       onPressed: () {
-                        _enviarMensagem();
+                        _archiveMessage(_controllerMensagem.text);
                       }),
                 )
               ],
@@ -226,34 +226,3 @@ class _GeneralChatState extends State<GeneralChat> {
     );
   }
 }
-
-
-/*
-ListView.builder(
-            itemCount: listaMensagens.length,
-            itemBuilder: (context, indice) {
-              Alignment alinhamento = Alignment.centerRight;
-              Color color = paleta.orange;
-              double laguraContainer = MediaQuery.of(context).size.width * 0.8;
-
-              if (indice % 2 == 0) {
-                color = paleta.royalBlue;
-                alinhamento = Alignment.centerLeft;
-              }
-              return Align(
-                alignment: alinhamento,
-                child: Padding(
-                  padding: EdgeInsets.all(6),
-                  child: Container(
-                    padding: EdgeInsets.all(16),
-                    width: laguraContainer,
-                    decoration: BoxDecoration(
-                        color: color,
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                    child: Text(listaMensagens[indice],
-                        style: TextStyle(fontSize: 18)),
-                  ),
-                ),
-              );
-            })
-*/

@@ -1,56 +1,49 @@
 class Message {
-  // Atributos
-  String _iduser = "";
-  String _nome = "";
-  String _mensagem = "";
-  String _urlimage = "";
-  String _tipo = "";
-  String _horaexibir = "";
-  int _time = 0;
+  //Types of messages
+  static const int typeMessage = 1;
+  static const int typePhoto = 2;
 
-  //Contrutor
+  int _messageid = 0;
+  String _iduser = "";
+  String _name = "";
+  String _message = "";
+  String _urlimage = "";
+  int _type = 0;
+  String _timeshow = "";
+
   Message();
 
-  //conversor em Map
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
+      "messageid": this.messageid,
       "iduser": this.iduser,
-      "nome": this.nome,
-      "mensagem": this.mensagem,
+      "name": this.name,
+      "message": this.message,
       "urlimage": this.urlimage,
-      "tipo": this.tipo,
-      "horaexibir": this.horaexibir,
-      "time": this.time,
+      "type": this.type,
+      "timeshow": this.timeshow,
     };
     return map;
   }
 
-  //Getters e Setters
-  get iduser => this._iduser;
+  get messageid => this._messageid;
+  set messageid(value) => this._messageid = value;
 
+  get iduser => this._iduser;
   set iduser(value) => this._iduser = value;
 
-  get nome => this._nome;
+  get name => this._name;
+  set name(value) => this._name = value;
 
-  set nome(value) => this._nome = value;
-
-  get mensagem => this._mensagem;
-
-  set mensagem(value) => this._mensagem = value;
+  get message => this._message;
+  set message(value) => this._message = value;
 
   get urlimage => this._urlimage;
-
   set urlimage(value) => this._urlimage = value;
 
-  get tipo => this._tipo;
+  get type => this._type;
+  set type(value) => this._type = value;
 
-  set tipo(value) => this._tipo = value;
-
-  get horaexibir => this._horaexibir;
-
-  set horaexibir(value) => this._horaexibir = value;
-
-  get time => this._time;
-
-  set time(value) => this._time = value;
+  get timeshow => this._timeshow;
+  set timeshow(value) => this._timeshow = value;
 }
