@@ -46,14 +46,18 @@ class _TimeLineState extends State<TimeLine> {
 
   _recuperarDadosUsuario() async {
     User user = auth.currentUser;
+    print("teste: g " + user.uid);
     DocumentSnapshot snapshot =
         await db.collection("users").doc(user.uid).get();
-    _addListenerPublications();
+
+    print("teste: g " + snapshot["email"]);
 
     setState(() {
       _admin = snapshot["admin"];
       _nameUser = snapshot["name"];
     });
+
+    _addListenerPublications();
   }
 
   @override

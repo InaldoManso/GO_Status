@@ -34,6 +34,7 @@ class Api {
   ];
 
   Future<String> recSteamIdFromUrl(String keyApi, String steamName) async {
+    print("Teste " + keyApi.toString());
     http.Response response =
         await http.get(getSteamUrl[0] + keyApi + getSteamUrl[1] + steamName);
 

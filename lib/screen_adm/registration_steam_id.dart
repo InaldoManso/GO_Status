@@ -59,17 +59,20 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  @override
-  void initState() {
-    _recuperarAdmKeys();
-    super.initState();
-  }
-
   _recuperarAdmKeys() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     steamapikey = prefs.getString("steamapikey");
     youtubeapikey = prefs.getString("youtubeapikey");
+
+    print("TEste 01" + steamapikey);
+    print("TEste 02" + youtubeapikey);
+  }
+
+  @override
+  void initState() {
+    _recuperarAdmKeys();
+    super.initState();
   }
 
   @override

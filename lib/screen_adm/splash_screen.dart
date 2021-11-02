@@ -1,15 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_status/helper/route_generator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_status/helper/version_control.dart';
-import 'package:go_status/model/user_stats.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/model/user_profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_status/model/user_stats.dart';
 import 'package:go_status/helper/api.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/model/user_profile.dart';
 import 'dart:async';
-
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -30,91 +29,79 @@ class _SplashScreenState extends State<SplashScreen> {
   String steamapikey;
   String youtubeapikey;
 
-  Future _verificarLogado() async {
+  _checkApiKeys() async {
+    print("teste001 Splash INF: check API KEY iniciado");
+    DocumentSnapshot snapshot = await db
+        .collection("admgostatus")
+        .doc("credentials")
+        .get()
+        .then((snapshotValue) {
+      steamapikey = snapshotValue["steamapikey"];
+      youtubeapikey = snapshotValue["youtubeapikey"];
+      print("teste001 Splash SUC: API Keys recuperadas");
+      _checkLogin();
+    }).catchError((onError) {
+      print("teste001 Splash ERR: Erro ao recuperar API Keys");
+      _snackBarInfo(
+          "Erro ao se comunicar com o servidor,\nentre em contato com seu Saver");
+    });
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString("steamapikey", steamapikey).then((value) {
+      print("teste001 Splash SUC: API KEY salva: " + steamapikey);
+    });
+    await prefs.setString("youtubeapikey", youtubeapikey).then((value) {
+      print("teste001 Splash SUC: API KEY salva: " + youtubeapikey);
+    });
+  }
+
+  _checkLogin() {
+    print("teste001 Splash INF: Verificando Login User");
     FirebaseAuth auth = FirebaseAuth.instance;
-    User user = await auth.currentUser;
+    User user = auth.currentUser;
     if (user != null) {
-      _recuperarAdmKeys();
+      print("teste001 Splash INF: User esta logado no app");
+      _recoverUserData();
     } else {
-      recApisKeys();
+      print("teste001 Splash INF: User NÃO esta logado");
+      Timer(Duration(seconds: 2), () {
+        Navigator.pushReplacementNamed(context, RouteGenerator.loginRoute);
+      });
     }
   }
 
-  recApisKeys() async {
-    DocumentSnapshot snapshot = await db
-        .collection("admgostatus")
-        .doc("credentials")
-        .get()
-        .then((snapshot) async {
-      steamapikey = snapshot["steamapikey"];
-      print("Resultado: 1 " + steamapikey);
-      youtubeapikey = snapshot["youtubeapikey"];
-      print("Resultado: 2 " + youtubeapikey);
-      print("teste: 01 apis keys recuperadas");
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString("steamapikey", steamapikey);
-      await prefs.setString("youtubeapikey", youtubeapikey);
-    }).catchError((onError) {
-      _snackBarInfo("Resultado: Erro ao conectar com os servidores");
-    });
-
-    Future.delayed(Duration(milliseconds: 2000), () {
-      Navigator.pushReplacementNamed(context, RouteGenerator.loginRoute);
-    });
-  }
-
-  _recuperarAdmKeys() async {
-    DocumentSnapshot snapshot = await db
-        .collection("admgostatus")
-        .doc("credentials")
-        .get()
-        .then((snapshot) async {
-      steamapikey = snapshot["steamapikey"];
-      print("Resultado: 1 " + steamapikey);
-      youtubeapikey = snapshot["youtubeapikey"];
-      print("Resultado: 2 " + youtubeapikey);
-      print("teste: 01 apis keys recuperadas");
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString("steamapikey", steamapikey);
-      await prefs.setString("youtubeapikey", youtubeapikey);
-
-      _recuperarDadosUser();
-    }).catchError((onError) {
-      _snackBarInfo("Resultado: Erro ao recuperar seus dados");
-    });
-  }
-
-  _recuperarDadosUser() async {
+  _recoverUserData() async {
+    print("teste001 Splash INF: Recupeando dados do user");
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
         await db.collection("users").doc(user.uid).get();
 
     String steamid = snapshot["steamid"];
-    print("teste: 02 steam id" + steamid);
+    print("teste001 Splash SUC: steam id" + steamid);
 
     usuario = await api.recDataUserFromSteamID(steamapikey, steamid);
-    print("teste: 03 recuperar user " + usuario.name);
+    print("teste001 Splash SUC: recuperar user " + usuario.name);
 
-    // _recSteamID(steamid);
     if (usuario != null) {
-      _recuperarCsgoStats(steamid, usuario.name, usuario.urlimage);
+      print("teste001 Splash INF: Atualizando stats do user");
+      _recoverStatsUserToUpdate(steamid, usuario.name, usuario.urlimage);
       setState(() {
         _carregando = true;
       });
     } else {
-      _snackBarInfo("Resultado: Erro ao recuperar seus dados");
+      _snackBarInfo(
+          "Erro ao se conectar com a Steam, tente novamente mais tarde!");
     }
   }
 
-  _recuperarCsgoStats(String steamid, String nome, String urlimage) async {
+  _recoverStatsUserToUpdate(
+      String steamid, String nome, String urlimage) async {
     csgoStats = await api.updateUserStats(steamapikey, steamid, nome, urlimage);
-    print("teste: 04 atualizando stats " + csgoStats.killdeath);
+    print("teste001 Splash SUC: Stats user KD: " + csgoStats.killdeath);
 
     if (csgoStats != null) {
+      print("teste001 Splash INF: Enviando atualização para o DB");
       User user = auth.currentUser;
-
       db
           .collection("users")
           .doc(user.uid)
@@ -123,13 +110,34 @@ class _SplashScreenState extends State<SplashScreen> {
         setState(() {
           _carregando = false;
         });
-        _validarVersaoCadastral();
+        _validateRegistrationVersion();
       });
     } else {
-      _snackBarInfo("Resultado: Erro ao recuperar seus dados");
+      print("teste001 Splash ERR: api steamStts não retornou valor");
+      _snackBarInfo(
+          "Erro ao se conectar com a Steam, tente novamente mais tarde!");
       setState(() {
         _carregando = false;
       });
+    }
+  }
+
+  _validateRegistrationVersion() async {
+    print("teste001 Splash INF: Validando versão do cadastro");
+    VersionControl versionControl = VersionControl();
+    User user = auth.currentUser;
+    DocumentSnapshot snapshot =
+        await db.collection("users").doc(user.uid).get();
+
+    String version = snapshot["version"];
+    print("teste: 03 version" + version);
+    bool updated = await versionControl.versionCheck(version, user.uid);
+    if (updated == true) {
+      print("teste001 Splash SUC: Cadastro ESTA atualizado");
+      Navigator.pushReplacementNamed(context, RouteGenerator.homeRoute);
+    } else {
+      print("teste001 Splash ERR: Cadastro NÃO ESTA atualizado");
+      _validateRegistrationVersion();
     }
   }
 
@@ -146,25 +154,9 @@ class _SplashScreenState extends State<SplashScreen> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  _validarVersaoCadastral() async {
-    VersionControl versionControl = VersionControl();
-    User user = auth.currentUser;
-    DocumentSnapshot snapshot =
-        await db.collection("users").doc(user.uid).get();
-
-    String version = snapshot["version"];
-    print("teste: 03 version" + version);
-    bool updated = await versionControl.versionCheck(version, user.uid);
-    if (updated == true) {
-      Navigator.pushReplacementNamed(context, RouteGenerator.homeRoute);
-    } else {
-      _validarVersaoCadastral();
-    }
-  }
-
   @override
   void initState() {
-    _verificarLogado();
+    _checkApiKeys();
     super.initState();
   }
 
