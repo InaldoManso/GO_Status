@@ -34,22 +34,18 @@ class Api {
   ];
 
   Future<String> recSteamIdFromUrl(String keyApi, String steamName) async {
-    print("Teste " + keyApi.toString());
     http.Response response =
         await http.get(getSteamUrl[0] + keyApi + getSteamUrl[1] + steamName);
-    print("GG " + keyApi);
-    print("GG " + steamName);
 
     Map<String, dynamic> returnData = json.decode(response.body);
-    print("GG " + response.body.toString());
-
     String success = returnData["response"]["success"].toString();
 
     if (success == "1") {
+      print("DEU CERTOOOO");
       return returnData["response"]["steamid"].toString();
     } else {
-      returnData = null;
-      return returnData[0];
+      print("DEU ERRROOOOO");
+      return "error";
     }
   }
 
@@ -64,18 +60,10 @@ class Api {
     }
   }
 
-  Future<UserProfile> recDataUserFromSteamID(
-      String keyApi, String steamID) async {
+  recDataUserFromSteamID(String keyApi, String steamID) async {
     UserProfile userProfile = UserProfile();
     http.Response response =
         await http.get(getSteamId[0] + keyApi + getSteamId[1] + steamID);
-
-    print("GG " + keyApi);
-    print("GG " + steamID);
-
-    print(response.body.toString());
-
-    print("GG " + response.body.toString());
 
     if (response.statusCode == 200) {
       Map<String, dynamic> returnData = json.decode(response.body);
@@ -95,12 +83,10 @@ class Api {
 
         return userProfile;
       } else {
-        userProfile = null;
-        return userProfile;
+        return "error";
       }
     } else {
-      userProfile = null;
-      return userProfile;
+      return "error";
     }
   }
 

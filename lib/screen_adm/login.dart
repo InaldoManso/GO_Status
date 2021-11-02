@@ -212,17 +212,18 @@ class _LoginState extends State<Login> {
               Padding(
                 padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
                 child: RaisedButton(
-                    color: paleta.dodgerBlue,
-                    textColor: Colors.white,
-                    padding: EdgeInsets.all(15),
-                    child: _exibirCarregando(),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    onPressed: () {
-                      _carregando = true;
-                      _exibirCarregando();
-                      _validarCampos();
-                    }),
+                  color: paleta.dodgerBlue,
+                  textColor: Colors.white,
+                  padding: EdgeInsets.all(15),
+                  child: _exibirCarregando(),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  onPressed: () {
+                    _carregando = true;
+                    _exibirCarregando();
+                    _validarCampos();
+                  },
+                ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
