@@ -37,6 +37,8 @@ class Api {
     print("Teste " + keyApi.toString());
     http.Response response =
         await http.get(getSteamUrl[0] + keyApi + getSteamUrl[1] + steamName);
+    print("GG " + keyApi);
+    print("GG " + steamName);
 
     Map<String, dynamic> returnData = json.decode(response.body);
     print("GG " + response.body.toString());
@@ -45,7 +47,10 @@ class Api {
 
     if (success == "1") {
       return returnData["response"]["steamid"].toString();
-    } else {}
+    } else {
+      returnData = null;
+      return returnData[0];
+    }
   }
 
   validarSteamPublica(String keyApi, String steamid) async {
@@ -65,7 +70,12 @@ class Api {
     http.Response response =
         await http.get(getSteamId[0] + keyApi + getSteamId[1] + steamID);
 
+    print("GG " + keyApi);
+    print("GG " + steamID);
+
     print(response.body.toString());
+
+    print("GG " + response.body.toString());
 
     if (response.statusCode == 200) {
       Map<String, dynamic> returnData = json.decode(response.body);

@@ -25,6 +25,25 @@ class _TimeLineState extends State<TimeLine> {
   String steamapikey;
   int _admin = 0;
 
+  _recuperarAdmKeys() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      steamapikey = prefs.getString("steamapikey");
+      youtubeapikey = prefs.getString("youtubeapikey");
+    });
+  }
+
+  _recoverUserData() async {
+    User user = auth.currentUser;
+    DocumentSnapshot snapshot =
+        await db.collection("users").doc(user.uid).get();
+
+    setState(() {
+      _admin = snapshot["admin"];
+      _nameUser = snapshot["name"];
+    });
+  }
+
   Stream<QuerySnapshot> _addListenerPublications() {
     final stream = db
         .collection("publications")
@@ -34,36 +53,14 @@ class _TimeLineState extends State<TimeLine> {
     stream.listen((dados) {
       _controller.add(dados);
     });
-  }
-
-  _recuperarAdmKeys() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      steamapikey = prefs.getString("steamapikey");
-      youtubeapikey = prefs.getString("youtubeapikey");
-    });
-  }
-
-  _recuperarDadosUsuario() async {
-    User user = auth.currentUser;
-    print("teste: g " + user.uid);
-    DocumentSnapshot snapshot =
-        await db.collection("users").doc(user.uid).get();
-
-    print("teste: g " + snapshot["email"]);
-
-    setState(() {
-      _admin = snapshot["admin"];
-      _nameUser = snapshot["name"];
-    });
-
-    _addListenerPublications();
+    return stream;
   }
 
   @override
   void initState() {
     _recuperarAdmKeys();
-    _recuperarDadosUsuario();
+    _recoverUserData();
+    _addListenerPublications();
     super.initState();
   }
 
@@ -169,7 +166,14 @@ class _TimeLineState extends State<TimeLine> {
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
-                                )
+                                ),
+                                // IconButton(
+                                //     splashColor: Colors.red,
+                                //     onPressed: () {},
+                                //     icon: Icon(
+                                //       Icons.more_horiz_outlined,
+                                //       color: Colors.white,
+                                //     ))
                               ],
                             ),
                             Divider(

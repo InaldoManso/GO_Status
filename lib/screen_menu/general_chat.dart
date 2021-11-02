@@ -38,7 +38,7 @@ class _GeneralChatState extends State<GeneralChat> {
       message.message = messageuser;
       message.urlimage = "empty";
       message.type = Message.typeMessage;
-      message.timeshow = dateFormatter.generateDateTimeIdentification();
+      message.timeshow = dateFormatter.generateDateTime();
       _sendMessage(message);
     }
   }
@@ -53,12 +53,11 @@ class _GeneralChatState extends State<GeneralChat> {
   Stream<QuerySnapshot> _addListenerMessages() {
     final stream = db
         .collection("generalchat")
-        .orderBy("timeshow", descending: false)
+        .orderBy("messageid", descending: false)
         .snapshots();
 
     stream.listen((dados) {
       _controller.add(dados);
-      //Sempre que atualizar, rolar para o fim
       Timer(Duration(milliseconds: 200), () {
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
       });
@@ -73,12 +72,12 @@ class _GeneralChatState extends State<GeneralChat> {
 
     _idUser = user.uid;
     _nameUser = snapshot["name"];
+    _addListenerMessages();
   }
 
   @override
   void initState() {
     _recuperarDadosUser();
-    _addListenerMessages();
     super.initState();
   }
 

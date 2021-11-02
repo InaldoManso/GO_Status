@@ -5,6 +5,10 @@ import 'package:intl/intl.dart';
 //Hour = H /Minute = m / Second = s
 
 class DateFormatter {
+  generateDateTime() {
+    return DateTime.now().toString();
+  }
+
   showDayMonthYearHoursMinSec(String datetime) {
     initializeDateFormatting("pt_BR");
     var formatter = DateFormat("dd-MM-yyyy HH:mm:ss");
