@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:go_status/helper/date_formatter.dart';
 import 'package:go_status/model/user_profile.dart';
 import 'package:go_status/model/user_stats.dart';
 import 'package:go_status/model/video.dart';
@@ -39,6 +41,18 @@ class Api {
 
     Map<String, dynamic> returnData = json.decode(response.body);
     String success = returnData["response"]["success"].toString();
+
+    //================== TEST AREA ==================//
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    DateFormatter dateFormatter = DateFormatter();
+    Map<String, dynamic> log = {
+      "time": dateFormatter.generateDateTime(),
+      "value": response.body,
+      "steamkey": keyApi,
+      "search": steamName
+    };
+    db..collection("apperrorlog").add(log);
+    //================== TEST AREA ==================//
 
     if (success == "1") {
       print("DEU CERTOOOO");
