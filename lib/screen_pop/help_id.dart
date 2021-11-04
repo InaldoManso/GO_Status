@@ -34,7 +34,7 @@ class _HelpIdState extends State<HelpId> {
                 height: 250,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("images/helpers/steamid.jpg"),
+                      image: AssetImage("assets/image/helpers/steamid.jpg"),
                       fit: BoxFit.fitWidth),
                 ),
               ),
@@ -49,7 +49,7 @@ class _HelpIdState extends State<HelpId> {
                 height: 250,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("images/helpers/steamidzoom.jpg"),
+                      image: AssetImage("assets/image/helpers/steamidzoom.jpg"),
                       fit: BoxFit.fitWidth),
                 ),
               ),

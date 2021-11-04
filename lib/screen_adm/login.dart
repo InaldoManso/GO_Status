@@ -11,17 +11,13 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  //Atributos
-  TextEditingController _controllerEmail =
-      // TextEditingController(text: "inaldo@gmail.com");
-      TextEditingController();
-  TextEditingController _controllerSenha =
-      // TextEditingController(text: "123456");
-      TextEditingController();
+  //Atributos "inaldo@gmail.com"
+  ColorPallete colorPallete = ColorPallete();
 
-  //
+  //Attributes
+  TextEditingController _controllerEmail = TextEditingController();
+  TextEditingController _controllerSenha = TextEditingController();
   IconData _iconSenha = Icons.visibility_off_outlined;
-  ColorPallete paleta = ColorPallete();
   bool _esconderSenha = true;
   bool _carregando = false;
 
@@ -150,14 +146,14 @@ class _LoginState extends State<Login> {
                   Text(
                     "GO ",
                     style: TextStyle(
-                        color: paleta.orange,
+                        color: colorPallete.orange,
                         fontSize: 32,
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "Status",
                     style: TextStyle(
-                        color: paleta.dodgerBlue,
+                        color: colorPallete.dodgerBlue,
                         fontSize: 32,
                         fontWeight: FontWeight.bold),
                   )
@@ -171,7 +167,7 @@ class _LoginState extends State<Login> {
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: "Digite seu e-mail",
-                    labelStyle: TextStyle(color: paleta.dodgerBlue),
+                    labelStyle: TextStyle(color: colorPallete.dodgerBlue),
                     //Borda externa
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16)),
@@ -191,12 +187,12 @@ class _LoginState extends State<Login> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: "Senha de 6 dígitos",
-                    labelStyle: TextStyle(color: paleta.dodgerBlue),
-                    counterStyle: TextStyle(color: paleta.dodgerBlue),
+                    labelStyle: TextStyle(color: colorPallete.dodgerBlue),
+                    counterStyle: TextStyle(color: colorPallete.dodgerBlue),
                     suffixIcon: IconButton(
                         icon: Icon(
                           _iconSenha,
-                          color: paleta.orange,
+                          color: colorPallete.orange,
                         ),
                         onPressed: (() {
                           _exibirSenha();
@@ -212,7 +208,7 @@ class _LoginState extends State<Login> {
               Padding(
                 padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
                 child: RaisedButton(
-                  color: paleta.dodgerBlue,
+                  color: colorPallete.dodgerBlue,
                   textColor: Colors.white,
                   padding: EdgeInsets.all(15),
                   child: _exibirCarregando(),
@@ -232,7 +228,8 @@ class _LoginState extends State<Login> {
                   children: [
                     GestureDetector(
                       child: Text("Cadastre-se",
-                          style: TextStyle(fontSize: 18, color: paleta.orange)),
+                          style: TextStyle(
+                              fontSize: 18, color: colorPallete.orange)),
                       onTap: () {
                         _iniciarCadastro();
                       },

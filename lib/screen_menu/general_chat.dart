@@ -119,8 +119,7 @@ class _GeneralChatState extends State<GeneralChat> {
 
                       Alignment alinhamento = Alignment.centerRight;
                       Color color = paleta.orange;
-                      double laguraContainer =
-                          MediaQuery.of(context).size.width * 0.8;
+                      double appWidth = MediaQuery.of(context).size.width;
 
                       if (_idUser != item["iduser"]) {
                         color = paleta.dodgerBlue;
@@ -131,8 +130,10 @@ class _GeneralChatState extends State<GeneralChat> {
                         child: Padding(
                           padding: EdgeInsets.all(6),
                           child: Container(
+                            constraints: BoxConstraints(
+                                minWidth: appWidth * 0.3,
+                                maxWidth: appWidth * 0.8),
                             padding: EdgeInsets.all(8),
-                            width: laguraContainer,
                             decoration: BoxDecoration(
                                 color: color,
                                 borderRadius:
@@ -225,3 +226,34 @@ class _GeneralChatState extends State<GeneralChat> {
     );
   }
 }
+
+/*
+ Container(
+                    constraints:
+                        BoxConstraints(minWidth: 100, maxWidth: appWidth * 0.6),
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        primary: Colors.transparent,
+                        minimumSize: Size(88, 36),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(2)),
+                        ),
+                      ),
+                      child: Text(
+                        "Eu sou " + userProfile.name,
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                        softWrap: false,
+                      ),
+                      onPressed: () {
+                        _validarUserAndStemPublic();
+                      },
+                    ),
+                  )
+*/

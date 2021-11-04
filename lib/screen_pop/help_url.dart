@@ -34,7 +34,7 @@ class _HelpUrlState extends State<HelpUrl> {
                 height: 250,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("images/helpers/steamurl.jpg"),
+                      image: AssetImage("assets/image/helpers/steamurl.jpg"),
                       fit: BoxFit.fitWidth),
                 ),
               ),
@@ -52,7 +52,8 @@ class _HelpUrlState extends State<HelpUrl> {
                 height: 250,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("images/helpers/steamurlzoom.jpg"),
+                      image:
+                          AssetImage("assets/image/helpers/steamurlzoom.jpg"),
                       fit: BoxFit.fitWidth),
                 ),
               ),
