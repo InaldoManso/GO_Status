@@ -1,14 +1,14 @@
+import 'package:go_status/screen_popup/publication/publication_creator.dart';
+import 'package:go_status/screen_popup/notifications/reset_password.dart';
 import 'package:go_status/screen_adm/register/registration_steam_id.dart';
+import 'package:go_status/screen_popup/publication/post_image_view.dart';
+import 'package:go_status/screen_popup/help_registration/help_url.dart';
+import 'package:go_status/screen_popup/help_registration/help_id.dart';
 import 'package:go_status/screen_adm/register/registration_user.dart';
+import 'package:go_status/screen_popup/notifications/logout.dart';
 import 'package:go_status/screen_adm/splash/splash_screen.dart';
-import 'package:go_status/screen_pop/publication_creator.dart';
-import 'package:go_status/screen_pop/post_image_view.dart';
-import 'package:go_status/screen_pop/reset_password.dart';
 import 'package:go_status/screen_adm/register/login.dart';
 import 'package:go_status/screen_adm/home/home.dart';
-import 'package:go_status/screen_pop/help_url.dart';
-import 'package:go_status/screen_pop/help_id.dart';
-import 'package:go_status/screen_pop/logout.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -24,6 +24,7 @@ class RouteGenerator {
   static const String postCreatorRoute = "/postcreator";
   static const String viewPostRoute = "/postimage";
 
+  // ignore: missing_return
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final argument = settings.arguments;
 

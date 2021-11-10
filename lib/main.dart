@@ -12,8 +12,6 @@ void main() async {
   final ThemeData theme = ThemeData();
   ColorPallete paleta = ColorPallete();
 
-  print("teste: inicio");
-
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -23,7 +21,6 @@ void main() async {
       theme: ThemeData(
         appBarTheme: AppBarTheme(backgroundColor: Colors.transparent),
         colorScheme: theme.colorScheme.copyWith(secondary: paleta.orange),
-        accentColor: paleta.orange,
         primaryColor: paleta.dodgerBlue,
         backgroundColor: paleta.grey850,
         scaffoldBackgroundColor: paleta.grey900,

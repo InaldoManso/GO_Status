@@ -240,68 +240,69 @@ class _PublicationCreatorState extends State<PublicationCreator> {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 8, bottom: 8),
-                      child: Divider(color: paleta.dodgerBlue),
-                    ),
-                    TextField(
-                      minLines: 3,
-                      maxLines: 10,
-                      maxLength: 300,
-                      controller: _controllerTexto,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                        labelText: "Digite aqui",
-                        labelStyle: TextStyle(color: Colors.grey),
-                        counterStyle: TextStyle(color: Colors.white),
-                        //Borda externa
-                        border: OutlineInputBorder(
+                      padding: const EdgeInsets.only(top: 24, bottom: 4),
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: paleta.grey900,
                           borderRadius: BorderRadius.circular(16),
+                          image: _urlImagRecovered != ""
+                              ? DecorationImage(
+                                  image: NetworkImage(_urlImagRecovered),
+                                  fit: BoxFit.cover,
+                                )
+                              : DecorationImage(
+                                  image: NetworkImage(""),
+                                  fit: BoxFit.cover,
+                                ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: Colors.grey)),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: paleta.grey900,
-                        image: _urlImagRecovered != ""
-                            ? DecorationImage(
-                                image: NetworkImage(_urlImagRecovered),
-                                fit: BoxFit.cover,
-                              )
-                            : DecorationImage(
-                                image: NetworkImage(""),
-                                fit: BoxFit.cover,
+                        child: _uploadingImage
+                            ? CircularProgressIndicator()
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  FlatButton(
+                                      child: Text("Camera",
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      onPressed: () {
+                                        _selectLocalImage("camera");
+                                      }),
+                                  FlatButton(
+                                      child: Text("Galeria",
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      onPressed: () {
+                                        _selectLocalImage("galeria");
+                                      }),
+                                ],
                               ),
                       ),
-                      child: _uploadingImage
-                          ? CircularProgressIndicator()
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                FlatButton(
-                                    child: Text("Camera",
-                                        style: TextStyle(color: Colors.white)),
-                                    onPressed: () {
-                                      _selectLocalImage("camera");
-                                    }),
-                                FlatButton(
-                                    child: Text("Galeria",
-                                        style: TextStyle(color: Colors.white)),
-                                    onPressed: () {
-                                      _selectLocalImage("galeria");
-                                    }),
-                              ],
-                            ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 8, bottom: 8),
-                      child: Divider(color: paleta.dodgerBlue),
+                      padding: EdgeInsets.only(top: 8),
+                      child: TextField(
+                        minLines: 3,
+                        maxLines: 10,
+                        maxLength: 300,
+                        controller: _controllerTexto,
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.multiline,
+                        decoration: InputDecoration(
+                          labelText: "Digite aqui",
+                          labelStyle: TextStyle(color: Colors.grey),
+                          counterStyle: TextStyle(color: Colors.white),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
