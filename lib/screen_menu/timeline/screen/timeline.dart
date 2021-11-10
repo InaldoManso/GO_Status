@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:go_status/helper/route_generator.dart';
+import 'package:go_status/general/tools/route_generator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/general/helpers/color_pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_status/model/publication.dart';
 import 'package:flutter/material.dart';
@@ -135,11 +135,11 @@ class _TimeLineState extends State<TimeLine> {
                       postagem.timeshow = item["timeshow"];
 
                       return Container(
-                        margin: EdgeInsets.only(top: 8, bottom: 8),
+                        margin: EdgeInsets.all(8),
                         padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: paleta.grey850,
-                        ),
+                            color: paleta.grey800,
+                            borderRadius: BorderRadius.circular(16)),
                         child: Column(
                           children: [
                             Row(
@@ -167,25 +167,20 @@ class _TimeLineState extends State<TimeLine> {
                                     ),
                                   ),
                                 ),
-                                // IconButton(
-                                //     splashColor: Colors.red,
-                                //     onPressed: () {},
-                                //     icon: Icon(
-                                //       Icons.more_horiz_outlined,
-                                //       color: Colors.white,
-                                //     ))
-                              ],
-                            ),
-                            Divider(
-                              color: Colors.black,
-                            ),
-                            Container(
-                              child: SingleChildScrollView(
-                                child: Text(
-                                  postagem.message,
-                                  style: TextStyle(color: Colors.white),
+                                Material(
+                                  color: Colors.transparent,
+                                  child: IconButton(
+                                    splashRadius: 20,
+                                    splashColor: Colors.grey,
+                                    iconSize: 30,
+                                    icon: const Icon(
+                                      Icons.more_horiz_outlined,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {},
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
                             GestureDetector(
                               onTap: () {
@@ -195,7 +190,7 @@ class _TimeLineState extends State<TimeLine> {
                               },
                               child: Container(
                                 margin: const EdgeInsets.only(top: 8),
-                                height: MediaQuery.of(context).size.width * 0.6,
+                                height: MediaQuery.of(context).size.width * 0.5,
                                 alignment: Alignment.topLeft,
                                 decoration: BoxDecoration(
                                   color: Colors.grey[200],
@@ -203,6 +198,15 @@ class _TimeLineState extends State<TimeLine> {
                                   image: DecorationImage(
                                       image: NetworkImage(postagem.urlimage),
                                       fit: BoxFit.cover),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(4),
+                              child: SingleChildScrollView(
+                                child: Text(
+                                  postagem.message,
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
                             ),

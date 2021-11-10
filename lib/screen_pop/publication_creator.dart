@@ -1,7 +1,7 @@
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:go_status/helper/date_formatter.dart';
-import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/general/tools/date_formatter.dart';
+import 'package:go_status/general/helpers/color_pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_status/model/publication.dart';
 import 'package:image_picker/image_picker.dart';
@@ -249,7 +249,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
                       maxLength: 300,
                       controller: _controllerTexto,
                       textAlign: TextAlign.center,
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.multiline,
                       decoration: InputDecoration(
                         labelText: "Digite aqui",
                         labelStyle: TextStyle(color: Colors.grey),

@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:go_status/screen_adm/login.dart';
-import 'package:go_status/screen_adm/registration_steam_id.dart';
-import 'package:go_status/screen_adm/registration_user.dart';
-import 'package:go_status/screen_adm/splash_screen.dart';
-import 'package:go_status/screen_adm/Home.dart';
+import 'package:go_status/screen_adm/register/registration_steam_id.dart';
+import 'package:go_status/screen_adm/register/registration_user.dart';
+import 'package:go_status/screen_adm/splash/splash_screen.dart';
 import 'package:go_status/screen_pop/publication_creator.dart';
-import 'package:go_status/screen_pop/help_id.dart';
-import 'package:go_status/screen_pop/help_url.dart';
-import 'package:go_status/screen_pop/logout.dart';
 import 'package:go_status/screen_pop/post_image_view.dart';
 import 'package:go_status/screen_pop/reset_password.dart';
+import 'package:go_status/screen_adm/register/login.dart';
+import 'package:go_status/screen_adm/home/home.dart';
+import 'package:go_status/screen_pop/help_url.dart';
+import 'package:go_status/screen_pop/help_id.dart';
+import 'package:go_status/screen_pop/logout.dart';
+import 'package:flutter/material.dart';
 
 class RouteGenerator {
   static const String splashRoute = "/splash";

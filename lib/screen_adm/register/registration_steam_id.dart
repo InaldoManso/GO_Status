@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/color_pallete.dart';
-import 'package:go_status/helper/route_generator.dart';
-import 'package:go_status/helper/api.dart';
-import 'package:go_status/model/user_profile.dart';
+import 'package:go_status/general/helpers/color_pallete.dart';
+import 'package:go_status/general/tools/route_generator.dart';
+import 'package:go_status/general/apis/api.dart';
+import 'package:go_status/general/model/user_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RegistrationSteamId extends StatefulWidget {

@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/date_formatter.dart';
-import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/general/tools/date_formatter.dart';
+import 'package:go_status/general/helpers/color_pallete.dart';
 import 'package:go_status/model/message.dart';
-import 'package:go_status/model/user_profile.dart';
+import 'package:go_status/general/model/user_profile.dart';
 
 class GeneralChat extends StatefulWidget {
   @override
@@ -50,7 +50,7 @@ class _GeneralChatState extends State<GeneralChat> {
         .then((value) => _controllerMensagem.clear());
   }
 
-  Stream<QuerySnapshot> _addListenerMessages() {
+  _addListenerMessages() {
     final stream = db
         .collection("generalchat")
         .orderBy("messageid", descending: false)
@@ -58,7 +58,7 @@ class _GeneralChatState extends State<GeneralChat> {
 
     stream.listen((dados) {
       _controller.add(dados);
-      Timer(Duration(milliseconds: 200), () {
+      Timer(Duration(milliseconds: 500), () {
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
       });
     });
@@ -108,6 +108,7 @@ class _GeneralChatState extends State<GeneralChat> {
                   );
                 } else {
                   return ListView.builder(
+                    shrinkWrap: true,
                     controller: _scrollController,
                     itemCount: querySnapshot.docs.length,
                     itemBuilder: (context, index) {

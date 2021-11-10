@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
-import 'package:go_status/helper/api.dart';
-import 'package:go_status/helper/custom_search_delegate.dart';
-import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/general/apis/api.dart';
+import 'package:go_status/general/tools/custom_search_delegate.dart';
+import 'package:go_status/general/helpers/color_pallete.dart';
 import 'package:go_status/model/video.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

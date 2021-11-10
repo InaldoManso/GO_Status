@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:go_status/helper/date_formatter.dart';
-import 'package:go_status/model/user_profile.dart';
-import 'package:go_status/model/user_stats.dart';
+import 'package:go_status/general/tools/date_formatter.dart';
+import 'package:go_status/general/model/user_profile.dart';
+import 'package:go_status/general/model/user_stats.dart';
 import 'package:go_status/model/video.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

@@ -1,6 +1,6 @@
-import 'package:go_status/helper/route_generator.dart';
-import 'package:go_status/screen_adm/splash_screen.dart';
-import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/general/tools/route_generator.dart';
+import 'package:go_status/screen_adm/splash/splash_screen.dart';
+import 'package:go_status/general/helpers/color_pallete.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

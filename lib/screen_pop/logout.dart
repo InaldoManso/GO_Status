@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/color_pallete.dart';
-import 'package:go_status/helper/route_generator.dart';
+import 'package:go_status/general/helpers/color_pallete.dart';
+import 'package:go_status/general/tools/route_generator.dart';
 
 class Logout extends StatefulWidget {
   @override

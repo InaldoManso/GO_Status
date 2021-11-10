@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_status/helper/color_pallete.dart';
+import 'package:go_status/general/helpers/color_pallete.dart';
 import 'package:go_status/model/map_details.dart';
 
 class Maps extends StatefulWidget {

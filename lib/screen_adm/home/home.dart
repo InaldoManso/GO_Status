@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:go_status/helper/color_pallete.dart';
-import 'package:go_status/screen_menu/compare_gun.dart';
-import 'package:go_status/screen_menu/videos.dart';
-import 'package:go_status/screen_menu/report.dart';
-import 'package:go_status/screen_menu/profile.dart';
-import 'package:go_status/screen_menu/timeline.dart';
+import 'package:go_status/screen_menu/profile/screen/profile.dart';
+import 'package:go_status/screen_menu/timeline/screen/timeline.dart';
+import 'package:go_status/general/helpers/color_pallete.dart';
 import 'package:go_status/screen_menu/classification.dart';
 import 'package:go_status/screen_menu/general_chat.dart';
-import 'package:go_status/screen_menu/groups.dart';
-import 'package:go_status/screen_menu/maps.dart';
+import 'package:go_status/screen_menu/compare_gun.dart';
 import 'package:go_status/screen_menu/settings.dart';
+import 'package:go_status/screen_menu/groups.dart';
+import 'package:go_status/screen_menu/videos.dart';
+import 'package:go_status/screen_menu/maps.dart';
+import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -42,8 +41,7 @@ class _HomeState extends State<Home> {
       CompareGun(), //5
       Maps(), //6
       Groups(), //7
-      Report(), //8
-      Settings(), //9
+      Settings(), //8
     ];
 
     return Scaffold(
@@ -70,9 +68,12 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
+            color: paleta.dodgerBlue, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(
+              Icons.home_outlined,
+              color: Colors.white,
+            ),
             onPressed: () {
               _apresentarTela(0);
               setState(() {
@@ -83,9 +84,12 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
+            color: paleta.dodgerBlue, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.person_outline),
+            icon: Icon(
+              Icons.person_outline,
+              color: Colors.white,
+            ),
             onPressed: () {
               _apresentarTela(1);
             }),
@@ -93,9 +97,12 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
+            color: paleta.dodgerBlue, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.list_alt_outlined),
+            icon: Icon(
+              Icons.list_alt_outlined,
+              color: Colors.white,
+            ),
             onPressed: () {
               _apresentarTela(2);
             }),
@@ -103,9 +110,12 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
+            color: paleta.dodgerBlue, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.video_library_outlined),
+            icon: Icon(
+              Icons.video_library_outlined,
+              color: Colors.white,
+            ),
             onPressed: () {
               _apresentarTela(3);
               setState(() {
@@ -116,41 +126,53 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
+            color: paleta.dodgerBlue, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.chat_outlined),
+            icon: Icon(
+              Icons.chat_outlined,
+              color: Colors.white,
+            ),
             onPressed: () {
               _apresentarTela(4);
             }),
       ),
-      /*Container(
+      Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
+            color: paleta.dodgerBlue, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-          icon: Icon(Icons.compare_arrows_outlined),
+          icon: Icon(
+            Icons.compare_arrows_outlined,
+            color: Colors.white,
+          ),
           onPressed: () {
             _apresentarTela(5);
           },
         ),
-      ),*/
+      ),
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
+            color: paleta.dodgerBlue, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-          icon: Icon(Icons.map_outlined),
+          icon: Icon(
+            Icons.map_outlined,
+            color: Colors.white,
+          ),
           onPressed: () {
             _apresentarTela(6);
           },
         ),
       ),
-      /*Container(
+      Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
+            color: paleta.dodgerBlue, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.people_alt_outlined),
+            icon: Icon(
+              Icons.people_alt_outlined,
+              color: Colors.white,
+            ),
             onPressed: () {
               _apresentarTela(7);
             }),
@@ -158,21 +180,14 @@ class _HomeState extends State<Home> {
       Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
+            color: paleta.dodgerBlue, borderRadius: BorderRadius.circular(8)),
         child: IconButton(
-            icon: Icon(Icons.bug_report_outlined),
+            icon: Icon(
+              Icons.settings_outlined,
+              color: Colors.white,
+            ),
             onPressed: () {
               _apresentarTela(8);
-            }),
-      ),*/
-      Container(
-        margin: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            color: paleta.grey850, borderRadius: BorderRadius.circular(8)),
-        child: IconButton(
-            icon: Icon(Icons.settings_outlined),
-            onPressed: () {
-              _apresentarTela(9);
             }),
       ),
     ]);

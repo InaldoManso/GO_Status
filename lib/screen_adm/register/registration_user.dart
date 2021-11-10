@@ -1,11 +1,11 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:go_status/helper/route_generator.dart';
+import 'package:go_status/general/tools/route_generator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:go_status/helper/color_pallete.dart';
-import 'package:go_status/model/user_profile.dart';
+import 'package:go_status/general/helpers/color_pallete.dart';
+import 'package:go_status/general/model/user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:go_status/model/user_stats.dart';
-import 'package:go_status/helper/api.dart';
+import 'package:go_status/general/model/user_stats.dart';
+import 'package:go_status/general/apis/api.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
