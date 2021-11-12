@@ -15,8 +15,6 @@ Até mais!
 GO status  
 ├── assets  
 │  
-├── main.dart  
-│  
 └── lib  
     ├── core  
     │   ├── data  
