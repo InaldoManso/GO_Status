@@ -23,7 +23,7 @@ GO status
     │   
     ├── core  
     │   ├── data  
-    │   │   ├── api  
+    │   │   ├── network  
     │   │   └── shared  
     │   │  
     │   ├── helper
@@ -36,7 +36,7 @@ GO status
     	├── aplication  
 	│  
 	├── data  
-	│   ├── api  
+	│   ├── network  
 	│   └── shared  
 	│  
 	├── model  
