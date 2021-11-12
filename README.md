@@ -16,6 +16,11 @@ GO status
 ├── assets  
 │  
 └── lib  
+    ├── builds  
+    │   ├── main  
+    │   │  
+    │   └── test  
+    │   
     ├── core  
     │   ├── data  
     │   │   ├── api  
@@ -26,11 +31,6 @@ GO status
     │   ├── model  
     │   │  
     │   └── tools  
-    │   
-    ├── builds  
-    │   ├── main  
-    │   │  
-    │   └── test  
     │  
     └── features  
 	├── data  
