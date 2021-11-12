@@ -33,15 +33,15 @@ GO status
     │   └── tools  
     │  
     └── features  
+    	├── aplication  
+	│  
 	├── data  
 	│   ├── api  
 	│   └── shared  
 	│  
+	├── model  
+	│  
 	├── presentation  
 	│   └── widgets  
-	│  
-	├── aplication  
-	│  
-	├── model  
 	│  
 	└── tools  
