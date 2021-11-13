@@ -22,7 +22,7 @@ class _PostTimelineState extends State<PostTimeline> {
 
   //Attributes
   final _controller = StreamController<QuerySnapshot>.broadcast();
-  List<String> itensMenu = ["Deletar", "Reportar"];
+  List<String> itensMenu = ["Deletar"];
   String _nameUser = "";
   String youtubeapikey;
   String steamapikey;
