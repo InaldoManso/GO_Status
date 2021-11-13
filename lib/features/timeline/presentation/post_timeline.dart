@@ -1,3 +1,5 @@
+import 'package:go_status/features/timeline/aplication/post_editor.dart';
+import 'package:go_status/features/timeline/tools/option_spliter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_status/core/tools/route_generator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,7 +22,7 @@ class _PostTimelineState extends State<PostTimeline> {
 
   //Attributes
   final _controller = StreamController<QuerySnapshot>.broadcast();
-  List<String> itensMenu = ["Deletar"];
+  List<String> itensMenu = ["Deletar", "Reportar"];
   String _nameUser = "";
   String youtubeapikey;
   String steamapikey;
@@ -57,14 +59,33 @@ class _PostTimelineState extends State<PostTimeline> {
     return stream;
   }
 
-  _settinsPublication(String item) async {
-    switch (item) {
-      case "Deletar":
+  _postOptions(String item) async {
+    Map<String, dynamic> option = OptionSpliter().option(item);
+
+    print(option["id"]);
+
+    switch (option["id"]) {
+      case "deletar":
+        _snackBarInfo(option["id"]);
+        PostEditor().excludePost(option);
         break;
-      case "Logout":
-        print("object");
+      case "reportar":
+        _snackBarInfo(option["id"]);
         break;
     }
+  }
+
+  void _snackBarInfo(String campoVazio) {
+    final snackBar = SnackBar(
+      backgroundColor: Colors.red,
+      content:
+          Text(campoVazio, style: TextStyle(fontSize: 16, color: Colors.white)),
+      action: SnackBarAction(
+          label: "OK", textColor: Colors.white, onPressed: () {}),
+      behavior: SnackBarBehavior.floating,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
@@ -144,6 +165,7 @@ class _PostTimelineState extends State<PostTimeline> {
                       postagem.message = item["message"];
                       postagem.urlimage = item["urlimage"];
                       postagem.timeshow = item["timeshow"];
+                      postagem.imageName = item["imageName"];
 
                       return Container(
                         margin: EdgeInsets.all(8),
@@ -190,12 +212,18 @@ class _PostTimelineState extends State<PostTimeline> {
                                             icon: Icon(
                                                 Icons.more_horiz_outlined,
                                                 color: Colors.white),
-                                            onSelected: _settinsPublication,
+                                            onSelected: _postOptions,
                                             itemBuilder: (context) {
                                               return itensMenu
                                                   .map((String item) {
                                                 return PopupMenuItem<String>(
-                                                  value: item,
+                                                  value: item +
+                                                      "/" +
+                                                      postagem.idpublication +
+                                                      "/" +
+                                                      postagem.iduser +
+                                                      "/" +
+                                                      postagem.imageName,
                                                   child: Text(
                                                     item,
                                                     style:

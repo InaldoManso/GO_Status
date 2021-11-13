@@ -35,6 +35,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
   String _nameuser;
   String _message;
   String _iduser;
+  String _imageName;
 
   Future _selectLocalImage(String originImage) async {
     PickedFile imageSelected;
@@ -117,6 +118,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
       postagem.message = _message;
       postagem.urlimage = _urlImagRecovered;
       postagem.timeshow = DateTime.now().toString();
+      postagem.imageName = "";
       _publishPost(postagem);
     }
   }
@@ -125,12 +127,12 @@ class _PublicationCreatorState extends State<PublicationCreator> {
     firebase_storage.FirebaseStorage storage =
         firebase_storage.FirebaseStorage.instance;
 
-    String imageId = dateFormatter.generateDateTimeIdentification().toString();
+    _imageName = dateFormatter.generateDateTimeIdentification().toString();
 
     //Reference archive
     firebase_storage.Reference pastaRaiz = storage.ref();
     firebase_storage.Reference arquivos =
-        pastaRaiz.child("publicPost").child(_iduser).child("$imageId.jpg");
+        pastaRaiz.child("publicPost").child(_iduser).child("$_imageName.jpg");
 
     //Uploade image and lister progres: .UploadTask
     firebase_storage.UploadTask task = arquivos.putFile(_image);
@@ -170,7 +172,8 @@ class _PublicationCreatorState extends State<PublicationCreator> {
         .then((referenceId) {
       Map<String, dynamic> postingId = {
         "idpublication": referenceId.id,
-        "urlimage": _urlImagRecovered
+        "urlimage": _urlImagRecovered,
+        "imageName": _imageName
       };
       db
           .collection("publications")

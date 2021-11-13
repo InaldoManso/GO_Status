@@ -1,5 +1,4 @@
 class PostItem {
-  //Types of messages
   static const int typeImage = 1;
 
   int _idtime;
@@ -11,6 +10,7 @@ class PostItem {
   String _message;
   String _urlimage;
   String _timeshow;
+  String _imageName;
 
   PostItem();
 
@@ -25,6 +25,7 @@ class PostItem {
       "message": this.message,
       "urlimage": this.urlimage,
       "timeshow": this.timeshow,
+      "imageName": this.imageName,
     };
     return map;
   }
@@ -55,4 +56,7 @@ class PostItem {
 
   get timeshow => this._timeshow;
   set timeshow(value) => this._timeshow = value;
+
+  get imageName => this._imageName;
+  set imageName(value) => this._imageName = value;
 }
