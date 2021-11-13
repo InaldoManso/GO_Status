@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
-import 'package:go_status/core/data/api/api.dart';
+import 'package:go_status/core/data/network/api.dart';
 import 'package:go_status/core/tools/custom_search_delegate.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:go_status/features/video/model/video.dart';

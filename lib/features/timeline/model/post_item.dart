@@ -1,4 +1,4 @@
-class Publication {
+class PostItem {
   //Types of messages
   static const int typeImage = 1;
 
@@ -12,7 +12,7 @@ class Publication {
   String _urlimage;
   String _timeshow;
 
-  Publication();
+  PostItem();
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {

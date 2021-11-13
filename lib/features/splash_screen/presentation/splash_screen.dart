@@ -6,7 +6,7 @@ import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:go_status/core/model/user_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_status/core/model/user_stats.dart';
-import 'package:go_status/core/data/api/api.dart';
+import 'package:go_status/core/data/network/api.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 

@@ -1,5 +1,5 @@
 import 'package:go_status/features/profile/presentation/profile.dart';
-import 'package:go_status/features/timeline/presentation/timeline.dart';
+import 'package:go_status/features/timeline/presentation/post_timeline.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:go_status/features/classification/presentation/classification.dart';
 import 'package:go_status/features/group_message/presentation/general_chat.dart';
@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     //Telas apresentadas
     List<Widget> telas = [
-      TimeLine(), //0
+      PostTimeline(), //0
       Profile(), //1
       Classification(), //2
       Videos(_resultado), //3

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
-import 'package:go_status/core/data/api/api.dart';
+import 'package:go_status/core/data/network/api.dart';
 
 class Profile extends StatefulWidget {
   @override

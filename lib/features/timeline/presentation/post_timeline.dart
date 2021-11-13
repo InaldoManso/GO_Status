@@ -3,16 +3,16 @@ import 'package:go_status/core/tools/route_generator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:go_status/features/timeline/model/publication.dart';
+import 'package:go_status/features/timeline/model/post_item.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class TimeLine extends StatefulWidget {
+class PostTimeline extends StatefulWidget {
   @override
-  _TimeLineState createState() => _TimeLineState();
+  _PostTimelineState createState() => _PostTimelineState();
 }
 
-class _TimeLineState extends State<TimeLine> {
+class _PostTimelineState extends State<PostTimeline> {
   //Classes and packages
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -134,7 +134,7 @@ class _TimeLineState extends State<TimeLine> {
 
                       DocumentSnapshot item = postagens[index];
 
-                      Publication postagem = Publication();
+                      PostItem postagem = PostItem();
                       postagem.idtime = item["idtime"];
                       postagem.idpublication = item["idpublication"];
                       postagem.iduser = item["iduser"];

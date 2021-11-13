@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_status/core/tools/date_formatter.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:go_status/features/timeline/model/publication.dart';
+import 'package:go_status/features/timeline/model/post_item.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -18,7 +18,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   DateFormatter dateFormatter = DateFormatter();
   FirebaseAuth auth = FirebaseAuth.instance;
-  Publication postagem = Publication();
+  PostItem postagem = PostItem();
   ColorPallete paleta = ColorPallete();
   File _image;
 
@@ -104,14 +104,14 @@ class _PublicationCreatorState extends State<PublicationCreator> {
 
   _createPosting() {
     _uploadImageOFC();
-    Publication postagem = Publication();
+    PostItem postagem = PostItem();
     _message = _controllerTexto.text;
 
     if (_message.isNotEmpty) {
       postagem.idtime = dateFormatter.generateDateTimeIdentification();
       postagem.idpublication = "empty";
       postagem.iduser = _iduser;
-      postagem.type = Publication.typeImage;
+      postagem.type = PostItem.typeImage;
       postagem.nameuser = _nameuser;
       postagem.imageuser = _imageuser;
       postagem.message = _message;
@@ -163,7 +163,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
     });
   }
 
-  _publishPost(Publication postagem) async {
+  _publishPost(PostItem postagem) async {
     await db
         .collection("publications")
         .add(postagem.toMap())

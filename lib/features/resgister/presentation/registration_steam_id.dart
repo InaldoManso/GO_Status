@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:go_status/core/tools/route_generator.dart';
-import 'package:go_status/core/data/api/api.dart';
+import 'package:go_status/core/data/network/api.dart';
 import 'package:go_status/core/model/user_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

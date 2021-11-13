@@ -53,14 +53,11 @@ class _GeneralChatState extends State<GeneralChat> {
   _addListenerMessages() {
     final stream = db
         .collection("generalchat")
-        .orderBy("messageid", descending: false)
+        .orderBy("messageid", descending: true)
         .snapshots();
 
     stream.listen((dados) {
       _controller.add(dados);
-      Timer(Duration(milliseconds: 500), () {
-        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-      });
     });
   }
 
@@ -108,6 +105,7 @@ class _GeneralChatState extends State<GeneralChat> {
                   );
                 } else {
                   return ListView.builder(
+                    reverse: true,
                     shrinkWrap: true,
                     controller: _scrollController,
                     itemCount: querySnapshot.docs.length,
@@ -227,34 +225,3 @@ class _GeneralChatState extends State<GeneralChat> {
     );
   }
 }
-
-/*
- Container(
-                    constraints:
-                        BoxConstraints(minWidth: 100, maxWidth: appWidth * 0.6),
-                    decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        primary: Colors.transparent,
-                        minimumSize: Size(88, 36),
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(2)),
-                        ),
-                      ),
-                      child: Text(
-                        "Eu sou " + userProfile.name,
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                        overflow: TextOverflow.fade,
-                        maxLines: 1,
-                        softWrap: false,
-                      ),
-                      onPressed: () {
-                        _validarUserAndStemPublic();
-                      },
-                    ),
-                  )
-*/
