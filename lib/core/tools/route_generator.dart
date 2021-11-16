@@ -1,14 +1,14 @@
-import 'package:go_status/features/timeline/presentation/publication_creator.dart';
+import 'package:go_status/features/timeline/presentation/widgets/publication_creator.dart';
 import 'package:go_status/features/reset_password/presentation/reset_password.dart';
 import 'package:go_status/features/resgister/presentation/registration_steam_id.dart';
-import 'package:go_status/features/timeline/presentation/post_image_view.dart';
+import 'package:go_status/features/timeline/presentation/widgets/post_image_view.dart';
 import 'package:go_status/features/resgister/presentation/help_url.dart';
 import 'package:go_status/features/resgister/presentation/help_id.dart';
 import 'package:go_status/features/resgister/presentation/registration_user.dart';
 import 'package:go_status/features/login/presentation/logout.dart';
 import 'package:go_status/features/splash_screen/presentation/splash_screen.dart';
 import 'package:go_status/features/login/presentation/login.dart';
-import 'package:go_status/features/home/aplication/home.dart';
+import 'package:go_status/builds/home/home.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
