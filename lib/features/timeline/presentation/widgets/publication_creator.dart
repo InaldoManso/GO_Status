@@ -28,6 +28,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
   final _picker = ImagePicker();
 
   String _urlImagRecovered = "";
+  String _urlImagRecoveredOFC = "";
   bool _uploadingImage = false;
   String _publicationTime;
   String _imageuser;
@@ -104,7 +105,6 @@ class _PublicationCreatorState extends State<PublicationCreator> {
   }
 
   _createPosting() {
-    _uploadImageOFC();
     PostItem postagem = PostItem();
     _message = _controllerTexto.text;
 
@@ -119,11 +119,11 @@ class _PublicationCreatorState extends State<PublicationCreator> {
       postagem.urlimage = _urlImagRecovered;
       postagem.timeshow = DateTime.now().toString();
       postagem.imageName = "";
-      _publishPost(postagem);
+      _uploadImageOFC(postagem);
     }
   }
 
-  Future _uploadImageOFC() async {
+  Future _uploadImageOFC(PostItem postagem) async {
     firebase_storage.FirebaseStorage storage =
         firebase_storage.FirebaseStorage.instance;
 
@@ -152,17 +152,21 @@ class _PublicationCreatorState extends State<PublicationCreator> {
 
     //Recovering url ImagePreview
     task.then((firebase_storage.TaskSnapshot snapshot) {
-      _recoveringUrlImageOFC(snapshot);
+      _recoveringUrlImageOFC(snapshot, postagem);
     });
   }
 
-  _recoveringUrlImageOFC(firebase_storage.TaskSnapshot snapshot) async {
+  _recoveringUrlImageOFC(
+      firebase_storage.TaskSnapshot snapshot, PostItem postagem) async {
     String url = await snapshot.ref.getDownloadURL();
 
     //Retrieving url to display
+    print("NEW " + url);
     setState(() {
-      _urlImagRecovered = url;
+      _urlImagRecoveredOFC = url;
     });
+
+    _publishPost(postagem);
   }
 
   _publishPost(PostItem postagem) async {
@@ -172,7 +176,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
         .then((referenceId) {
       Map<String, dynamic> postingId = {
         "idpublication": referenceId.id,
-        "urlimage": _urlImagRecovered,
+        "urlimage": _urlImagRecoveredOFC,
         "imageName": _imageName
       };
       db
