@@ -1,3 +1,4 @@
+import 'package:go_status/core/data/network/api_stats.dart';
 import 'package:go_status/features/profile/presentation/profile.dart';
 import 'package:go_status/features/timeline/presentation/post_timeline.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
@@ -18,6 +19,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   //atributos
   ColorPallete paleta = ColorPallete();
+  ApiStats apiStats = ApiStats();
 
   //Atributos das telas
   int _indiceAtual = 0;
@@ -27,6 +29,12 @@ class _HomeState extends State<Home> {
     setState(() {
       _indiceAtual = indice;
     });
+  }
+
+  @override
+  void initState() {
+    apiStats.updateUserStats();
+    super.initState();
   }
 
   @override

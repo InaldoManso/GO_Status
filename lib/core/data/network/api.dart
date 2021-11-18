@@ -124,6 +124,7 @@ class Api {
 
       Map<String, dynamic> mvps = retorno["playerstats"]["stats"][98];
       csgoStats.mvps = mvps["value"].toString();
+      print("teste001: GG " + mvps["name"]);
 
       Map<String, dynamic> hshots = retorno["playerstats"]["stats"][25];
       csgoStats.headshots = hshots["value"].toString();

@@ -240,11 +240,6 @@ class _PostTimelineState extends State<PostTimeline> {
                               ],
                             ),
                             GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, RouteGenerator.viewPostRoute,
-                                    arguments: postagem.urlimage);
-                              },
                               child: Container(
                                 margin: const EdgeInsets.only(top: 8),
                                 height: MediaQuery.of(context).size.width * 0.5,
@@ -257,6 +252,12 @@ class _PostTimelineState extends State<PostTimeline> {
                                       fit: BoxFit.cover),
                                 ),
                               ),
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RouteGenerator.viewPostRoute,
+                                    arguments: postagem.urlimage);
+                              },
+                              onDoubleTap: () {},
                             ),
                             Container(
                               padding: EdgeInsets.all(4),
