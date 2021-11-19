@@ -1,3 +1,4 @@
+import 'package:go_status/core/data/network/api_stats.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_status/core/tools/route_generator.dart';
 import 'package:go_status/core/tools/version_control.dart';
@@ -30,7 +31,6 @@ class _SplashScreenState extends State<SplashScreen> {
   String youtubeapikey;
 
   _checkApiKeys() async {
-    print("teste001 Splash INF: check API KEY iniciado");
     DocumentSnapshot snapshot = await db
         .collection("admgostatus")
         .doc("credentials")
@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
         .then((snapshotValue) {
       steamapikey = snapshotValue["steamapikey"];
       youtubeapikey = snapshotValue["youtubeapikey"];
-      print("teste001 Splash SUC: API Keys recuperadas");
+
       _checkLogin();
     }).catchError((onError) {
       print("teste001 Splash ERR: Erro ao recuperar API Keys");
@@ -47,12 +47,8 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("steamapikey", steamapikey).then((value) {
-      print("teste001 Splash SUC: API KEY salva: " + steamapikey);
-    });
-    await prefs.setString("youtubeapikey", youtubeapikey).then((value) {
-      print("teste001 Splash SUC: API KEY salva: " + youtubeapikey);
-    });
+    await prefs.setString("steamapikey", steamapikey).then((value) {});
+    await prefs.setString("youtubeapikey", youtubeapikey).then((value) {});
   }
 
   _checkLogin() {
@@ -71,19 +67,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _recoverUserData() async {
-    print("teste001 Splash INF: Recupeando dados do user");
     User user = auth.currentUser;
     DocumentSnapshot snapshot =
         await db.collection("users").doc(user.uid).get();
 
     String steamid = snapshot["steamid"];
-    print("teste001 Splash SUC: steam id" + steamid);
 
     usuario = await api.recDataUserFromSteamID(steamapikey, steamid);
-    print("teste001 Splash SUC: recuperar user " + usuario.name);
 
     if (usuario != null) {
-      print("teste001 Splash INF: Atualizando stats do user");
       _recoverStatsUserToUpdate(steamid, usuario.name, usuario.urlimage);
       setState(() {
         _carregando = true;
@@ -96,7 +88,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _recoverStatsUserToUpdate(
       String steamid, String nome, String urlimage) async {
-    csgoStats = await api.updateUserStats(steamapikey, steamid, nome, urlimage);
+    ApiStats apiStats = ApiStats();
+    csgoStats = await apiStats.updateUserStats(steamid);
     print("teste001 Splash SUC: Stats user KD: " + csgoStats.killdeath);
 
     if (csgoStats != null) {

@@ -134,7 +134,7 @@ class Api {
       double killDeath = kill / death;
 
       csgoStats.killdeath = killDeath.toStringAsPrecision(2);
-      csgoStats.nome = name;
+      csgoStats.name = name;
       csgoStats.urlimage = urlimage;
 
       //Rec time played from other api
@@ -147,6 +147,8 @@ class Api {
 
       csgoStats.timeplay =
           retornoTime["response"]["games"][0]["playtime_forever"].toString();
+
+      print("GG ::::::::::: " + csgoStats.timeplay);
 
       return csgoStats;
     } else {

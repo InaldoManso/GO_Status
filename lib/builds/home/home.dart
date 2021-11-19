@@ -33,7 +33,6 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    apiStats.updateUserStats();
     super.initState();
   }
 
