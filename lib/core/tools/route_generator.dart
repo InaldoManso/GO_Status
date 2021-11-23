@@ -8,7 +8,7 @@ import 'package:go_status/features/resgister/presentation/registration_user.dart
 import 'package:go_status/features/login/presentation/logout.dart';
 import 'package:go_status/features/splash_screen/presentation/splash_screen.dart';
 import 'package:go_status/features/login/presentation/login.dart';
-import 'package:go_status/builds/home/home.dart';
+import 'package:go_status/builds/home/presentation/home.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {

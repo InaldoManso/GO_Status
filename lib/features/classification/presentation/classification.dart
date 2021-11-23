@@ -239,7 +239,7 @@ class _ClassificationState extends State<Classification> {
                           Expanded(
                               flex: 2,
                               child: Text(
-                                classifUser.nome,
+                                classifUser.nome ?? "",
                                 textAlign: TextAlign.center,
                               )),
                           Expanded(
