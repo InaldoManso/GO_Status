@@ -1,5 +1,5 @@
-import 'package:go_status/core/tools/route_generator.dart';
 import 'package:go_status/features/splash_screen/presentation/splash_screen.dart';
+import 'package:go_status/core/tools/route_generator.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

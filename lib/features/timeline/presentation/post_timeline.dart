@@ -67,7 +67,7 @@ class _PostTimelineState extends State<PostTimeline> {
     switch (option["id"]) {
       case "deletar":
         _snackBarInfo(option["id"]);
-        PostEditor().excludePost(option);
+        // PostEditor().excludePost(option);
         break;
       case "reportar":
         _snackBarInfo(option["id"]);
@@ -172,7 +172,7 @@ class _PostTimelineState extends State<PostTimeline> {
                         padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             color: paleta.grey800,
-                            borderRadius: BorderRadius.circular(16)),
+                            borderRadius: BorderRadius.circular(8)),
                         child: Column(
                           children: [
                             Row(

@@ -203,7 +203,7 @@ class _GeneralChatState extends State<GeneralChat> {
                       onTap: () {
                         Timer(Duration(milliseconds: 200), () {
                           _scrollController.jumpTo(
-                              _scrollController.position.maxScrollExtent);
+                              _scrollController.position.minScrollExtent);
                         });
                       },
                     ),

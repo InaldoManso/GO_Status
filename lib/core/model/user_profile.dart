@@ -9,7 +9,7 @@ class UserProfile {
   String _urlimage = "";
   String _country = "";
   String _version = "";
-  bool _showKillDeath = false;
+  bool _showKillDeath = true;
 
   UserProfile();
 

@@ -39,20 +39,6 @@ class _ProfileState extends State<Profile> {
     DocumentSnapshot snapshot =
         await db.collection("users").doc(user.uid).get();
 
-    /*
-      "admin": this.admin,
-      "name": this.name,
-      "email": this.email,
-      "password": this.password,
-      "steamid": this.steamid,
-      "userid": this.userid,
-      "team": this.team,
-      "urlimage": this.urlimage,
-      "country": this.country,
-      "version": this.version,
-      "showkilldeath": this.showKillDeath
-        */
-
     int horas = int.parse(snapshot["timeplay"]);
 
     setState(() {
@@ -68,11 +54,6 @@ class _ProfileState extends State<Profile> {
       _totalHShots = snapshot["headshots"];
       _resultadoKD = snapshot["killdeath"];
     });
-
-    int gg = int.parse(snapshot["timeplay"]);
-    int g1 = 84673;
-    var g2 = Duration(minutes: g1);
-    print("HORASS " + g2.toString());
 
     valorkd = double.parse(snapshot["killdeath"]);
     double kdcor = double.parse(snapshot["killdeath"]);
