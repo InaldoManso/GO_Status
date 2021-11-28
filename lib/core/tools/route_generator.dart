@@ -1,3 +1,4 @@
+import 'package:go_status/features/snapping_menu/presentation/widgets/snapping_screen_show.dart';
 import 'package:go_status/features/timeline/presentation/widgets/publication_creator.dart';
 import 'package:go_status/features/reset_password/presentation/reset_password.dart';
 import 'package:go_status/features/resgister/presentation/registration_steam_id.dart';
@@ -23,6 +24,7 @@ class RouteGenerator {
   static const String helpIdRoute = "/helpid";
   static const String postCreatorRoute = "/postcreator";
   static const String viewPostRoute = "/postimage";
+  static const String snappingScreenShow = "/snappingscreenshow";
 
   // ignore: missing_return
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -64,6 +66,9 @@ class RouteGenerator {
 
       case viewPostRoute:
         return MaterialPageRoute(builder: (_) => PostImageView(argument));
+
+      case snappingScreenShow:
+        return MaterialPageRoute(builder: (_) => SnappingScreenShow(argument));
 
       /*case ITEM_ROTA:
         return MaterialPageRoute(builder: (_) => Item(args));*/

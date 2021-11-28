@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:flutter/material.dart';
+import 'package:go_status/core/tools/route_generator.dart';
+import 'package:go_status/features/snapping_menu/model/snapping_item.dart';
+import 'package:go_status/features/snapping_menu/tools/snapping_selector.dart';
 
 class SnappingMenu extends StatefulWidget {
   // const SnappingMenu({ Key? key }) : super(key: key);
@@ -31,6 +34,34 @@ class _SnappingMenuState extends State<SnappingMenu> {
       _image = snapshot["urlimage"];
       _country = snapshot["country"];
     });
+  }
+
+  Future<List<SnappingItem>> _recoverMenuItems() async {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+
+    QuerySnapshot querySnapshot = await db
+        .collection("interface")
+        .doc("menuItems")
+        .collection("items")
+        .orderBy("order", descending: false)
+        .get();
+
+    List<SnappingItem> menulist = [];
+    for (DocumentSnapshot item in querySnapshot.docs) {
+      var data = item.data();
+      if (data["enabled"] == false || data["type"] != "menuButton") continue;
+
+      SnappingItem snappingItem = SnappingItem();
+      snappingItem.enabled = data["enabled"];
+      snappingItem.id = data["id"];
+      snappingItem.order = data["order"];
+      snappingItem.tittle = data["tittle"];
+      snappingItem.type = data["type"];
+
+      menulist.add(snappingItem);
+    }
+
+    return menulist;
   }
 
   @override
@@ -99,12 +130,19 @@ class _SnappingMenuState extends State<SnappingMenu> {
                             ),
                             Expanded(
                               flex: 1,
-                              child: CircleAvatar(
-                                child: _image == ""
-                                    ? CircularProgressIndicator()
-                                    : ClipOval(child: Image.network(_image)),
-                                radius: 35,
-                                backgroundColor: Colors.grey,
+                              child: GestureDetector(
+                                child: CircleAvatar(
+                                  child: _image == ""
+                                      ? CircularProgressIndicator()
+                                      : ClipOval(child: Image.network(_image)),
+                                  radius: 35,
+                                  backgroundColor: Colors.grey,
+                                ),
+                                onTap: () {
+                                  Navigator.pushNamed(context,
+                                      RouteGenerator.snappingScreenShow,
+                                      arguments: "profile");
+                                },
                               ),
                             ),
                           ],
@@ -117,58 +155,64 @@ class _SnappingMenuState extends State<SnappingMenu> {
                       Expanded(
                         flex: 6,
                         child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Container(
-                                height: 70,
-                                color: Colors.green,
-                              ),
-                              Container(
-                                height: 70,
-                                color: Colors.yellow,
-                              ),
-                              Container(
-                                height: 70,
-                                color: Colors.green,
-                              ),
-                              Container(
-                                height: 70,
-                                color: Colors.yellow,
-                              ),
-                              Container(
-                                height: 70,
-                                color: Colors.green,
-                              ),
-                              Container(
-                                height: 70,
-                                color: Colors.yellow,
-                              ),
-                              Container(
-                                height: 70,
-                                color: Colors.green,
-                              ),
-                              Container(
-                                height: 70,
-                                color: Colors.yellow,
-                              ),
-                              Container(
-                                height: 70,
-                                color: Colors.green,
-                              ),
-                              Container(
-                                height: 70,
-                                color: Colors.yellow,
-                              ),
-                              Container(
-                                height: 70,
-                                color: Colors.green,
-                              ),
-                              Container(
-                                height: 70,
-                                color: Colors.yellow,
-                              ),
-                            ],
+                          child: FutureBuilder<List<SnappingItem>>(
+                            future: _recoverMenuItems(),
+                            // ignore: missing_return
+                            builder: (context, snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.none:
+                                case ConnectionState.waiting:
+                                  return Container(
+                                    height: MediaQuery.of(context).size.height,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Center(
+                                        child: CircularProgressIndicator()),
+                                  );
+                                  break;
+                                case ConnectionState.active:
+                                case ConnectionState.done:
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder: (_, index) {
+                                      List<SnappingItem> snappingItemsList =
+                                          snapshot.data;
+                                      SnappingItem snappingItem =
+                                          snappingItemsList[index];
+
+                                      return Container(
+                                        padding: EdgeInsets.all(8),
+                                        child: ElevatedButton.icon(
+                                          style: ElevatedButton.styleFrom(
+                                            alignment: Alignment.centerLeft,
+                                            primary: Colors.white,
+                                            padding: const EdgeInsets.all(15),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(16)),
+                                          ),
+                                          icon: Icon(
+                                              Icons.video_collection_outlined,
+                                              color: colorPallete.dodgerBlue),
+                                          label: Text(
+                                            snappingItem.tittle,
+                                            style: TextStyle(
+                                                color: colorPallete.dodgerBlue),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              RouteGenerator.snappingScreenShow,
+                                              arguments: snappingItem.id,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  );
+                                  break;
+                              }
+                            },
                           ),
                         ),
                       ),

@@ -48,11 +48,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       Classification(), //1
       Maps(), //2
       GeneralChat(), //3
-      // Profile(), //1
-      // Videos(_result), //3
-      // CompareGun(), //5
-      // Groups(), //7
-      // Settings(), //8
     ];
 
     return SnappingSheet.horizontal(
