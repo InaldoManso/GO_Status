@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,41 +12,14 @@ class Classification extends StatefulWidget {
 }
 
 class _ClassificationState extends State<Classification> {
+  //Classes and Packages
+  FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
-  String _emailUsuarioLogado;
-  String _idUsuarioLogado;
+
+  //Attributes
+  StreamController _controller = StreamController<QuerySnapshot>.broadcast();
   ColorPallete paleta = ColorPallete();
-  User _user;
   Color _corKD;
-
-  Future<List<UserClassification>> _recuperarContatos() async {
-    FirebaseFirestore db = FirebaseFirestore.instance;
-
-    QuerySnapshot querySnapshot = await db
-        .collection("users")
-        .orderBy("killdeath", descending: true)
-        .get();
-
-    List<UserClassification> listaUsuarios = [];
-    for (DocumentSnapshot item in querySnapshot.docs) {
-      var dados = item.data();
-      if (dados["showkilldeath"] == false) continue;
-
-      UserClassification classifUser = UserClassification();
-      classifUser.email = dados["email"];
-      classifUser.nome = dados["nome"];
-      classifUser.urlimage = dados["urlimage"];
-      classifUser.killdeath = dados["killdeath"];
-      classifUser.kill = dados["kill"];
-      classifUser.death = dados["death"];
-      classifUser.mvps = dados["mvps"];
-      classifUser.timeplay = dados["timeplay"];
-
-      listaUsuarios.add(classifUser);
-    }
-
-    return listaUsuarios;
-  }
 
   _exibirMiniPerfil(UserClassification classifUser) {
     //Calcular Horas
@@ -74,7 +49,7 @@ class _ClassificationState extends State<Classification> {
           elevation: 0,
           actionsAlignment: MainAxisAlignment.spaceAround,
           title: Text(
-            classifUser.nome,
+            classifUser.name,
             style: TextStyle(color: Colors.white),
             textAlign: TextAlign.center,
           ),
@@ -177,91 +152,127 @@ class _ClassificationState extends State<Classification> {
     );
   }
 
-  _recuperarDadosUsuario() async {
-    _user = await auth.currentUser;
-    _idUsuarioLogado = _user.uid;
-    _emailUsuarioLogado = _user.email;
+  Stream<QuerySnapshot> _addListenerMessages() {
+    final stream = db
+        .collection("users")
+        .orderBy("killdeath", descending: true)
+        .snapshots();
+
+    stream.listen((dados) {
+      _controller.add(dados);
+    });
+    return stream;
   }
 
   @override
   void initState() {
     super.initState();
-    _recuperarDadosUsuario();
+    _addListenerMessages();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<UserClassification>>(
-      future: _recuperarContatos(),
-      // ignore: missing_return
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.waiting:
-            return Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Center(child: CircularProgressIndicator()),
-            );
-            break;
-          case ConnectionState.active:
-          case ConnectionState.done:
-            return Scaffold(
-              extendBodyBehindAppBar: true,
-              /*appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-              ),*/
-              body: ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (_, indice) {
-                  List<UserClassification> listaItens = snapshot.data;
-                  UserClassification classifUser = listaItens[indice];
+    return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      body: Container(
+        child: StreamBuilder(
+          stream: _controller.stream,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return Container();
+                break;
+              case ConnectionState.waiting:
+                return Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(child: CircularProgressIndicator()),
+                );
+                break;
+              case ConnectionState.active:
+              case ConnectionState.done:
+                QuerySnapshot querySnapshot = snapshot.data;
 
-                  return GestureDetector(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 4, bottom: 4),
-                      padding: EdgeInsets.all(8),
-                      color: paleta.grey850,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                image: DecorationImage(
-                                    image: NetworkImage(classifUser.urlimage),
-                                    fit: BoxFit.cover),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8))),
+                if (snapshot.hasError) {
+                  return Container(
+                    child: Text("Erro ao carregar dados"),
+                  );
+                } else {
+                  return ListView.builder(
+                    itemCount: querySnapshot.docs.length,
+                    itemBuilder: (context, index) {
+                      //Recuperar mensagens
+                      List<DocumentSnapshot> postagens =
+                          querySnapshot.docs.toList();
+
+                      DocumentSnapshot item = postagens[index];
+
+                      UserClassification classifUser = UserClassification();
+                      classifUser.name = item["name"];
+                      classifUser.email = item["email"];
+                      classifUser.password = item["password"];
+                      classifUser.steamid = item["steamid"];
+                      classifUser.userid = item["userid"];
+                      classifUser.team = item["team"];
+                      classifUser.urlimage = item["urlimage"];
+                      classifUser.country = item["country"];
+                      classifUser.killdeath = item["killdeath"];
+                      classifUser.kill = item["kill"];
+                      classifUser.death = item["death"];
+                      classifUser.timeplay = item["timeplay"];
+                      classifUser.wins = item["wins"];
+                      classifUser.mvps = item["mvps"];
+                      classifUser.headshots = item["headshots"];
+
+                      return GestureDetector(
+                        child: Container(
+                          margin: EdgeInsets.only(top: 4, bottom: 4),
+                          padding: EdgeInsets.all(8),
+                          color: paleta.grey850,
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey[200],
+                                    image: DecorationImage(
+                                        image:
+                                            NetworkImage(classifUser.urlimage),
+                                        fit: BoxFit.cover),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8))),
+                              ),
+                              Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    classifUser.name ?? "",
+                                    textAlign: TextAlign.center,
+                                  )),
+                              Expanded(
+                                flex: 1,
+                                child: Text(
+                                  classifUser.killdeath,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
                           ),
-                          Expanded(
-                              flex: 2,
-                              child: Text(
-                                classifUser.nome ?? "",
-                                textAlign: TextAlign.center,
-                              )),
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              classifUser.killdeath,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      _exibirMiniPerfil(classifUser);
+                        ),
+                        onTap: () {
+                          _exibirMiniPerfil(classifUser);
+                        },
+                      );
                     },
                   );
-                },
-              ),
-            );
-            break;
-        }
-      },
+                }
+                break;
+            }
+            return null;
+          },
+        ),
+      ),
     );
   }
 }

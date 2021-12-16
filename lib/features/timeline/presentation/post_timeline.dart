@@ -1,4 +1,3 @@
-import 'package:go_status/features/timeline/aplication/post_editor.dart';
 import 'package:go_status/features/timeline/tools/option_spliter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_status/core/tools/route_generator.dart';
@@ -18,7 +17,7 @@ class _PostTimelineState extends State<PostTimeline> {
   //Classes and packages
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
-  ColorPallete paleta = ColorPallete();
+  ColorPallete colorPallete = ColorPallete();
 
   //Attributes
   final _controller = StreamController<QuerySnapshot>.broadcast();
@@ -113,7 +112,7 @@ class _PostTimelineState extends State<PostTimeline> {
               ? IconButton(
                   icon: Icon(
                     Icons.post_add_outlined,
-                    color: paleta.dodgerBlue,
+                    color: colorPallete.dodgerBlue,
                   ),
                   onPressed: () {
                     Navigator.pushNamed(
@@ -133,8 +132,10 @@ class _PostTimelineState extends State<PostTimeline> {
                 return Container();
                 break;
               case ConnectionState.waiting:
-                return Center(
-                  child: CircularProgressIndicator(),
+                return Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(child: CircularProgressIndicator()),
                 );
                 break;
               case ConnectionState.active:
@@ -171,14 +172,15 @@ class _PostTimelineState extends State<PostTimeline> {
                         margin: EdgeInsets.all(8),
                         padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                            color: paleta.grey800,
+                            color: colorPallete.grey800,
                             borderRadius: BorderRadius.circular(8)),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Row(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(left: 16, right: 16),
+                                  padding: EdgeInsets.only(left: 8, right: 16),
                                   child: CircleAvatar(
                                     child: postagem.imageuser == ""
                                         ? CircularProgressIndicator()
@@ -208,7 +210,7 @@ class _PostTimelineState extends State<PostTimeline> {
                                     iconSize: 30,
                                     icon: _admin > 0
                                         ? PopupMenuButton<String>(
-                                            color: paleta.grey900,
+                                            color: colorPallete.grey900,
                                             icon: Icon(
                                                 Icons.more_horiz_outlined,
                                                 color: Colors.white),
@@ -239,6 +241,16 @@ class _PostTimelineState extends State<PostTimeline> {
                                 ),
                               ],
                             ),
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              child: Text(
+                                postagem.message,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                             GestureDetector(
                               child: Container(
                                 margin: const EdgeInsets.only(top: 8),
@@ -259,15 +271,40 @@ class _PostTimelineState extends State<PostTimeline> {
                               },
                               onDoubleTap: () {},
                             ),
-                            Container(
-                              padding: EdgeInsets.all(4),
-                              child: SingleChildScrollView(
-                                child: Text(
-                                  postagem.message,
-                                  style: TextStyle(color: Colors.white),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: TextButton.icon(
+                                      label: Text("1",
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      icon: Icon(Icons.favorite_border_outlined,
+                                          color: colorPallete.orange),
+                                      onPressed: () {
+                                        
+                                      },
+                                      onLongPress: () {},
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
+                                Expanded(
+                                  flex: 5,
+                                  child: TextButton.icon(
+                                    style: TextButton.styleFrom(),
+                                    icon: Icon(Icons.comment_outlined,
+                                        color: Colors.grey),
+                                    label: Text(
+                                      'comentar',
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                ),
+                                Spacer()
+                              ],
+                            )
                           ],
                         ),
                       );

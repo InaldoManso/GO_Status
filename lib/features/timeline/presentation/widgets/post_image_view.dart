@@ -10,29 +10,43 @@ class PostImageView extends StatefulWidget {
   _PostImageViewState createState() => _PostImageViewState();
 }
 
-class _PostImageViewState extends State<PostImageView> {
+class _PostImageViewState extends State<PostImageView>
+    with TickerProviderStateMixin {
+  final TransformationController _controller = TransformationController();
   ColorPallete paleta = ColorPallete();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          margin: const EdgeInsets.only(top: 8),
-          height: MediaQuery.of(context).size.width,
-          alignment: Alignment.topLeft,
-          decoration: BoxDecoration(
-            color: paleta.grey900,
-            borderRadius: BorderRadius.circular(16),
-            image: DecorationImage(
-                image: NetworkImage(widget.urlimage), fit: BoxFit.scaleDown),
+      backgroundColor: Colors.black,
+      body: GestureDetector(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: GestureDetector(
+            child: InteractiveViewer(
+              transformationController: _controller,
+              child: Image.network(
+                widget.urlimage,
+                fit: BoxFit.contain,
+              ),
+            ),
+            onDoubleTap: () {
+              _controller.value = Matrix4.identity();
+            },
           ),
         ),
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.transparent,
+        child: const Icon(Icons.close_outlined),
+        backgroundColor: Colors.black12,
+        splashColor: Colors.transparent,
+        isExtended: false,
         elevation: 0,
-        child: Icon(Icons.close_fullscreen_outlined),
         onPressed: () {
           Navigator.pop(context);
         },
