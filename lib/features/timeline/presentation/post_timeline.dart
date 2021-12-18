@@ -1,3 +1,6 @@
+import 'package:go_status/core/tools/date_formatter.dart';
+import 'package:go_status/features/timeline/aplication/post_interactive.dart';
+import 'package:go_status/features/timeline/model/post_reaction.dart';
 import 'package:go_status/features/timeline/tools/option_spliter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_status/core/tools/route_generator.dart';
@@ -22,9 +25,12 @@ class _PostTimelineState extends State<PostTimeline> {
   //Attributes
   final _controller = StreamController<QuerySnapshot>.broadcast();
   List<String> itensMenu = ["Deletar"];
-  String _nameUser = "";
   String youtubeapikey;
   String steamapikey;
+
+  //User attributes
+  String _uidUser = "";
+  String _nameUser = "";
   int _admin = 0;
 
   _recuperarAdmKeys() async {
@@ -43,6 +49,7 @@ class _PostTimelineState extends State<PostTimeline> {
     setState(() {
       _admin = snapshot["admin"];
       _nameUser = snapshot["name"];
+      _uidUser = snapshot["userid"];
     });
   }
 
@@ -87,6 +94,45 @@ class _PostTimelineState extends State<PostTimeline> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  _sendPostReaction(int reactionId, String postId) {
+    PostInteractive postInteractive = PostInteractive();
+    PostReaction postReaction = PostReaction();
+    DateFormatter dateFormatter = DateFormatter();
+    postReaction.idreaction = reactionId;
+    postReaction.uidUser = _uidUser;
+    postReaction.nameUser = _nameUser;
+    postReaction.timeReaction = dateFormatter.generateDateTime();
+    postReaction.type = "love";
+    postInteractive.sendGoodGame(postId, postReaction);
+  }
+
+  Future<List<PostReaction>> _listReation(String postId) async {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    List<PostReaction> listaUsuarios = [];
+
+    QuerySnapshot querySnapshot = await db
+        .collection('publications')
+        .doc(postId)
+        .collection('reactions')
+        .get();
+
+    for (DocumentSnapshot item in querySnapshot.docs) {
+      var dados = item.data();
+      // if (dados["showkilldeath"] == false) continue;
+
+      PostReaction postReaction = PostReaction();
+      postReaction.idreaction = dados["idreaction"];
+      postReaction.nameUser = dados["nameUser"];
+      postReaction.timeReaction = dados["timeReaction"];
+      postReaction.type = dados["type"];
+      postReaction.uidUser = dados["uidUser"];
+
+      listaUsuarios.add(postReaction);
+    }
+
+    return listaUsuarios;
+  }
+
   @override
   void initState() {
     _recuperarAdmKeys();
@@ -125,7 +171,6 @@ class _PostTimelineState extends State<PostTimeline> {
       body: Container(
         child: StreamBuilder(
           stream: _controller.stream,
-          // ignore: missing_return
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -271,26 +316,60 @@ class _PostTimelineState extends State<PostTimeline> {
                               },
                               onDoubleTap: () {},
                             ),
+                            // Row Gestures
                             Row(
                               children: [
                                 Expanded(
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: TextButton.icon(
-                                      label: Text("1",
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                      icon: Icon(Icons.favorite_border_outlined,
-                                          color: colorPallete.orange),
-                                      onPressed: () {
-                                        
-                                      },
-                                      onLongPress: () {},
-                                    ),
+                                  child: FutureBuilder(
+                                    future: _listReation(item["idpublication"]),
+                                    builder: (context, snapshot) {
+                                      switch (snapshot.connectionState) {
+                                        case ConnectionState.none:
+                                        case ConnectionState.waiting:
+                                          return TextButton.icon(
+                                            label: Text('...'),
+                                            icon: Icon(
+                                                Icons.favorite_border_outlined,
+                                                color: colorPallete.orange),
+                                            onPressed: () {},
+                                          );
+                                        case ConnectionState.active:
+                                        case ConnectionState.done:
+                                          List<PostReaction> listReactions =
+                                              snapshot.data;
+                                          bool liked = false;
+                                          liked = listReactions.any((element) =>
+                                              element.uidUser == _uidUser);
+                                          return TextButton.icon(
+                                            label: Text(
+                                              snapshot.data.length.toString(),
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.white),
+                                            ),
+                                            icon: liked
+                                                ? Icon(Icons.favorite,
+                                                    color: colorPallete.orange)
+                                                : Icon(
+                                                    Icons
+                                                        .favorite_border_outlined,
+                                                    color: colorPallete.orange),
+                                            onPressed: () {
+                                              print(postagem.idpublication);
+                                              _sendPostReaction(
+                                                  1, postagem.idpublication);
+                                              setState(() {});
+                                            },
+                                            onLongPress: () {},
+                                          );
+                                          break;
+                                      }
+                                      return Container();
+                                    },
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 5,
+                                  flex: 3,
                                   child: TextButton.icon(
                                     style: TextButton.styleFrom(),
                                     icon: Icon(Icons.comment_outlined,

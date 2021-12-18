@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
@@ -18,6 +20,8 @@ class _SnappingMenuState extends State<SnappingMenu> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   ColorPallete colorPallete = ColorPallete();
+  //Attributes
+  StreamController _controller = StreamController<QuerySnapshot>.broadcast();
 
 //Atributos User
   String _name = "";
@@ -64,9 +68,24 @@ class _SnappingMenuState extends State<SnappingMenu> {
     return menulist;
   }
 
+  Stream<QuerySnapshot> _addListenerMenuItems() {
+    final stream = db
+        .collection("interface")
+        .doc("menuItems")
+        .collection("items")
+        .orderBy("order", descending: false)
+        .snapshots();
+
+    stream.listen((dados) {
+      _controller.add(dados);
+    });
+    return stream;
+  }
+
   @override
   void initState() {
     _recoverUserData();
+    _addListenerMenuItems();
     super.initState();
   }
 
@@ -154,66 +173,92 @@ class _SnappingMenuState extends State<SnappingMenu> {
                       ),
                       Expanded(
                         flex: 6,
-                        child: SingleChildScrollView(
-                          child: FutureBuilder<List<SnappingItem>>(
-                            future: _recoverMenuItems(),
-                            // ignore: missing_return
-                            builder: (context, snapshot) {
-                              switch (snapshot.connectionState) {
-                                case ConnectionState.none:
-                                case ConnectionState.waiting:
+                        child: StreamBuilder(
+                          stream: _controller.stream,
+                          builder: (context, snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.none:
+                                return Container();
+                                break;
+                              case ConnectionState.waiting:
+                                return Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Center(
+                                      child: CircularProgressIndicator()),
+                                );
+                                break;
+                              case ConnectionState.active:
+                              case ConnectionState.done:
+                                QuerySnapshot querySnapshot = snapshot.data;
+
+                                if (snapshot.hasError) {
                                   return Container(
-                                    height: MediaQuery.of(context).size.height,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Center(
-                                        child: CircularProgressIndicator()),
+                                    child: Text("Erro ao carregar dados"),
                                   );
-                                  break;
-                                case ConnectionState.active:
-                                case ConnectionState.done:
+                                } else {
                                   return ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: snapshot.data.length,
-                                    itemBuilder: (_, index) {
-                                      List<SnappingItem> snappingItemsList =
-                                          snapshot.data;
-                                      SnappingItem snappingItem =
+                                    itemCount: querySnapshot.docs.length,
+                                    itemBuilder: (context, index) {
+                                      //Recuperar mensagens
+                                      List<DocumentSnapshot> snappingItemsList =
+                                          querySnapshot.docs.toList();
+
+                                      DocumentSnapshot item =
                                           snappingItemsList[index];
 
-                                      return Container(
-                                        padding: EdgeInsets.all(8),
-                                        child: ElevatedButton.icon(
-                                          style: ElevatedButton.styleFrom(
-                                            alignment: Alignment.centerLeft,
-                                            primary: Colors.white,
-                                            padding: const EdgeInsets.all(15),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(16)),
-                                          ),
-                                          icon: Icon(
-                                              Icons.video_collection_outlined,
-                                              color: colorPallete.dodgerBlue),
-                                          label: Text(
-                                            snappingItem.tittle,
-                                            style: TextStyle(
+                                      SnappingItem snappingItem =
+                                          SnappingItem();
+
+                                      snappingItem.enabled = item["enabled"];
+                                      snappingItem.id = item["id"];
+                                      snappingItem.order = item["order"];
+                                      snappingItem.tittle = item["tittle"];
+                                      snappingItem.type = item["type"];
+
+                                      if (item["enabled"] == false ||
+                                          item["type"] != "menuButton") {
+                                        return Container();
+                                      } else {
+                                        return Container(
+                                          padding: EdgeInsets.all(8),
+                                          child: ElevatedButton.icon(
+                                            style: ElevatedButton.styleFrom(
+                                              alignment: Alignment.centerLeft,
+                                              primary: Colors.white,
+                                              padding: const EdgeInsets.all(15),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          16)),
+                                            ),
+                                            icon: Icon(
+                                                Icons.video_collection_outlined,
                                                 color: colorPallete.dodgerBlue),
+                                            label: Text(
+                                              snappingItem.tittle,
+                                              style: TextStyle(
+                                                  color:
+                                                      colorPallete.dodgerBlue),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                RouteGenerator
+                                                    .snappingScreenShow,
+                                                arguments: snappingItem.id,
+                                              );
+                                            },
                                           ),
-                                          onPressed: () {
-                                            Navigator.pushNamed(
-                                              context,
-                                              RouteGenerator.snappingScreenShow,
-                                              arguments: snappingItem.id,
-                                            );
-                                          },
-                                        ),
-                                      );
+                                        );
+                                      }
                                     },
                                   );
-                                  break;
-                              }
-                            },
-                          ),
+                                }
+                                break;
+                            }
+                            return null;
+                          },
                         ),
                       ),
                     ],

@@ -238,7 +238,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         Home.snappingSheetController.snapToPosition(
                           const SnappingPosition.factor(
                             positionFactor: 0.0,
-                            snappingCurve: Curves.ease,
+                            snappingCurve: Curves.easeInCubic,
                             snappingDuration: Duration(milliseconds: 500),
                           ),
                         );
@@ -247,7 +247,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         Home.snappingSheetController.snapToPosition(
                           const SnappingPosition.factor(
                             positionFactor: 1.0,
-                            snappingCurve: Curves.ease,
+                            snappingCurve: Curves.easeInCubic,
                             snappingDuration: Duration(milliseconds: 500),
                           ),
                         );

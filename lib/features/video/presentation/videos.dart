@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_youtube/flutter_youtube.dart';
+// import 'package:flutter_youtube/flutter_youtube.dart';
 import 'package:go_status/core/data/network/api.dart';
 import 'package:go_status/core/tools/custom_search_delegate.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
@@ -81,81 +81,82 @@ class _VideosState extends State<Videos> {
           ),
         ],
       ),
-      body: FutureBuilder<List<Video>>(
-        future: _listarVideos(_pesquisa),
-        builder: (contex, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-              break;
-            case ConnectionState.active:
-            case ConnectionState.done:
-              if (snapshot.hasData) {
-                return ListView.separated(
-                    itemBuilder: (context, index) {
-                      List<Video> videos = snapshot.data;
-                      Video video = videos[index];
+      body: Container(),
+      // body: FutureBuilder<List<Video>>(
+      //   future: _listarVideos(_pesquisa),
+      //   builder: (contex, snapshot) {
+      //     switch (snapshot.connectionState) {
+      //       case ConnectionState.none:
+      //       case ConnectionState.waiting:
+      //         return Center(
+      //           child: CircularProgressIndicator(),
+      //         );
+      //         break;
+      //       case ConnectionState.active:
+      //       case ConnectionState.done:
+      //         if (snapshot.hasData) {
+      //           return ListView.separated(
+      //               itemBuilder: (context, index) {
+      //                 List<Video> videos = snapshot.data;
+      //                 Video video = videos[index];
 
-                      return GestureDetector(
-                        onTap: () {
-                          FlutterYoutube.playYoutubeVideoById(
-                              apiKey: youtubeapikey,
-                              videoId: video.id,
-                              autoPlay: true,
-                              fullScreen: true);
-                        },
-                        child: Container(
-                          margin: EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                              color: paleta.grey850,
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(8)),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(video.imagem),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.play_circle_outline_outlined,
-                                    size: 50,
-                                    color: paleta.dodgerBlue,
-                                  ),
-                                ),
-                              ),
-                              ListTile(
-                                title: Text(video.titulo),
-                                subtitle: Text(video.canal),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) => Divider(
-                          height: 2,
-                          color: Colors.grey,
-                        ),
-                    itemCount: snapshot.data.length);
-              } else {
-                return Center(
-                  child: Text("Nenhum dado a ser exibido!"),
-                );
-              }
-              break;
-          }
-          return null;
-        },
-      ),
+      //                 return GestureDetector(
+      //                   onTap: () {
+      //                     FlutterYoutube.playYoutubeVideoById(
+      //                         apiKey: youtubeapikey,
+      //                         videoId: video.id,
+      //                         autoPlay: true,
+      //                         fullScreen: true);
+      //                   },
+      //                   child: Container(
+      //                     margin: EdgeInsets.all(4),
+      //                     decoration: BoxDecoration(
+      //                         color: paleta.grey850,
+      //                         borderRadius: BorderRadius.circular(8)),
+      //                     child: Column(
+      //                       children: <Widget>[
+      //                         Container(
+      //                           height: 200,
+      //                           decoration: BoxDecoration(
+      //                             borderRadius: BorderRadius.vertical(
+      //                                 top: Radius.circular(8)),
+      //                             image: DecorationImage(
+      //                               fit: BoxFit.cover,
+      //                               image: NetworkImage(video.imagem),
+      //                             ),
+      //                           ),
+      //                           child: Center(
+      //                             child: Icon(
+      //                               Icons.play_circle_outline_outlined,
+      //                               size: 50,
+      //                               color: paleta.dodgerBlue,
+      //                             ),
+      //                           ),
+      //                         ),
+      //                         ListTile(
+      //                           title: Text(video.titulo),
+      //                           subtitle: Text(video.canal),
+      //                         )
+      //                       ],
+      //                     ),
+      //                   ),
+      //                 );
+      //               },
+      //               separatorBuilder: (context, index) => Divider(
+      //                     height: 2,
+      //                     color: Colors.grey,
+      //                   ),
+      //               itemCount: snapshot.data.length);
+      //         } else {
+      //           return Center(
+      //             child: Text("Nenhum dado a ser exibido!"),
+      //           );
+      //         }
+      //         break;
+      //     }
+      //     return null;
+      //   },
+      // ),
     );
   }
 }

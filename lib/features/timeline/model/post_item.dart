@@ -1,3 +1,5 @@
+import 'package:go_status/features/timeline/model/post_reaction.dart';
+
 class PostItem {
   static const int typeImage = 1;
 
@@ -11,6 +13,7 @@ class PostItem {
   String _urlimage;
   String _timeshow;
   String _imageName;
+  List<PostReaction> _reactions = [];
 
   PostItem();
 
@@ -26,6 +29,7 @@ class PostItem {
       "urlimage": this.urlimage,
       "timeshow": this.timeshow,
       "imageName": this.imageName,
+      "reactions": this.reactions,
     };
     return map;
   }
@@ -59,4 +63,7 @@ class PostItem {
 
   get imageName => this._imageName;
   set imageName(value) => this._imageName = value;
+
+  get reactions => this._reactions;
+  set reactions(value) => this._reactions = value;
 }

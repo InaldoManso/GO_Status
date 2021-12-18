@@ -1,8 +1,8 @@
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:go_status/features/timeline/model/post_reaction.dart';
+import 'package:go_status/core/tools/date_formatter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:go_status/core/tools/date_formatter.dart';
-import 'package:go_status/features/timeline/model/post_reaction.dart';
 
 class PostInteractive {
   //Classes and packages
@@ -12,8 +12,9 @@ class PostInteractive {
       firebase_storage.FirebaseStorage.instance;
   DateFormatter dateFormatter = DateFormatter();
 
-  sendGoodGame(PostReaction postReaction) async {
-    String postId = dateFormatter.generateDateTimeIdentification();
+  sendGoodGame(String postId, PostReaction postReaction) async {
+    Map<String, dynamic> teste = {'teste': 'teste'};
+    print(postReaction.toMap());
     await db
         .collection("publications")
         .doc(postId)

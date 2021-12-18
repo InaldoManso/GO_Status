@@ -36,8 +36,8 @@ dependencies:
   firebase_messaging: ^6.0.16
 
   http: ^0.12.2
-  flutter_youtube: ^1.1.6
-  youtube_player_flutter: ^7.0.0+7
+  # flutter_youtube: ^1.1.6
+  # youtube_player_flutter: ^7.0.0+7
   intl: ^0.16.1
   shared_preferences: ^0.5.2
   image_picker: ^0.6.7+15
