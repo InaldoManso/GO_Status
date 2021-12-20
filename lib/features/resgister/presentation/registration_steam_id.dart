@@ -13,35 +13,35 @@ class RegistrationSteamId extends StatefulWidget {
 class _RegistrationSteamIdState extends State<RegistrationSteamId> {
   //Models&Helpers
   ColorPallete colorPallete = ColorPallete();
-  UserProfile userProfile = UserProfile();
+  UserProfile? userProfile = UserProfile();
   Api api = Api();
 
   //Atributos
   TextEditingController searchUserEditingController = TextEditingController();
   String _labelTextField = "exemplo: MeuNome123";
-  String _idSelecionado = "url";
+  String? _idSelecionado = "url";
   bool _searching = false;
   bool _success = false;
-  String youtubeapikey;
-  String steamapikey;
+  String? youtubeapikey;
+  String? steamapikey;
 
   _recoverUser(int searchType, String searchUser) async {
     if (searchType == 1) {
-      String steamId = await api.recSteamIdFromUrl(steamapikey, searchUser);
+      String steamId = await api.recSteamIdFromUrl(steamapikey!, searchUser);
       if (steamId != "error") {
         UserProfile userProfileResult =
-            await api.recDataUserFromSteamID(steamapikey, steamId);
+            await api.recDataUserFromSteamID(steamapikey!, steamId);
         _foundUser(true, userData: userProfileResult);
       } else {
         _foundUser(false);
       }
     } else if (searchType == 2) {
       print("DEU INICIO DO ID $searchUser");
-      var test = await api.recDataUserFromSteamID(steamapikey, searchUser);
+      var test = await api.recDataUserFromSteamID(steamapikey!, searchUser);
       print("DEU " + test.toString());
       if (test != "error") {
         UserProfile userProfileResult =
-            await api.recDataUserFromSteamID(steamapikey, searchUser);
+            await api.recDataUserFromSteamID(steamapikey!, searchUser);
         _foundUser(true, userData: userProfileResult);
       } else {
         _foundUser(false);
@@ -49,7 +49,7 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
     }
   }
 
-  _foundUser(bool success, {UserProfile userData}) {
+  _foundUser(bool success, {UserProfile? userData}) {
     if (success) {
       setState(() {
         userProfile = userData;
@@ -69,7 +69,7 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
   _validarUserAndStemPublic() async {
     bool perfilPublico = false;
     perfilPublico =
-        await api.validarSteamPublica(steamapikey, userProfile.steamid);
+        await api.validarSteamPublica(steamapikey!, userProfile!.steamid);
     if (perfilPublico) {
       _enviarCadastro(userProfile);
     } else {
@@ -78,7 +78,7 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
     }
   }
 
-  _enviarCadastro(UserProfile userProfile) {
+  _enviarCadastro(UserProfile? userProfile) {
     Navigator.pushNamed(context, RouteGenerator.registrationRoute,
         arguments: userProfile);
   }
@@ -104,8 +104,8 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
     steamapikey = prefs.getString("steamapikey");
     youtubeapikey = prefs.getString("youtubeapikey");
 
-    print("TEste 01" + steamapikey);
-    print("TEste 02" + youtubeapikey);
+    print("TEste 01" + steamapikey!);
+    print("TEste 02" + youtubeapikey!);
   }
 
   @override
@@ -144,7 +144,7 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
     );
   }
 
-  _seachInterface(bool success, UserProfile userProfile) {
+  _seachInterface(bool success, UserProfile? userProfile) {
     double appWidth = MediaQuery.of(context).size.width;
     if (success) {
       return Container(
@@ -158,7 +158,7 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: NetworkImage(userProfile.urlimage),
+                    image: NetworkImage(userProfile!.urlimage),
                     fit: BoxFit.contain),
               ),
             ),
@@ -229,7 +229,7 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
                 Radio(
                     value: "url",
                     groupValue: _idSelecionado,
-                    onChanged: (String escolha) {
+                    onChanged: (String? escolha) {
                       _idSelecionado = escolha;
                       _labelTextField = "exemplo: MeuNome123";
                       setState(() {});
@@ -238,7 +238,7 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
                 Radio(
                     value: "steamid",
                     groupValue: _idSelecionado,
-                    onChanged: (String escolha) {
+                    onChanged: (String? escolha) {
                       _idSelecionado = escolha;
                       _labelTextField = "exemplo: 12345678910111213";
                       setState(() {});

@@ -7,7 +7,7 @@ import 'package:go_status/features/video/model/video.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Videos extends StatefulWidget {
-  String pesquisa;
+  String? pesquisa;
   Videos(this.pesquisa);
   @override
   _VideosState createState() => _VideosState();
@@ -15,10 +15,10 @@ class Videos extends StatefulWidget {
 
 class _VideosState extends State<Videos> {
   //Atributos
-  String _pesquisa = "";
+  String? _pesquisa = "";
   ColorPallete paleta = ColorPallete();
-  String steamapikey;
-  String youtubeapikey;
+  String? steamapikey;
+  String? youtubeapikey;
 
   _listarVideos(String pesquisa) {
     Api api = Api();
@@ -47,7 +47,7 @@ class _VideosState extends State<Videos> {
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         title: Text(
-          _pesquisa == "" ? "League Master Club" : "\"" + _pesquisa + "\"",
+          _pesquisa == "" ? "League Master Club" : "\"" + _pesquisa! + "\"",
           style: TextStyle(color: paleta.orange),
         ),
         actions: [
@@ -72,7 +72,7 @@ class _VideosState extends State<Videos> {
               color: paleta.dodgerBlue,
             ),
             onPressed: () async {
-              String res = await showSearch(
+              String? res = await showSearch(
                   context: context, delegate: CustomSearchDelegate());
               setState(() {
                 _pesquisa = res;

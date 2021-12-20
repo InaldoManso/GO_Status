@@ -27,11 +27,11 @@ class _SplashScreenState extends State<SplashScreen> {
   //Dados a atualizar do User
   UserStats csgoStats = UserStats();
   UserProfile usuario = UserProfile();
-  String steamapikey;
-  String youtubeapikey;
+  String? steamapikey;
+  String? youtubeapikey;
 
   _checkApiKeys() async {
-    DocumentSnapshot snapshot = await db
+    DocumentSnapshot snapshot = await (db
         .collection("admgostatus")
         .doc("credentials")
         .get()
@@ -44,17 +44,17 @@ class _SplashScreenState extends State<SplashScreen> {
       print("teste001 Splash ERR: Erro ao recuperar API Keys");
       _snackBarInfo(
           "Erro ao se comunicar com o servidor,\nentre em contato com seu Saver");
-    });
+    }) as FutureOr<DocumentSnapshot<Object>>);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("steamapikey", steamapikey).then((value) {});
-    await prefs.setString("youtubeapikey", youtubeapikey).then((value) {});
+    await prefs.setString("steamapikey", steamapikey!).then((value) {});
+    await prefs.setString("youtubeapikey", youtubeapikey!).then((value) {});
   }
 
   _checkLogin() {
     print("teste001 Splash INF: Verificando Login User");
     FirebaseAuth auth = FirebaseAuth.instance;
-    User user = auth.currentUser;
+    User? user = auth.currentUser;
     if (user != null) {
       print("teste001 Splash INF: User esta logado no app");
       _recoverUserData();
@@ -67,13 +67,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _recoverUserData() async {
-    User user = auth.currentUser;
+    User user = auth.currentUser!;
     DocumentSnapshot snapshot =
         await db.collection("users").doc(user.uid).get();
 
     String steamid = snapshot["steamid"];
 
-    usuario = await api.recDataUserFromSteamID(steamapikey, steamid);
+    usuario = await api.recDataUserFromSteamID(steamapikey!, steamid);
 
     if (usuario != null) {
       _recoverStatsUserToUpdate(steamid, usuario.name, usuario.urlimage);
@@ -94,7 +94,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (csgoStats != null) {
       print("teste001 Splash INF: Enviando atualização para o DB");
-      User user = auth.currentUser;
+      User user = auth.currentUser!;
       db
           .collection("users")
           .doc(user.uid)
@@ -118,7 +118,7 @@ class _SplashScreenState extends State<SplashScreen> {
   _validateRegistrationVersion() async {
     print("teste001 Splash INF: Validando versão do cadastro");
     VersionControl versionControl = VersionControl();
-    User user = auth.currentUser;
+    User user = auth.currentUser!;
     DocumentSnapshot snapshot =
         await db.collection("users").doc(user.uid).get();
 

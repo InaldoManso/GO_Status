@@ -1,9 +1,9 @@
 class SnappingItem {
-  bool enabled;
-  String id;
-  int order;
-  String tittle;
-  String type;
+  bool? enabled;
+  String? id;
+  int? order;
+  String? tittle;
+  String? type;
 
   SnappingItem({this.enabled, this.id, this.order, this.type});
 

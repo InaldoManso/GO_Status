@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 class RegistrationUser extends StatefulWidget {
-  UserProfile userProfile;
+  var userProfile;
   RegistrationUser(this.userProfile);
   @override
   _RegistrationUserState createState() => _RegistrationUserState();
@@ -26,8 +26,8 @@ class _RegistrationUserState extends State<RegistrationUser> {
   //Attributes
   bool _editando = true;
   String _buttonText = "Criar conta!";
-  String steamapikey;
-  String youtubeapikey;
+  String? steamapikey;
+  String? youtubeapikey;
 
   //Controllers
   TextEditingController emailEditingController = TextEditingController();
@@ -40,13 +40,13 @@ class _RegistrationUserState extends State<RegistrationUser> {
     if (_validarCampos()) {
       if (_validarSenha()) {
         //Configurar os dados
-        userProfile.name = widget.userProfile.name;
+        userProfile.name = widget.userProfile!.name;
         userProfile.email = emailEditingController.text;
         userProfile.password = senhaEditingController.text;
-        userProfile.steamid = widget.userProfile.steamid;
+        userProfile.steamid = widget.userProfile!.steamid;
         userProfile.team = timeEditingController.text;
-        userProfile.urlimage = widget.userProfile.urlimage;
-        userProfile.country = widget.userProfile.country;
+        userProfile.urlimage = widget.userProfile!.urlimage;
+        userProfile.country = widget.userProfile!.country;
         userProfile.version = "1.0.0";
         _salvarCadastro(userProfile);
       } else {
@@ -107,10 +107,10 @@ class _RegistrationUserState extends State<RegistrationUser> {
         .createUserWithEmailAndPassword(email: email, password: senha)
         .then((firebaseUser) {
       //Definir o UID a ser salvo
-      usuario.userid = firebaseUser.user.uid;
+      usuario.userid = firebaseUser.user!.uid;
       db
           .collection("users")
-          .doc(firebaseUser.user.uid)
+          .doc(firebaseUser.user!.uid)
           .set(usuario.toMap())
           .then((value) {
         setState(() {
@@ -128,12 +128,13 @@ class _RegistrationUserState extends State<RegistrationUser> {
   }
 
   _recuperarCsgoStats(String steamid, String nome, String urlimage) async {
-    UserStats csgoStats = UserStats();
+    UserStats? csgoStats = UserStats();
     Api api = Api();
-    csgoStats = await api.updateUserStats(steamapikey, steamid, nome, urlimage);
+    csgoStats = await (api.updateUserStats(
+        steamapikey!, steamid, nome, urlimage) as FutureOr<UserStats>);
 
     if (csgoStats != null) {
-      User user = auth.currentUser;
+      User user = auth.currentUser!;
 
       db
           .collection("users")
@@ -209,8 +210,8 @@ class _RegistrationUserState extends State<RegistrationUser> {
                         color: Colors.grey[200],
                         image: DecorationImage(
                             image: NetworkImage(
-                                widget.userProfile.urlimage != null
-                                    ? widget.userProfile.urlimage
+                                widget.userProfile!.urlimage != null
+                                    ? widget.userProfile!.urlimage
                                     : null),
                             fit: BoxFit.cover),
                         borderRadius: BorderRadius.all(Radius.circular(16))),

@@ -3,7 +3,7 @@ import 'package:go_status/core/helper/color_pallete.dart';
 
 class PostImageView extends StatefulWidget {
   // const PostImageView({ Key? key }) : super(key: key);
-  String urlimage;
+  String? urlimage;
   PostImageView(this.urlimage);
 
   @override
@@ -27,7 +27,7 @@ class _PostImageViewState extends State<PostImageView>
             child: InteractiveViewer(
               transformationController: _controller,
               child: Image.network(
-                widget.urlimage,
+                widget.urlimage!,
                 fit: BoxFit.contain,
               ),
             ),

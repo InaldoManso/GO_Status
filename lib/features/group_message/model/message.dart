@@ -4,8 +4,8 @@ class Message {
   static const int typePhoto = 2;
 
   int _messageid = 0;
-  String _iduser = "";
-  String _name = "";
+  String? _iduser = "";
+  String? _name = "";
   String _message = "";
   String _urlimage = "";
   int _type = 0;

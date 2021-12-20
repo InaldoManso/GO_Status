@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:go_status/builds/home/aplication/cloud_message.dart';
 import 'package:go_status/features/classification/presentation/classification.dart';
 import 'package:go_status/features/group_message/presentation/general_chat.dart';
@@ -21,12 +20,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   //Classes and Packages
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   ColorPallete colorPallete = ColorPallete();
   ApiStats apiStats = ApiStats();
 
   //Attributes
-  AnimationController controller;
+  late AnimationController controller;
   bool expanded = true;
   int _currentIndex = 0;
 
@@ -34,33 +33,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     setState(() {
       _currentIndex = indice;
     });
-  }
-
-  printer() async {
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-      },
-    );
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(
-            sound: true, badge: true, alert: true, provisional: true));
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
-    _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-    });
-    //
-    String gg = await _firebaseMessaging.getToken();
-    print("txtx: " + gg);
   }
 
   CloudMessage cm = CloudMessage();
@@ -78,7 +50,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       duration: Duration(milliseconds: 400),
       reverseDuration: Duration(milliseconds: 400),
     );
-    printer();
     teste();
   }
 

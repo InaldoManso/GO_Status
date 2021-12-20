@@ -15,7 +15,7 @@ class _SettingsState extends State<Settings> {
   FirebaseAuth auth = FirebaseAuth.instance;
   UserSettings configUser = UserSettings();
   ColorPallete paleta = ColorPallete();
-  User user;
+  User? user;
 
   //Atributos
   bool _exibirclassificacao = false;
@@ -23,7 +23,7 @@ class _SettingsState extends State<Settings> {
 
   _atualizarConfig() {
     configUser.showkilldeath = _exibirclassificacao;
-    db.collection("users").doc(user.uid).update(configUser.toMap());
+    db.collection("users").doc(user!.uid).update(configUser.toMap());
   }
 
   _recuperarConfig(String uid) async {
@@ -44,7 +44,7 @@ class _SettingsState extends State<Settings> {
 
   _recuperarDadosUser() async {
     user = await auth.currentUser;
-    _recuperarConfig(user.uid);
+    _recuperarConfig(user!.uid);
   }
 
   @override

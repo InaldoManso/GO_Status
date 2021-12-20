@@ -95,8 +95,8 @@ class _LoginState extends State<Login> {
     }
   }
 
-  Widget _exibirCarregando() {
-    Widget widget;
+  Widget? _exibirCarregando() {
+    Widget? widget;
 
     if (_carregando) {
       setState(() {

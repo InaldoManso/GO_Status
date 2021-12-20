@@ -24,12 +24,12 @@ class _SnappingMenuState extends State<SnappingMenu> {
   StreamController _controller = StreamController<QuerySnapshot>.broadcast();
 
 //Atributos User
-  String _name = "";
-  String _image = "";
-  String _country = "";
+  String? _name = "";
+  String? _image = "";
+  String? _country = "";
 
   _recoverUserData() async {
-    User user = auth.currentUser;
+    User user = auth.currentUser!;
     DocumentSnapshot snapshot =
         await db.collection("users").doc(user.uid).get();
 
@@ -52,7 +52,7 @@ class _SnappingMenuState extends State<SnappingMenu> {
 
     List<SnappingItem> menulist = [];
     for (DocumentSnapshot item in querySnapshot.docs) {
-      var data = item.data();
+      DocumentSnapshot data = item.data() as DocumentSnapshot<Object>;
       if (data["enabled"] == false || data["type"] != "menuButton") continue;
 
       SnappingItem snappingItem = SnappingItem();
@@ -126,7 +126,7 @@ class _SnappingMenuState extends State<SnappingMenu> {
                                 children: [
                                   Container(
                                     child: Text(
-                                      _name,
+                                      _name!,
                                       overflow: TextOverflow.fade,
                                       textAlign: TextAlign.left,
                                       softWrap: false,
@@ -136,7 +136,7 @@ class _SnappingMenuState extends State<SnappingMenu> {
                                     ),
                                   ),
                                   Text(
-                                    _country,
+                                    _country!,
                                     overflow: TextOverflow.fade,
                                     textAlign: TextAlign.left,
                                     softWrap: false,
@@ -153,7 +153,7 @@ class _SnappingMenuState extends State<SnappingMenu> {
                                 child: CircleAvatar(
                                   child: _image == ""
                                       ? CircularProgressIndicator()
-                                      : ClipOval(child: Image.network(_image)),
+                                      : ClipOval(child: Image.network(_image!)),
                                   radius: 35,
                                   backgroundColor: Colors.grey,
                                 ),
@@ -190,7 +190,8 @@ class _SnappingMenuState extends State<SnappingMenu> {
                                 break;
                               case ConnectionState.active:
                               case ConnectionState.done:
-                                QuerySnapshot querySnapshot = snapshot.data;
+                                QuerySnapshot? querySnapshot =
+                                    snapshot.data as QuerySnapshot<Object?>?;
 
                                 if (snapshot.hasError) {
                                   return Container(
@@ -198,7 +199,7 @@ class _SnappingMenuState extends State<SnappingMenu> {
                                   );
                                 } else {
                                   return ListView.builder(
-                                    itemCount: querySnapshot.docs.length,
+                                    itemCount: querySnapshot!.docs.length,
                                     itemBuilder: (context, index) {
                                       //Recuperar mensagens
                                       List<DocumentSnapshot> snappingItemsList =
@@ -236,7 +237,7 @@ class _SnappingMenuState extends State<SnappingMenu> {
                                                 Icons.video_collection_outlined,
                                                 color: colorPallete.dodgerBlue),
                                             label: Text(
-                                              snappingItem.tittle,
+                                              snappingItem.tittle!,
                                               style: TextStyle(
                                                   color:
                                                       colorPallete.dodgerBlue),
@@ -257,7 +258,6 @@ class _SnappingMenuState extends State<SnappingMenu> {
                                 }
                                 break;
                             }
-                            return null;
                           },
                         ),
                       ),

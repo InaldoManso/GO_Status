@@ -1,19 +1,19 @@
 class UserClassification {
-  String _name;
-  String _email;
-  String _password;
-  String _steamid;
-  String _userid;
-  String _team;
-  String _urlimage;
-  String _country;
-  String _killdeath;
-  String _kill;
-  String _death;
-  String _timeplay;
-  String _wins;
-  String _mvps;
-  String _headshots;
+  String? _name;
+  String? _email;
+  String? _password;
+  String? _steamid;
+  String? _userid;
+  String? _team;
+  String? _urlimage;
+  String? _country;
+  String? _killdeath;
+  String? _kill;
+  String? _death;
+  String? _timeplay;
+  String? _wins;
+  String? _mvps;
+  String? _headshots;
 
   UserClassification();
 

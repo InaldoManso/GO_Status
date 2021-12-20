@@ -25,14 +25,16 @@ class ApiStats {
 
   updateUserStats(String steamId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String steamapikey = prefs.getString("steamapikey");
+    String steamapikey = prefs.getString("steamapikey")!;
 
-    UserStats userStats = UserStats();
-    http.Response response = await http.get(_getStatsUser[0] +
+    var _uriConvert = Uri.parse(_getStatsUser[0] +
         steamapikey +
         _getStatsUser[1] +
         steamId +
         _getStatsUser[2]);
+
+    UserStats userStats = UserStats();
+    http.Response response = await http.get(_uriConvert);
 
     if (response.statusCode == 200) {
       Map<String, dynamic> retorno = json.decode(response.body);
@@ -75,12 +77,14 @@ class ApiStats {
 
   _getTimePlayerd(String steamId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String steamapikey = prefs.getString("steamapikey");
-    http.Response responseTime = await http.get(_getTimePlayed[0] +
+    String steamapikey = prefs.getString("steamapikey")!;
+
+    var _uriConvert = Uri.parse(_getTimePlayed[0] +
         steamapikey +
         _getTimePlayed[1] +
         steamId +
         _getTimePlayed[2]);
+    http.Response responseTime = await http.get(_uriConvert);
     Map<String, dynamic> retornoTime = json.decode(responseTime.body);
 
     return retornoTime["response"]["games"][0]["playtime_forever"].toString();
@@ -88,10 +92,11 @@ class ApiStats {
 
   _getUserData(String steamId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String steamapikey = prefs.getString("steamapikey");
+    String steamapikey = prefs.getString("steamapikey")!;
     UserProfile userProfile = UserProfile();
-    http.Response response =
-        await http.get(_getSteamId[0] + steamapikey + _getSteamId[1] + steamId);
+    var _uriConvert =
+        Uri.parse(_getSteamId[0] + steamapikey + _getSteamId[1] + steamId);
+    http.Response response = await http.get(_uriConvert);
 
     if (response.statusCode == 200) {
       Map<String, dynamic> returnData = json.decode(response.body);

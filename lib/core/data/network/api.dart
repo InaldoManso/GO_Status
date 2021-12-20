@@ -36,8 +36,9 @@ class Api {
   ];
 
   Future<String> recSteamIdFromUrl(String keyApi, String steamName) async {
-    http.Response response =
-        await http.get(getSteamUrl[0] + keyApi + getSteamUrl[1] + steamName);
+    var _uriConvert =
+        Uri.parse(getSteamUrl[0] + keyApi + getSteamUrl[1] + steamName);
+    http.Response response = await http.get(_uriConvert);
 
     Map<String, dynamic> returnData = json.decode(response.body);
     String success = returnData["response"]["success"].toString();
@@ -64,8 +65,9 @@ class Api {
   }
 
   validarSteamPublica(String keyApi, String steamid) async {
-    http.Response response = await http.get(
+    var _uriConvert = Uri.parse(
         getStatsUser[0] + keyApi + getStatsUser[1] + steamid + getStatsUser[2]);
+    http.Response response = await http.get(_uriConvert);
 
     if (response.statusCode == 200) {
       return true;
@@ -76,8 +78,9 @@ class Api {
 
   recDataUserFromSteamID(String keyApi, String steamID) async {
     UserProfile userProfile = UserProfile();
-    http.Response response =
-        await http.get(getSteamId[0] + keyApi + getSteamId[1] + steamID);
+    var _uriConvert =
+        Uri.parse(getSteamId[0] + keyApi + getSteamId[1] + steamID);
+    http.Response response = await http.get(_uriConvert);
 
     if (response.statusCode == 200) {
       Map<String, dynamic> returnData = json.decode(response.body);
@@ -104,11 +107,12 @@ class Api {
     }
   }
 
-  Future<UserStats> updateUserStats(
+  Future<UserStats?> updateUserStats(
       String keyApi, String steamid, String name, String urlimage) async {
     UserStats csgoStats = UserStats();
-    http.Response response = await http.get(
+    var _uriConvert = Uri.parse(
         getStatsUser[0] + keyApi + getStatsUser[1] + steamid + getStatsUser[2]);
+    http.Response response = await http.get(_uriConvert);
 
     if (response.statusCode == 200) {
       Map<String, dynamic> retorno = json.decode(response.body);
@@ -137,12 +141,14 @@ class Api {
       csgoStats.name = name;
       csgoStats.urlimage = urlimage;
 
-      //Rec time played from other api
-      http.Response responseTime = await http.get(getTimePlayed[0] +
+      var _uriConvert = Uri.parse(getTimePlayed[0] +
           keyApi +
           getTimePlayed[1] +
           steamid +
           getTimePlayed[2]);
+
+      //Rec time played from other api
+      http.Response responseTime = await http.get(_uriConvert);
       Map<String, dynamic> retornoTime = json.decode(responseTime.body);
 
       csgoStats.timeplay =
@@ -156,8 +162,8 @@ class Api {
     }
   }
 
-  Future<List<Video>> searchOnYoutube(String pesquisa, String apiKey) async {
-    http.Response response = await http.get(urlBase +
+  Future<List<Video>?> searchOnYoutube(String pesquisa, String? apiKey) async {
+    var _uriConvert = Uri.parse(urlBase +
         "search"
             "?part=snippet"
             "&type=video"
@@ -166,11 +172,12 @@ class Api {
             "&key=$apiKey"
             "&channelId=$idChannel"
             "&q=$pesquisa");
+    http.Response response = await http.get(_uriConvert);
 
     if (response.statusCode == 200) {
       Map<String, dynamic> dadosJson = json.decode(response.body);
 
-      List<Video> videos = dadosJson["items"].map<Video>((map) {
+      List<Video>? videos = dadosJson["items"].map<Video>((map) {
         return Video.fromJson(map);
       }).toList();
 

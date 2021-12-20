@@ -65,7 +65,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => PublicationCreator());
 
       case viewPostRoute:
-        return MaterialPageRoute(builder: (_) => PostImageView(argument));
+        return MaterialPageRoute(
+            builder: (_) => PostImageView(argument as String?));
 
       case snappingScreenShow:
         return MaterialPageRoute(builder: (_) => SnappingScreenShow(argument));
@@ -75,7 +76,7 @@ class RouteGenerator {
 
       //Se for chamada uma rota inválida
       default:
-        _erroRota();
+        return _erroRota();
     }
   }
 

@@ -20,7 +20,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
   FirebaseAuth auth = FirebaseAuth.instance;
   PostItem postagem = PostItem();
   ColorPallete paleta = ColorPallete();
-  File _image;
+  File? _image;
 
   //Image attributes
 
@@ -30,16 +30,16 @@ class _PublicationCreatorState extends State<PublicationCreator> {
   String _urlImagRecovered = "";
   String _urlImagRecoveredOFC = "";
   bool _uploadingImage = false;
-  String _publicationTime;
-  String _imageuser;
-  String _urlImage;
-  String _nameuser;
-  String _message;
-  String _iduser;
-  String _imageName;
+  String? _publicationTime;
+  String? _imageuser;
+  String? _urlImage;
+  String? _nameuser;
+  String? _message;
+  String? _iduser;
+  String? _imageName;
 
   Future _selectLocalImage(String originImage) async {
-    PickedFile imageSelected;
+    PickedFile? imageSelected;
 
     switch (originImage) {
       case "camera":
@@ -51,7 +51,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
         break;
     }
 
-    final File fileImageConvert = File(imageSelected.path);
+    final File fileImageConvert = File(imageSelected!.path);
 
     setState(() {
       _image = fileImageConvert;
@@ -71,10 +71,10 @@ class _PublicationCreatorState extends State<PublicationCreator> {
     //Reference archive
     firebase_storage.Reference pastaRaiz = storage.ref();
     firebase_storage.Reference arquivos =
-        pastaRaiz.child("previewPost").child(_iduser).child("preview.jpg");
+        pastaRaiz.child("previewPost").child(_iduser!).child("preview.jpg");
 
     //Uploade image and lister progres: .UploadTask
-    firebase_storage.UploadTask task = arquivos.putFile(_image);
+    firebase_storage.UploadTask task = arquivos.putFile(_image!);
 
     //Controller progress
     task.snapshotEvents.listen((firebase_storage.TaskSnapshot storageEvent) {
@@ -108,7 +108,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
     PostItem postagem = PostItem();
     _message = _controllerTexto.text;
 
-    if (_message.isNotEmpty) {
+    if (_message!.isNotEmpty) {
       postagem.idtime = dateFormatter.generateDateTimeIdentification();
       postagem.idpublication = "empty";
       postagem.iduser = _iduser;
@@ -132,10 +132,10 @@ class _PublicationCreatorState extends State<PublicationCreator> {
     //Reference archive
     firebase_storage.Reference pastaRaiz = storage.ref();
     firebase_storage.Reference arquivos =
-        pastaRaiz.child("publicPost").child(_iduser).child("$_imageName.jpg");
+        pastaRaiz.child("publicPost").child(_iduser!).child("$_imageName.jpg");
 
     //Uploade image and lister progres: .UploadTask
-    firebase_storage.UploadTask task = arquivos.putFile(_image);
+    firebase_storage.UploadTask task = arquivos.putFile(_image!);
 
     //Controller progress
     task.snapshotEvents.listen((firebase_storage.TaskSnapshot storageEvent) {
@@ -188,7 +188,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
   }
 
   _recoveringUserData() async {
-    User user = auth.currentUser;
+    User user = auth.currentUser!;
     DocumentSnapshot snapshot =
         await db.collection("users").doc(user.uid).get();
 
@@ -237,7 +237,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
                           child: CircleAvatar(
                             child: _imageuser == ""
                                 ? CircularProgressIndicator()
-                                : ClipOval(child: Image.network(_imageuser)),
+                                : ClipOval(child: Image.network(_imageuser!)),
                             radius: 20,
                             backgroundColor: Colors.grey,
                           ),
@@ -245,7 +245,7 @@ class _PublicationCreatorState extends State<PublicationCreator> {
                         Expanded(
                           child: Container(
                             child: Text(
-                              _nameuser,
+                              _nameuser!,
                               style: TextStyle(color: Colors.white),
                             ),
                           ),

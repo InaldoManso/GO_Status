@@ -12,7 +12,7 @@ class PostInteractive {
       firebase_storage.FirebaseStorage.instance;
   DateFormatter dateFormatter = DateFormatter();
 
-  sendGoodGame(String postId, PostReaction postReaction) async {
+  sendGoodGame(String? postId, PostReaction postReaction) async {
     Map<String, dynamic> teste = {'teste': 'teste'};
     print(postReaction.toMap());
     await db

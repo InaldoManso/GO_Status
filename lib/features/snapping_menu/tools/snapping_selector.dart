@@ -11,11 +11,11 @@ import 'package:go_status/features/video/presentation/videos.dart';
 import 'package:flutter/material.dart';
 
 class SnappingSelector {
-  menuScreens(String identifier, {var argument}) {
+  menuScreens(String? identifier, {var argument}) {
     return getScreen(identifier, args: argument);
   }
 
-  Widget getScreen(String quickLink, {var args}) {
+  Widget getScreen(String? quickLink, {var args}) {
     switch (quickLink) {
       case "postTimeline":
         return PostTimeline();

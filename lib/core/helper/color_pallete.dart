@@ -7,7 +7,7 @@ class ColorPallete {
   Color orange = Color(0xffFFA500);
 
   //Grey
-  Color grey900 = Colors.grey[900];
-  Color grey850 = Colors.grey[850];
-  Color grey800 = Colors.grey[800];
+  Color? grey900 = Colors.grey[900];
+  Color? grey850 = Colors.grey[850];
+  Color? grey800 = Colors.grey[800];
 }

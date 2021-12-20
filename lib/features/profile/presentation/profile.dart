@@ -15,27 +15,27 @@ class _ProfileState extends State<Profile> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   //Atributos User
-  String _nome = "";
-  String _image = "";
-  String _pais = "";
+  String? _nome = "";
+  String? _image = "";
+  String? _pais = "";
 
   //Atributos Interface
   ColorPallete paleta = ColorPallete();
   Api api = Api();
-  Color _corKD;
-  String _resultadoKD = "--";
-  String _totalKills = "--";
-  String _totalDeaths = "--";
+  Color? _corKD;
+  String? _resultadoKD = "--";
+  String? _totalKills = "--";
+  String? _totalDeaths = "--";
   String _totalTime = "--";
-  String _totalWins = "--";
-  String _totalMvps = "--";
-  String _totalHShots = "--";
+  String? _totalWins = "--";
+  String? _totalMvps = "--";
+  String? _totalHShots = "--";
   double valorkd = 0;
   String label = "0";
 
   recuperarDadosUser() async {
     _corKD = paleta.dodgerBlue;
-    User user = auth.currentUser;
+    User user = auth.currentUser!;
     DocumentSnapshot snapshot =
         await db.collection("users").doc(user.uid).get();
 
@@ -99,7 +99,7 @@ class _ProfileState extends State<Profile> {
                       child: CircleAvatar(
                         child: _image == ""
                             ? CircularProgressIndicator()
-                            : ClipOval(child: Image.network(_image)),
+                            : ClipOval(child: Image.network(_image!)),
                         radius: 50,
                         backgroundColor: Colors.grey,
                       ),
@@ -111,7 +111,7 @@ class _ProfileState extends State<Profile> {
                           children: [
                             Container(
                               child: Text(
-                                _nome,
+                                _nome!,
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontSize: 24,
@@ -119,7 +119,7 @@ class _ProfileState extends State<Profile> {
                               ),
                             ),
                             Text(
-                              _pais,
+                              _pais!,
                               textAlign: TextAlign.center,
                               style:
                                   TextStyle(fontSize: 18, color: paleta.orange),
@@ -154,7 +154,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Text(
-                      _resultadoKD,
+                      _resultadoKD!,
                       style: TextStyle(fontSize: 18, color: _corKD),
                     ),
                   ],
@@ -175,7 +175,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Text(
-                      _totalKills,
+                      _totalKills!,
                       style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
                     ),
                   ],
@@ -196,7 +196,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Text(
-                      _totalDeaths,
+                      _totalDeaths!,
                       style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
                     ),
                   ],
@@ -238,7 +238,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Text(
-                      _totalWins,
+                      _totalWins!,
                       style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
                     ),
                   ],
@@ -259,7 +259,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Text(
-                      _totalMvps,
+                      _totalMvps!,
                       style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
                     ),
                   ],
@@ -280,7 +280,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Text(
-                      _totalHShots,
+                      _totalHShots!,
                       style: TextStyle(fontSize: 18, color: paleta.dodgerBlue),
                     ),
                   ],

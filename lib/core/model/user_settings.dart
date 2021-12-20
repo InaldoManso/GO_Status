@@ -1,5 +1,5 @@
 class UserSettings {
-  bool _showkilldeath;
+  bool? _showkilldeath;
 
   UserSettings();
 

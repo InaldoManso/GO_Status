@@ -25,13 +25,13 @@ class _PostTimelineState extends State<PostTimeline> {
   //Attributes
   final _controller = StreamController<QuerySnapshot>.broadcast();
   List<String> itensMenu = ["Deletar"];
-  String youtubeapikey;
-  String steamapikey;
+  String? youtubeapikey;
+  String? steamapikey;
 
   //User attributes
-  String _uidUser = "";
-  String _nameUser = "";
-  int _admin = 0;
+  String? _uidUser = "";
+  String? _nameUser = "";
+  int? _admin = 0;
 
   _recuperarAdmKeys() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -42,7 +42,7 @@ class _PostTimelineState extends State<PostTimeline> {
   }
 
   _recoverUserData() async {
-    User user = auth.currentUser;
+    User user = auth.currentUser!;
     DocumentSnapshot snapshot =
         await db.collection("users").doc(user.uid).get();
 
@@ -94,7 +94,7 @@ class _PostTimelineState extends State<PostTimeline> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  _sendPostReaction(int reactionId, String postId) {
+  _sendPostReaction(int reactionId, String? postId) {
     PostInteractive postInteractive = PostInteractive();
     PostReaction postReaction = PostReaction();
     DateFormatter dateFormatter = DateFormatter();
@@ -106,7 +106,7 @@ class _PostTimelineState extends State<PostTimeline> {
     postInteractive.sendGoodGame(postId, postReaction);
   }
 
-  Future<List<PostReaction>> _listReation(String postId) async {
+  Future<List<PostReaction>> _listReation(String? postId) async {
     FirebaseFirestore db = FirebaseFirestore.instance;
     List<PostReaction> listaUsuarios = [];
 
@@ -116,12 +116,13 @@ class _PostTimelineState extends State<PostTimeline> {
         .collection('reactions')
         .get();
 
-    for (DocumentSnapshot item in querySnapshot.docs) {
-      var dados = item.data();
-      // if (dados["showkilldeath"] == false) continue;
+    print('object: ' + querySnapshot.toString());
+
+    for (DocumentSnapshot? item in querySnapshot.docs) {
+      DocumentSnapshot<Object?>? dados = item;
 
       PostReaction postReaction = PostReaction();
-      postReaction.idreaction = dados["idreaction"];
+      postReaction.idreaction = dados!["idreaction"];
       postReaction.nameUser = dados["nameUser"];
       postReaction.timeReaction = dados["timeReaction"];
       postReaction.type = dados["type"];
@@ -148,13 +149,13 @@ class _PostTimelineState extends State<PostTimeline> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(
-          "Olá " + _nameUser + "!",
+          "Olá " + _nameUser! + "!",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         actions: [
-          _admin > 0
+          _admin! > 0
               ? IconButton(
                   icon: Icon(
                     Icons.post_add_outlined,
@@ -175,17 +176,16 @@ class _PostTimelineState extends State<PostTimeline> {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
                 return Container();
-                break;
               case ConnectionState.waiting:
                 return Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   child: Center(child: CircularProgressIndicator()),
                 );
-                break;
               case ConnectionState.active:
               case ConnectionState.done:
-                QuerySnapshot querySnapshot = snapshot.data;
+                QuerySnapshot? querySnapshot =
+                    snapshot.data as QuerySnapshot<Object?>?;
 
                 if (snapshot.hasError) {
                   return Container(
@@ -193,7 +193,7 @@ class _PostTimelineState extends State<PostTimeline> {
                   );
                 } else {
                   return ListView.builder(
-                    itemCount: querySnapshot.docs.length,
+                    itemCount: querySnapshot!.docs.length,
                     itemBuilder: (context, index) {
                       //Recuperar mensagens
                       List<DocumentSnapshot> postagens =
@@ -253,7 +253,7 @@ class _PostTimelineState extends State<PostTimeline> {
                                     splashRadius: 20,
                                     splashColor: Colors.grey,
                                     iconSize: 30,
-                                    icon: _admin > 0
+                                    icon: _admin! > 0
                                         ? PopupMenuButton<String>(
                                             color: colorPallete.grey900,
                                             icon: Icon(
@@ -325,6 +325,7 @@ class _PostTimelineState extends State<PostTimeline> {
                                     builder: (context, snapshot) {
                                       switch (snapshot.connectionState) {
                                         case ConnectionState.none:
+                                          return Container();
                                         case ConnectionState.waiting:
                                           return TextButton.icon(
                                             label: Text('...'),
@@ -335,14 +336,17 @@ class _PostTimelineState extends State<PostTimeline> {
                                           );
                                         case ConnectionState.active:
                                         case ConnectionState.done:
+                                          print('ggggg' +
+                                              snapshot.data.toString());
                                           List<PostReaction> listReactions =
-                                              snapshot.data;
+                                              snapshot.data
+                                                  as List<PostReaction>;
                                           bool liked = false;
                                           liked = listReactions.any((element) =>
                                               element.uidUser == _uidUser);
                                           return TextButton.icon(
                                             label: Text(
-                                              snapshot.data.length.toString(),
+                                              listReactions.length.toString(),
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   color: Colors.white),
@@ -362,9 +366,7 @@ class _PostTimelineState extends State<PostTimeline> {
                                             },
                                             onLongPress: () {},
                                           );
-                                          break;
                                       }
-                                      return Container();
                                     },
                                   ),
                                 ),
@@ -390,9 +392,7 @@ class _PostTimelineState extends State<PostTimeline> {
                     },
                   );
                 }
-                break;
             }
-            return null;
           },
         ),
       ),

@@ -25,8 +25,8 @@ class _GeneralChatState extends State<GeneralChat> {
   StreamController _controller = StreamController<QuerySnapshot>.broadcast();
   TextEditingController _controllerMensagem = TextEditingController();
   ScrollController _scrollController = ScrollController();
-  String _nameUser;
-  String _idUser;
+  String? _nameUser;
+  String? _idUser;
 
   _archiveMessage(messageuser) {
     Message message = Message();
@@ -63,7 +63,7 @@ class _GeneralChatState extends State<GeneralChat> {
 
   _recuperarDadosUser() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
-    User user = auth.currentUser;
+    User user = auth.currentUser!;
     DocumentSnapshot snapshot =
         await db.collection("users").doc(user.uid).get();
 
@@ -89,15 +89,17 @@ class _GeneralChatState extends State<GeneralChat> {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
+                return Container();
               case ConnectionState.waiting:
                 return Center(
                     child: Column(
                   children: [CircularProgressIndicator()],
                 ));
-                break;
+
               case ConnectionState.active:
               case ConnectionState.done:
-                QuerySnapshot querySnapshot = snapshot.data;
+                QuerySnapshot? querySnapshot =
+                    snapshot.data as QuerySnapshot<Object?>?;
 
                 if (snapshot.hasError) {
                   return Container(
@@ -108,7 +110,7 @@ class _GeneralChatState extends State<GeneralChat> {
                     reverse: true,
                     shrinkWrap: true,
                     controller: _scrollController,
-                    itemCount: querySnapshot.docs.length,
+                    itemCount: querySnapshot!.docs.length,
                     itemBuilder: (context, index) {
                       //Recuperar mensagens
                       List<DocumentSnapshot> mensagens =
@@ -166,7 +168,6 @@ class _GeneralChatState extends State<GeneralChat> {
                 }
                 break;
             }
-            return null;
           },
         ),
       ),

@@ -19,7 +19,7 @@ class _ClassificationState extends State<Classification> {
   //Attributes
   StreamController _controller = StreamController<QuerySnapshot>.broadcast();
   ColorPallete paleta = ColorPallete();
-  Color _corKD;
+  Color? _corKD;
 
   _exibirMiniPerfil(UserClassification classifUser) {
     //Calcular Horas
@@ -152,7 +152,7 @@ class _ClassificationState extends State<Classification> {
     );
   }
 
-  Stream<QuerySnapshot> _addListenerMessages() {
+  _addListenerMessages() {
     final stream = db
         .collection("users")
         .orderBy("killdeath", descending: true)
@@ -161,7 +161,6 @@ class _ClassificationState extends State<Classification> {
     stream.listen((dados) {
       _controller.add(dados);
     });
-    return stream;
   }
 
   @override
@@ -182,17 +181,18 @@ class _ClassificationState extends State<Classification> {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
                 return Container();
-                break;
+
               case ConnectionState.waiting:
                 return Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   child: Center(child: CircularProgressIndicator()),
                 );
-                break;
+
               case ConnectionState.active:
               case ConnectionState.done:
-                QuerySnapshot querySnapshot = snapshot.data;
+                QuerySnapshot? querySnapshot =
+                    snapshot.data as QuerySnapshot<Object?>?;
 
                 if (snapshot.hasError) {
                   return Container(
@@ -200,7 +200,7 @@ class _ClassificationState extends State<Classification> {
                   );
                 } else {
                   return ListView.builder(
-                    itemCount: querySnapshot.docs.length,
+                    itemCount: querySnapshot!.docs.length,
                     itemBuilder: (context, index) {
                       //Recuperar mensagens
                       List<DocumentSnapshot> postagens =
@@ -269,7 +269,6 @@ class _ClassificationState extends State<Classification> {
                 }
                 break;
             }
-            return null;
           },
         ),
       ),

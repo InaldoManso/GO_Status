@@ -1,9 +1,9 @@
 class PostReaction {
-  int _idreaction;
-  String _uidUser;
-  String _nameUser;
-  String _timeReaction;
-  String _type;
+  int? _idreaction;
+  String? _uidUser;
+  String? _nameUser;
+  String? _timeReaction;
+  String? _type;
 
   PostReaction();
 

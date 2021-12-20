@@ -3,16 +3,16 @@ import 'package:go_status/features/timeline/model/post_reaction.dart';
 class PostItem {
   static const int typeImage = 1;
 
-  int _idtime;
-  String _idpublication;
-  String _iduser;
-  int _type;
-  String _nameuser;
-  String _imageuser;
-  String _message;
-  String _urlimage;
-  String _timeshow;
-  String _imageName;
+  int? _idtime;
+  String? _idpublication;
+  String? _iduser;
+  int? _type;
+  String? _nameuser;
+  String? _imageuser;
+  String? _message;
+  String? _urlimage;
+  String? _timeshow;
+  String? _imageName;
   List<PostReaction> _reactions = [];
 
   PostItem();

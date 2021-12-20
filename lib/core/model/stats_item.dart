@@ -1,6 +1,6 @@
 class StatsItem {
-  String name;
-  int value;
+  String? name;
+  int? value;
 
   StatsItem({
     this.name,
