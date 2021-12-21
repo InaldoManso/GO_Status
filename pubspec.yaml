@@ -48,8 +48,8 @@ dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/image/logos/icon_app_oval.png"
-  adaptive_icon_background: "assets/image/logos/icon_app_oval.png"
+  image_path: "assets/image/logos/icon_app.png"
+  adaptive_icon_background: "assets/image/logos/icon_app.png"
   android/ios: true
 
 dev_dependencies:
