@@ -1,4 +1,5 @@
 import 'package:go_status/features/snapping_menu/presentation/widgets/snapping_screen_show.dart';
+import 'package:go_status/features/timeline/presentation/widgets/post_comments.dart';
 import 'package:go_status/features/timeline/presentation/widgets/publication_creator.dart';
 import 'package:go_status/features/reset_password/presentation/reset_password.dart';
 import 'package:go_status/features/resgister/presentation/registration_steam_id.dart';
@@ -25,10 +26,11 @@ class RouteGenerator {
   static const String postCreatorRoute = "/postcreator";
   static const String viewPostRoute = "/postimage";
   static const String snappingScreenShow = "/snappingscreenshow";
+  static const String postComments = "/postcomments";
 
   // ignore: missing_return
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final argument = settings.arguments;
+    final arguments = settings.arguments;
 
     switch (settings.name) {
       case "/":
@@ -44,7 +46,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Login());
 
       case registrationRoute:
-        return MaterialPageRoute(builder: (_) => RegistrationUser(argument));
+        return MaterialPageRoute(builder: (_) => RegistrationUser(arguments));
 
       case registerStemIdRoute:
         return MaterialPageRoute(builder: (_) => RegistrationSteamId());
@@ -66,15 +68,14 @@ class RouteGenerator {
 
       case viewPostRoute:
         return MaterialPageRoute(
-            builder: (_) => PostImageView(argument as String?));
+            builder: (_) => PostImageView(arguments as String?));
 
       case snappingScreenShow:
-        return MaterialPageRoute(builder: (_) => SnappingScreenShow(argument));
+        return MaterialPageRoute(builder: (_) => SnappingScreenShow(arguments));
 
-      /*case ITEM_ROTA:
-        return MaterialPageRoute(builder: (_) => Item(args));*/
+      case postComments:
+        return MaterialPageRoute(builder: (_) => PostComments(arguments));
 
-      //Se for chamada uma rota inválida
       default:
         return _erroRota();
     }

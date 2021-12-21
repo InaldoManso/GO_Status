@@ -106,6 +106,11 @@ class _PostTimelineState extends State<PostTimeline> {
     postInteractive.sendGoodGame(postId, postReaction);
   }
 
+  _removePostReaction(String? postId) {
+    PostInteractive postInteractive = PostInteractive();
+    postInteractive.removeGoodGame(postId!, _uidUser!);
+  }
+
   Future<List<PostReaction>> _listReation(String? postId) async {
     FirebaseFirestore db = FirebaseFirestore.instance;
     List<PostReaction> listaUsuarios = [];
@@ -316,7 +321,6 @@ class _PostTimelineState extends State<PostTimeline> {
                               },
                               onDoubleTap: () {},
                             ),
-                            // Row Gestures
                             Row(
                               children: [
                                 Expanded(
@@ -336,8 +340,6 @@ class _PostTimelineState extends State<PostTimeline> {
                                           );
                                         case ConnectionState.active:
                                         case ConnectionState.done:
-                                          print('ggggg' +
-                                              snapshot.data.toString());
                                           List<PostReaction> listReactions =
                                               snapshot.data
                                                   as List<PostReaction>;
@@ -359,10 +361,15 @@ class _PostTimelineState extends State<PostTimeline> {
                                                         .favorite_border_outlined,
                                                     color: colorPallete.orange),
                                             onPressed: () {
-                                              print(postagem.idpublication);
-                                              _sendPostReaction(
-                                                  1, postagem.idpublication);
-                                              setState(() {});
+                                              if (liked) {
+                                                _removePostReaction(
+                                                    postagem.idpublication);
+                                                setState(() {});
+                                              } else {
+                                                _sendPostReaction(
+                                                    1, postagem.idpublication);
+                                                setState(() {});
+                                              }
                                             },
                                             onLongPress: () {},
                                           );
@@ -380,7 +387,14 @@ class _PostTimelineState extends State<PostTimeline> {
                                       'comentar',
                                       style: TextStyle(color: Colors.grey),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Map<String, dynamic> mapPostId = {
+                                        'postId': postagem.idpublication
+                                      };
+                                      Navigator.pushNamed(
+                                          context, RouteGenerator.postComments,
+                                          arguments: mapPostId);
+                                    },
                                   ),
                                 ),
                                 Spacer()
