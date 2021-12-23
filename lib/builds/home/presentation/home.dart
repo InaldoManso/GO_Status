@@ -10,6 +10,8 @@ import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'dart:async';
+import 'package:go_status/builds/home/aplication/cloud_message.dart';
 
 class Home extends StatefulWidget {
   static final snappingSheetController = SnappingSheetController();
@@ -51,6 +53,34 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       reverseDuration: Duration(milliseconds: 400),
     );
     teste();
+    printer();
+  }
+
+  printer() async {
+    // _firebaseMessagin(
+    //   onMessage: (Map<String, dynamic> message) async {
+    //     print("onMessage: $message");
+    //   },
+    //   onLaunch: (Map<String, dynamic> message) async {
+    //     print("onLaunch: $message");
+    //   },
+    //   onResume: (Map<String, dynamic> message) async {
+    //     print("onResume: $message");
+    //   },
+    // );
+    // _firebaseMessaging.requestNotificationPermissions(
+    //     const IosNotificationSettings(
+    //         sound: true, badge: true, alert: true, provisional: true));
+    // _firebaseMessaging.onIosSettingsRegistered
+    //     .listen((IosNotificationSettings settings) {
+    //   print("Settings registered: $settings");
+    // });
+    // _firebaseMessaging.getToken().then((String token) {
+    //   assert(token != null);
+    // });
+    //
+    String? gg = await _firebaseMessaging.getToken();
+    print("txtx: " + gg!);
   }
 
   @override

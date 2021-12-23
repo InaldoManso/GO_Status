@@ -23,7 +23,7 @@ class ApiStats {
     "&appids_filter[0]=730"
   ];
 
-  updateUserStats(String steamId) async {
+  Future<UserStats> updateUserStats(String steamId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String steamapikey = prefs.getString("steamapikey")!;
 
@@ -64,7 +64,7 @@ class ApiStats {
 
       return userStats;
     } else {
-      return "error";
+      return userStats;
     }
   }
 

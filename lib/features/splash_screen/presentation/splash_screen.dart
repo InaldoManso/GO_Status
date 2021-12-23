@@ -31,7 +31,8 @@ class _SplashScreenState extends State<SplashScreen> {
   String? youtubeapikey;
 
   _checkApiKeys() async {
-    DocumentSnapshot snapshot = await (db
+    // DocumentSnapshot snapshot = await (db
+    await db
         .collection("admgostatus")
         .doc("credentials")
         .get()
@@ -44,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
       print("teste001 Splash ERR: Erro ao recuperar API Keys");
       _snackBarInfo(
           "Erro ao se comunicar com o servidor,\nentre em contato com seu Saver");
-    }) as FutureOr<DocumentSnapshot<Object>>);
+    });
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("steamapikey", steamapikey!).then((value) {});

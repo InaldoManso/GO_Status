@@ -28,9 +28,9 @@ void main() async {
         textTheme: const TextTheme(
           subtitle1: TextStyle(color: Colors.white),
           subtitle2: TextStyle(color: Colors.white),
+          overline: TextStyle(color: Colors.white),
           caption: TextStyle(color: Colors.white),
           button: TextStyle(color: Colors.white),
-          overline: TextStyle(color: Colors.white),
           bodyText1: TextStyle(
               fontSize: 14.0, fontFamily: 'Hind', color: Colors.white),
           bodyText2: TextStyle(
