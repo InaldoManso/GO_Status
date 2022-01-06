@@ -1,6 +1,11 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class CloudMessage {}
+class CloudMessage {
+  saveFCMTokenInFirebase(String? fcmToken) {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser!;
+    db.collection("users").doc(user.uid).update({'fmc': fcmToken});
+  }
+}
