@@ -277,13 +277,15 @@ class _RegistrationSteamIdState extends State<RegistrationSteamId> {
                     child: Container(
                       height: 60,
                       width: 60,
-                      child: RaisedButton(
-                        color: colorPallete.dodgerBlue,
-                        textColor: Colors.white,
-                        padding: EdgeInsets.all(15),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: colorPallete.dodgerBlue,
+                          textStyle: TextStyle(color: Colors.white),
+                          padding: EdgeInsets.all(15),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
                         child: Icon(Icons.search),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
                         onPressed: () {
                           setState(() {
                             _searching = true;

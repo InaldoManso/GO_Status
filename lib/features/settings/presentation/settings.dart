@@ -42,8 +42,8 @@ class _SettingsState extends State<Settings> {
     });
   }
 
-  _recuperarDadosUser() async {
-    user = await auth.currentUser;
+  _recuperarDadosUser() {
+    user = auth.currentUser;
     _recuperarConfig(user!.uid);
   }
 

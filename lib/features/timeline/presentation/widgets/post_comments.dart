@@ -1,12 +1,12 @@
-import 'dart:async';
-
+// ignore_for_file: must_be_immutable
+import 'package:go_status/features/timeline/aplication/post_interactive.dart';
+import 'package:go_status/features/timeline/model/post_comment.dart';
+import 'package:go_status/core/tools/date_formatter.dart';
+import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/core/helper/color_pallete.dart';
-import 'package:go_status/core/tools/date_formatter.dart';
-import 'package:go_status/features/timeline/aplication/post_interactive.dart';
-import 'package:go_status/features/timeline/model/post_comment.dart';
+import 'dart:async';
 
 class PostComments extends StatefulWidget {
   var mapPostId;

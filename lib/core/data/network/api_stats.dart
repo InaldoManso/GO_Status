@@ -64,6 +64,7 @@ class ApiStats {
 
       return userStats;
     } else {
+      userStats.kill = "";
       return userStats;
     }
   }

@@ -76,7 +76,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     usuario = await api.recDataUserFromSteamID(steamapikey!, steamid);
 
-    if (usuario != null) {
+    if (usuario.email != "error") {
       _recoverStatsUserToUpdate(steamid, usuario.name, usuario.urlimage);
       setState(() {
         _carregando = true;
@@ -93,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
     csgoStats = await apiStats.updateUserStats(steamid);
     print("teste001 Splash SUC: Stats user KD: " + csgoStats.killdeath);
 
-    if (csgoStats != null) {
+    if (csgoStats.kill != "") {
       print("teste001 Splash INF: Enviando atualização para o DB");
       User user = auth.currentUser!;
       db

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: must_be_immutable
 import 'package:go_status/core/helper/color_pallete.dart';
+import 'package:flutter/material.dart';
 
 class PostImageView extends StatefulWidget {
   // const PostImageView({ Key? key }) : super(key: key);

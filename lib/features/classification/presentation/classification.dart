@@ -267,7 +267,6 @@ class _ClassificationState extends State<Classification> {
                     },
                   );
                 }
-                break;
             }
           },
         ),

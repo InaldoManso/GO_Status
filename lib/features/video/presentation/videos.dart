@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-// import 'package:flutter_youtube/flutter_youtube.dart';
-import 'package:go_status/core/data/network/api.dart';
+// ignore_for_file: must_be_immutable
 import 'package:go_status/core/tools/custom_search_delegate.dart';
-import 'package:go_status/core/helper/color_pallete.dart';
-import 'package:go_status/features/video/model/video.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_status/core/helper/color_pallete.dart';
+// import 'package:flutter_youtube/flutter_youtube.dart';
+// import 'package:go_status/core/data/network/api.dart';
+import 'package:flutter/material.dart';
 
 class Videos extends StatefulWidget {
   String? pesquisa;
@@ -20,10 +20,10 @@ class _VideosState extends State<Videos> {
   String? steamapikey;
   String? youtubeapikey;
 
-  _listarVideos(String pesquisa) {
-    Api api = Api();
-    return api.searchOnYoutube(pesquisa, youtubeapikey);
-  }
+  // _listarVideos(String pesquisa) {
+  //   Api api = Api();
+  //   return api.searchOnYoutube(pesquisa, youtubeapikey);
+  // }
 
   _recuperarAdmKeys() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

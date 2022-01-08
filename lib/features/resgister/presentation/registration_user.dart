@@ -1,3 +1,4 @@
+// ignore_for_file: must_be_immutable
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_status/core/tools/route_generator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -133,7 +134,7 @@ class _RegistrationUserState extends State<RegistrationUser> {
     csgoStats = await (api.updateUserStats(
         steamapikey!, steamid, nome, urlimage) as FutureOr<UserStats>);
 
-    if (csgoStats != null) {
+    if (csgoStats.kill != "") {
       User user = auth.currentUser!;
 
       db
@@ -318,13 +319,15 @@ class _RegistrationUserState extends State<RegistrationUser> {
               Padding(
                 padding:
                     EdgeInsets.only(top: 50, bottom: 50, left: 40, right: 40),
-                child: RaisedButton(
-                  color: paleta.dodgerBlue,
-                  textColor: Colors.white,
-                  padding: EdgeInsets.all(15),
+                child: ElevatedButton(
                   child: Text(_buttonText, style: TextStyle(fontSize: 18)),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                  style: ElevatedButton.styleFrom(
+                    primary: paleta.dodgerBlue,
+                    textStyle: TextStyle(color: Colors.white),
+                    padding: EdgeInsets.all(15),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
                   onPressed: () {
                     _processoCadastral();
                   },

@@ -1,9 +1,9 @@
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:go_status/features/timeline/model/post_item.dart';
 import 'package:go_status/core/tools/date_formatter.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:go_status/features/timeline/model/post_item.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -25,14 +25,12 @@ class _PublicationCreatorState extends State<PublicationCreator> {
   //Image attributes
 
   TextEditingController _controllerTexto = TextEditingController();
-  final _picker = ImagePicker();
+  ImagePicker _picker = ImagePicker();
 
   String _urlImagRecovered = "";
   String _urlImagRecoveredOFC = "";
   bool _uploadingImage = false;
-  String? _publicationTime;
   String? _imageuser;
-  String? _urlImage;
   String? _nameuser;
   String? _message;
   String? _iduser;
@@ -43,10 +41,12 @@ class _PublicationCreatorState extends State<PublicationCreator> {
 
     switch (originImage) {
       case "camera":
+        // ignore: deprecated_member_use
         imageSelected = await _picker.getImage(source: ImageSource.camera);
         break;
 
       case "galeria":
+        // ignore: deprecated_member_use
         imageSelected = await _picker.getImage(source: ImageSource.gallery);
         break;
     }
@@ -276,14 +276,14 @@ class _PublicationCreatorState extends State<PublicationCreator> {
                             : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  FlatButton(
+                                  TextButton(
                                       child: Text("Camera",
                                           style:
                                               TextStyle(color: Colors.white)),
                                       onPressed: () {
                                         _selectLocalImage("camera");
                                       }),
-                                  FlatButton(
+                                  TextButton(
                                       child: Text("Galeria",
                                           style:
                                               TextStyle(color: Colors.white)),
@@ -321,16 +321,15 @@ class _PublicationCreatorState extends State<PublicationCreator> {
                 ),
               ),
               Padding(
-                  child: RaisedButton(
-                      color: paleta.dodgerBlue,
-                      textColor: Colors.white,
-                      padding: EdgeInsets.all(15),
-                      child: Text(
-                        "Publicar",
-                        style: TextStyle(fontSize: 16),
+                  child: ElevatedButton(
+                      child: Text("Publicar", style: TextStyle(fontSize: 16)),
+                      style: ElevatedButton.styleFrom(
+                        primary: paleta.dodgerBlue,
+                        textStyle: TextStyle(color: Colors.white),
+                        padding: EdgeInsets.all(15),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
                       ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
                       onPressed: () {
                         if (_urlImagRecovered != "") {
                           _createPosting();

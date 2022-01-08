@@ -100,10 +100,12 @@ class Api {
 
         return userProfile;
       } else {
-        return "error";
+        userProfile.email = "error";
+        return userProfile;
       }
     } else {
-      return "error";
+      userProfile.email = "error";
+      return userProfile;
     }
   }
 
@@ -158,7 +160,8 @@ class Api {
 
       return csgoStats;
     } else {
-      return null;
+      csgoStats.kill = "";
+      return csgoStats;
     }
   }
 

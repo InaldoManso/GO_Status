@@ -54,13 +54,15 @@ class _HelpIdState extends State<HelpId> {
                 ),
               ),
             ),
-            RaisedButton(
-                color: paleta.dodgerBlue,
-                textColor: Colors.white,
-                padding: EdgeInsets.all(15),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: paleta.dodgerBlue,
+                  textStyle: TextStyle(color: Colors.white),
+                  padding: EdgeInsets.all(15),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                ),
                 child: Text("Entendi"),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
                 onPressed: () {
                   Navigator.pop(context);
                 })

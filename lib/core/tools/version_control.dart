@@ -13,7 +13,6 @@ class VersionControl {
         };
         db.collection("users").doc(userid).update(updates);
         return false;
-        break;
 
       default:
         return true;

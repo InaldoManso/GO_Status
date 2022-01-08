@@ -166,7 +166,6 @@ class _GeneralChatState extends State<GeneralChat> {
                     },
                   );
                 }
-                break;
             }
           },
         ),

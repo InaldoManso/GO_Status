@@ -207,13 +207,15 @@ class _LoginState extends State<Login> {
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
-                child: RaisedButton(
-                  color: colorPallete.dodgerBlue,
-                  textColor: Colors.white,
-                  padding: EdgeInsets.all(15),
+                child: ElevatedButton(
                   child: _exibirCarregando(),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                  style: ElevatedButton.styleFrom(
+                    primary: colorPallete.dodgerBlue,
+                    textStyle: TextStyle(color: Colors.white),
+                    padding: EdgeInsets.all(15),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
                   onPressed: () {
                     _carregando = true;
                     _exibirCarregando();

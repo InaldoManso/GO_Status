@@ -1,12 +1,10 @@
-import 'dart:async';
-
+import 'package:go_status/features/snapping_menu/model/snapping_item.dart';
+import 'package:go_status/core/tools/route_generator.dart';
+import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:flutter/material.dart';
-import 'package:go_status/core/tools/route_generator.dart';
-import 'package:go_status/features/snapping_menu/model/snapping_item.dart';
-import 'package:go_status/features/snapping_menu/tools/snapping_selector.dart';
+import 'dart:async';
 
 class SnappingMenu extends StatefulWidget {
   // const SnappingMenu({ Key? key }) : super(key: key);
@@ -38,34 +36,6 @@ class _SnappingMenuState extends State<SnappingMenu> {
       _image = snapshot["urlimage"];
       _country = snapshot["country"];
     });
-  }
-
-  Future<List<SnappingItem>> _recoverMenuItems() async {
-    FirebaseFirestore db = FirebaseFirestore.instance;
-
-    QuerySnapshot querySnapshot = await db
-        .collection("interface")
-        .doc("menuItems")
-        .collection("items")
-        .orderBy("order", descending: false)
-        .get();
-
-    List<SnappingItem> menulist = [];
-    for (DocumentSnapshot item in querySnapshot.docs) {
-      DocumentSnapshot data = item.data() as DocumentSnapshot<Object>;
-      if (data["enabled"] == false || data["type"] != "menuButton") continue;
-
-      SnappingItem snappingItem = SnappingItem();
-      snappingItem.enabled = data["enabled"];
-      snappingItem.id = data["id"];
-      snappingItem.order = data["order"];
-      snappingItem.tittle = data["tittle"];
-      snappingItem.type = data["type"];
-
-      menulist.add(snappingItem);
-    }
-
-    return menulist;
   }
 
   Stream<QuerySnapshot> _addListenerMenuItems() {
@@ -179,7 +149,7 @@ class _SnappingMenuState extends State<SnappingMenu> {
                             switch (snapshot.connectionState) {
                               case ConnectionState.none:
                                 return Container();
-                                break;
+
                               case ConnectionState.waiting:
                                 return Container(
                                   height: MediaQuery.of(context).size.height,
@@ -187,7 +157,7 @@ class _SnappingMenuState extends State<SnappingMenu> {
                                   child: Center(
                                       child: CircularProgressIndicator()),
                                 );
-                                break;
+
                               case ConnectionState.active:
                               case ConnectionState.done:
                                 QuerySnapshot? querySnapshot =
@@ -256,7 +226,6 @@ class _SnappingMenuState extends State<SnappingMenu> {
                                     },
                                   );
                                 }
-                                break;
                             }
                           },
                         ),
