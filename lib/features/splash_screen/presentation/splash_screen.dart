@@ -29,6 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   UserProfile usuario = UserProfile();
   String? steamapikey;
   String? youtubeapikey;
+  String? cloudmessaging;
 
   _checkApiKeys() async {
     // DocumentSnapshot snapshot = await (db
@@ -39,6 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
         .then((snapshotValue) {
       steamapikey = snapshotValue["steamapikey"];
       youtubeapikey = snapshotValue["youtubeapikey"];
+      cloudmessaging = snapshotValue["cloudmessaging"];
 
       _checkLogin();
     }).catchError((onError) {
@@ -50,6 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("steamapikey", steamapikey!).then((value) {});
     await prefs.setString("youtubeapikey", youtubeapikey!).then((value) {});
+    await prefs.setString("cloudmessaging", cloudmessaging!).then((value) {});
   }
 
   _checkLogin() {

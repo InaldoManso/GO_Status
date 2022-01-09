@@ -6,6 +6,6 @@ class CloudMessage {
     FirebaseFirestore db = FirebaseFirestore.instance;
     FirebaseAuth auth = FirebaseAuth.instance;
     User user = auth.currentUser!;
-    db.collection("users").doc(user.uid).update({'fmc': fcmToken});
+    db.collection("users").doc(user.uid).update({'fcm': fcmToken});
   }
 }

@@ -1,4 +1,5 @@
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:go_status/core/data/network/push_generator.dart';
 import 'package:go_status/features/timeline/model/post_item.dart';
 import 'package:go_status/core/tools/date_formatter.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
@@ -17,9 +18,10 @@ class _PublicationCreatorState extends State<PublicationCreator> {
   //Classes and Packages
   FirebaseFirestore db = FirebaseFirestore.instance;
   DateFormatter dateFormatter = DateFormatter();
+  PushGenerator pushGenerator = PushGenerator();
   FirebaseAuth auth = FirebaseAuth.instance;
-  PostItem postagem = PostItem();
   ColorPallete paleta = ColorPallete();
+  PostItem postagem = PostItem();
   File? _image;
 
   //Image attributes
@@ -160,8 +162,6 @@ class _PublicationCreatorState extends State<PublicationCreator> {
       firebase_storage.TaskSnapshot snapshot, PostItem postagem) async {
     String url = await snapshot.ref.getDownloadURL();
 
-    //Retrieving url to display
-    print("NEW " + url);
     setState(() {
       _urlImagRecoveredOFC = url;
     });
@@ -183,8 +183,18 @@ class _PublicationCreatorState extends State<PublicationCreator> {
           .collection("publications")
           .doc(referenceId.id)
           .update(postingId)
-          .then((value) => Navigator.pop(context));
+          .then((value) {
+        _sendPushs(_urlImagRecoveredOFC);
+      });
     });
+  }
+
+  _sendPushs(String? urlImage) async {
+    bool sent = await pushGenerator.sendPushOfNewPosting(
+        _nameuser, _controllerTexto.text, urlImage);
+    if (sent) {
+      Navigator.pop(context);
+    } else {}
   }
 
   _recoveringUserData() async {

@@ -1,4 +1,5 @@
 import 'package:go_status/core/tools/date_formatter.dart';
+import 'package:go_status/features/timeline/aplication/post_editor.dart';
 import 'package:go_status/features/timeline/aplication/post_interactive.dart';
 import 'package:go_status/features/timeline/model/post_reaction.dart';
 import 'package:go_status/features/timeline/tools/option_spliter.dart';
@@ -72,8 +73,7 @@ class _PostTimelineState extends State<PostTimeline> {
 
     switch (option["id"]) {
       case "deletar":
-        _snackBarInfo(option["id"]);
-        // PostEditor().excludePost(option);
+        _showDialog('Deseja excluir essa posategem?', option);
         break;
       case "reportar":
         _snackBarInfo(option["id"]);
@@ -137,6 +137,40 @@ class _PostTimelineState extends State<PostTimeline> {
     }
 
     return listaUsuarios;
+  }
+
+  _showDialog(String messageId, Map<String, dynamic> option) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Apagar publicação"),
+          titlePadding: const EdgeInsets.all(20),
+          contentPadding: const EdgeInsets.all(20),
+          actionsAlignment: MainAxisAlignment.spaceEvenly,
+          titleTextStyle: const TextStyle(fontSize: 16, color: Colors.blue),
+          contentTextStyle: const TextStyle(fontSize: 20, color: Colors.white),
+          content: Text(messageId, textAlign: TextAlign.center),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          backgroundColor: colorPallete.grey800,
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Não", style: TextStyle(color: Colors.blue)),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: const Text("Sim", style: TextStyle(color: Colors.blue)),
+              onPressed: () {
+                PostEditor().excludePost(option);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
