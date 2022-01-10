@@ -129,35 +129,44 @@ class _GeneralChatState extends State<GeneralChat> {
                       return Align(
                         alignment: alinhamento,
                         child: Padding(
-                          padding: EdgeInsets.all(6),
+                          padding: EdgeInsets.all(8),
                           child: Container(
+                            padding: EdgeInsets.all(8),
                             constraints: BoxConstraints(
                                 minWidth: appWidth * 0.3,
                                 maxWidth: appWidth * 0.8),
-                            padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
                                 color: color,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(8))),
+                                    BorderRadius.all(Radius.circular(16))),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              crossAxisAlignment: _idUser != item["iduser"]
+                                  ? CrossAxisAlignment.start
+                                  : CrossAxisAlignment.end,
                               children: [
-                                _idUser != item["iduser"]
-                                    ? Text(item["name"],
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(fontSize: 12))
-                                    : Container(),
-                                _idUser != item["iduser"]
-                                    ? Divider(color: Colors.grey[100])
-                                    : Container(),
-                                Text(item["message"],
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(fontSize: 16)),
-                                Text(
-                                    dateFormatter
-                                        .showHoursMin(item["timeshow"]),
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(fontSize: 10))
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    _idUser != item["iduser"]
+                                        ? Text(item["name"],
+                                            style: TextStyle(fontSize: 10))
+                                        : Container(),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8),
+                                      child: Text(
+                                          dateFormatter
+                                              .showHoursMin(item["timeshow"]),
+                                          style: TextStyle(fontSize: 10)),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 8, bottom: 8),
+                                  child: Text(item["message"],
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 16)),
+                                ),
                               ],
                             ),
                           ),

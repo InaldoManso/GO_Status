@@ -73,7 +73,7 @@ class _PostTimelineState extends State<PostTimeline> {
 
     switch (option["id"]) {
       case "deletar":
-        _showDialog('Deseja excluir essa posategem?', option);
+        _showDialog('Deseja excluir essa postagem?', option);
         break;
       case "reportar":
         _snackBarInfo(option["id"]);

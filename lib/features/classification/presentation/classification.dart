@@ -225,45 +225,51 @@ class _ClassificationState extends State<Classification> {
                       classifUser.mvps = item["mvps"];
                       classifUser.headshots = item["headshots"];
 
-                      return GestureDetector(
-                        child: Container(
-                          margin: EdgeInsets.only(top: 4, bottom: 4),
-                          padding: EdgeInsets.all(8),
-                          color: paleta.grey850,
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    image: DecorationImage(
-                                        image:
-                                            NetworkImage(classifUser.urlimage),
-                                        fit: BoxFit.cover),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8))),
-                              ),
-                              Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    classifUser.name ?? "",
-                                    textAlign: TextAlign.center,
-                                  )),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  classifUser.killdeath,
-                                  textAlign: TextAlign.center,
+                      double timeLimit = double.parse(item["timeplay"]);
+
+                      if (item["showkilldeath"] != false && timeLimit > 18000) {
+                        return GestureDetector(
+                          child: Container(
+                            margin: EdgeInsets.only(top: 4, bottom: 4),
+                            padding: EdgeInsets.all(8),
+                            color: paleta.grey850,
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              classifUser.urlimage),
+                                          fit: BoxFit.cover),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8))),
                                 ),
-                              ),
-                            ],
+                                Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      classifUser.name ?? "",
+                                      textAlign: TextAlign.center,
+                                    )),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    classifUser.killdeath,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        onTap: () {
-                          _exibirMiniPerfil(classifUser);
-                        },
-                      );
+                          onTap: () {
+                            _exibirMiniPerfil(classifUser);
+                          },
+                        );
+                      } else {
+                        return Container();
+                      }
                     },
                   );
                 }
