@@ -94,7 +94,6 @@ class _SplashScreenState extends State<SplashScreen> {
       String steamid, String nome, String urlimage) async {
     ApiStats apiStats = ApiStats();
     csgoStats = await apiStats.updateUserStats(steamid);
-    print("teste001 Splash SUC: Stats user KD: " + csgoStats.killdeath);
 
     if (csgoStats.kill != "") {
       print("teste001 Splash INF: Enviando atualização para o DB");
@@ -110,7 +109,6 @@ class _SplashScreenState extends State<SplashScreen> {
         _validateRegistrationVersion();
       });
     } else {
-      print("teste001 Splash ERR: api steamStts não retornou valor");
       _snackBarInfo(
           "Erro ao se conectar com a Steam, tente novamente mais tarde!");
       setState(() {

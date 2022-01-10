@@ -131,10 +131,10 @@ class _RegistrationUserState extends State<RegistrationUser> {
   _recuperarCsgoStats(String steamid, String nome, String urlimage) async {
     UserStats? csgoStats = UserStats();
     Api api = Api();
-    csgoStats = await (api.updateUserStats(
-        steamapikey!, steamid, nome, urlimage) as FutureOr<UserStats>);
+    csgoStats =
+        await api.updateUserStats(steamapikey!, steamid, nome, urlimage);
 
-    if (csgoStats.kill != "") {
+    if (csgoStats!.kill != "") {
       User user = auth.currentUser!;
 
       db

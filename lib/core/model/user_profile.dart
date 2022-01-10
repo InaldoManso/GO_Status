@@ -9,6 +9,7 @@ class UserProfile {
   String _urlimage = "";
   String _country = "";
   String _version = "";
+  String _fcm = "";
   bool _showKillDeath = true;
 
   UserProfile();
@@ -25,6 +26,7 @@ class UserProfile {
       "urlimage": this.urlimage,
       "country": this.country,
       "version": this.version,
+      "fcm": this.fcm,
       "showkilldeath": this.showKillDeath
     };
     return map;
@@ -59,6 +61,9 @@ class UserProfile {
 
   get version => this._version;
   set version(value) => this._version = value;
+
+  get fcm => this._fcm;
+  set fcm(value) => this._fcm = value;
 
   get showKillDeath => this._showKillDeath;
   set showKillDeath(value) => this._showKillDeath = value;
