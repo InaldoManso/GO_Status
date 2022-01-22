@@ -1,4 +1,5 @@
 // ignore_for_file: must_be_immutable
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_status/core/tools/custom_search_delegate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
@@ -31,6 +32,16 @@ class _VideosState extends State<Videos> {
       steamapikey = prefs.getString("steamapikey");
       youtubeapikey = prefs.getString("youtubeapikey");
     });
+  }
+
+  checkIfDocExists() async {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    var collectionRef = db.collection('users');
+    var doc = await collectionRef.doc('XPQwmklB5YcP43QGOFAVgMRTIDF2').get();
+
+    print(doc.data()!.containsKey('sendchatnotify'));
+
+    return doc.data()!.containsKey('sendchatnotify');
   }
 
   @override
@@ -81,7 +92,12 @@ class _VideosState extends State<Videos> {
           ),
         ],
       ),
-      body: Container(),
+      body: Center(
+          child: IconButton(
+              icon: Icon(Icons.check_box_outline_blank),
+              onPressed: () {
+                checkIfDocExists();
+              })),
       // body: FutureBuilder<List<Video>>(
       //   future: _listarVideos(_pesquisa),
       //   builder: (contex, snapshot) {

@@ -1,3 +1,4 @@
+import 'package:go_status/features/snapping_menu/aplication/snapping_button.dart';
 import 'package:go_status/features/snapping_menu/model/snapping_item.dart';
 import 'package:go_status/core/tools/route_generator.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
@@ -21,7 +22,7 @@ class _SnappingMenuState extends State<SnappingMenu> {
   //Attributes
   StreamController _controller = StreamController<QuerySnapshot>.broadcast();
 
-//Atributos User
+  //Atributos User
   String? _name = "";
   String? _image = "";
   String? _country = "";
@@ -191,37 +192,12 @@ class _SnappingMenuState extends State<SnappingMenu> {
                                           item["type"] != "menuButton") {
                                         return Container();
                                       } else {
-                                        return Container(
-                                          padding: EdgeInsets.all(8),
-                                          child: ElevatedButton.icon(
-                                            style: ElevatedButton.styleFrom(
-                                              alignment: Alignment.centerLeft,
-                                              primary: Colors.white,
-                                              padding: const EdgeInsets.all(15),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16)),
-                                            ),
-                                            icon: Icon(
-                                                Icons.video_collection_outlined,
-                                                color: colorPallete.dodgerBlue),
-                                            label: Text(
-                                              snappingItem.tittle!,
-                                              style: TextStyle(
-                                                  color:
-                                                      colorPallete.dodgerBlue),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.pushNamed(
-                                                context,
-                                                RouteGenerator
-                                                    .snappingScreenShow,
-                                                arguments: snappingItem.id,
-                                              );
-                                            },
-                                          ),
-                                        );
+                                        return SnappingButton(
+                                            snappingItem.tittle,
+                                            snappingItem.id,
+                                            RouteGenerator.snappingScreenShow,
+                                            snappingItem.id,
+                                            context);
                                       }
                                     },
                                   );

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_status/core/data/network/push_generator.dart';
 import 'package:go_status/core/tools/date_formatter.dart';
 import 'package:go_status/core/helper/color_pallete.dart';
 import 'package:go_status/features/group_message/model/message.dart';
@@ -17,6 +18,7 @@ class _GeneralChatState extends State<GeneralChat> {
   //Classes and Packages
   FirebaseFirestore db = FirebaseFirestore.instance;
   DateFormatter dateFormatter = DateFormatter();
+  PushGenerator pushGenerator = PushGenerator();
   FirebaseAuth auth = FirebaseAuth.instance;
   ColorPallete paleta = ColorPallete();
   UserProfile usuario = UserProfile();
@@ -44,10 +46,10 @@ class _GeneralChatState extends State<GeneralChat> {
   }
 
   _sendMessage(Message message) async {
-    await db
-        .collection("generalchat")
-        .add(message.toMap())
-        .then((value) => _controllerMensagem.clear());
+    await db.collection("generalchat").add(message.toMap()).then((value) {
+      _controllerMensagem.clear();
+      pushGenerator.sendPushOfNewMessage(message.name, message.message);
+    });
   }
 
   _addListenerMessages() {

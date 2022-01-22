@@ -19,10 +19,12 @@ class _SettingsState extends State<Settings> {
 
   //Atributos
   bool _exibirclassificacao = false;
+  bool _recebernotificacoes = false;
   bool _carregado = false;
 
   _atualizarConfig() {
     configUser.showkilldeath = _exibirclassificacao;
+    configUser.sendchatnotify = _recebernotificacoes;
     db.collection("users").doc(user!.uid).update(configUser.toMap());
   }
 
@@ -30,10 +32,13 @@ class _SettingsState extends State<Settings> {
     DocumentSnapshot snapshot = await db.collection("users").doc(uid).get();
 
     configUser.showkilldeath = snapshot["showkilldeath"];
-    _exibirclassificacao = configUser.showkilldeath == false ? false : true;
-    _carregado = true;
+    configUser.sendchatnotify = snapshot["sendchatnotify"];
 
-    setState(() {});
+    setState(() {
+      _exibirclassificacao = configUser.showkilldeath == false ? false : true;
+      _recebernotificacoes = configUser.showkilldeath == false ? false : true;
+      _carregado = true;
+    });
   }
 
   _deslogarUser() async {
@@ -86,6 +91,16 @@ class _SettingsState extends State<Settings> {
               onChanged: (bool valor) {
                 setState(() {
                   _exibirclassificacao = valor;
+                  _atualizarConfig();
+                });
+              }),
+          Divider(),
+          SwitchListTile(
+              title: Text("Receber notificações do chat Geral"),
+              value: _recebernotificacoes,
+              onChanged: (bool valor) {
+                setState(() {
+                  _recebernotificacoes = valor;
                   _atualizarConfig();
                 });
               }),
