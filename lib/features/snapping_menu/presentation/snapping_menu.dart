@@ -188,8 +188,9 @@ class _SnappingMenuState extends State<SnappingMenu> {
                                       snappingItem.tittle = item["tittle"];
                                       snappingItem.type = item["type"];
 
-                                      if (item["enabled"] == false ||
-                                          item["type"] != "menuButton") {
+                                      // if (item["enabled"] == false ||
+                                      //     item["type"] != "menuButton") {
+                                      if (1 != 1) {
                                         return Container();
                                       } else {
                                         return SnappingButton(
