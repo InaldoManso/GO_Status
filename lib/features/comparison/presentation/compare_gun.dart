@@ -7,8 +7,6 @@ import 'package:go_status/features/comparison/model/comparison_item.dart';
 import 'package:go_status/features/comparison/presentation/widgets/line_comparison.dart';
 
 class CompareGun extends StatefulWidget {
-  // const CompareGun({ Key? key }) : super(key: key);
-
   @override
   _CompareGunState createState() => _CompareGunState();
 }
@@ -20,23 +18,11 @@ class _CompareGunState extends State<CompareGun> {
 
   //Attributes
   StreamController _controller = StreamController<QuerySnapshot>.broadcast();
-  int? _municao;
-  int? _premio;
-  int? _damage;
-  int? _taxadisparo;
-  int? _coice;
-  int? _precisao;
-  int? _penetracao;
-
-  int? _municao2;
-  int? _premio2;
-  int? _damage2;
-  int? _taxadisparo2;
-  int? _coice2;
-  int? _precisao2;
-  int? _penetracao2;
-
-  List<String>? listring = ['aaaa'];
+  Widget lines = Container(child: Center(child: CircularProgressIndicator()));
+  ComparisonItem? initCi01 = ComparisonItem();
+  ComparisonItem? initCi02 = ComparisonItem();
+  String? gunTittle01 = 'Selecione';
+  String? gunTittle02 = 'Selecione';
 
   Stream<QuerySnapshot> _addListenerCompareGuns() {
     final stream = db
@@ -52,8 +38,66 @@ class _CompareGunState extends State<CompareGun> {
     return stream;
   }
 
+  _initializeInterface(bool initconfig,
+      {int? item, ComparisonItem? ci01, ComparisonItem? ci02}) {
+    if (initconfig) {
+      initCi01!.id = 'arma1';
+      initCi01!.name = 'Arma 01';
+      initCi01!.ammunition = '20/120';
+      initCi01!.damage = 180;
+      initCi01!.firingRate = 180;
+      initCi01!.penetration = 180;
+      initCi01!.precisionRange = 180;
+      initCi01!.prizeForKilling = 180;
+      initCi01!.recoilControl = 180;
+
+      initCi02!.id = 'arma1';
+      initCi02!.name = 'Arma 01';
+      initCi02!.ammunition = '20/120';
+      initCi02!.damage = 180;
+      initCi02!.firingRate = 180;
+      initCi02!.penetration = 180;
+      initCi02!.precisionRange = 180;
+      initCi02!.prizeForKilling = 180;
+      initCi02!.recoilControl = 180;
+
+      setState(() {
+        lines = LineComparison(initCi01!, initCi02!);
+      });
+    } else if (initconfig == false && item == 1) {
+      initCi01!.id = ci01!.id ?? "";
+      initCi01!.name = ci01.name ?? "";
+      initCi01!.ammunition = ci01.ammunition ?? "";
+      initCi01!.damage = ci01.damage ?? 0;
+      initCi01!.firingRate = ci01.firingRate ?? 0;
+      initCi01!.penetration = ci01.penetration ?? 0;
+      initCi01!.precisionRange = ci01.precisionRange ?? 0;
+      initCi01!.prizeForKilling = ci01.prizeForKilling ?? 0;
+      initCi01!.recoilControl = ci01.recoilControl ?? 0;
+      setState(() {
+        gunTittle01 = ci01.name;
+        lines = LineComparison(initCi01!, initCi02!);
+      });
+    } else if (initconfig == false && item == 2) {
+      initCi02!.id = ci02!.id ?? "";
+      initCi02!.name = ci02.name ?? "";
+      initCi02!.ammunition = ci02.ammunition ?? "";
+      initCi02!.damage = ci02.damage ?? 0;
+      initCi02!.firingRate = ci02.firingRate ?? 0;
+      initCi02!.penetration = ci02.penetration ?? 0;
+      initCi02!.precisionRange = ci02.precisionRange ?? 0;
+      initCi02!.prizeForKilling = ci02.prizeForKilling ?? 0;
+      initCi02!.recoilControl = ci02.recoilControl ?? 0;
+      setState(() {
+        gunTittle02 = ci02.name;
+        lines = LineComparison(initCi01!, initCi02!);
+      });
+    }
+  }
+
   @override
   void initState() {
+    _initializeInterface(true);
     _addListenerCompareGuns();
     super.initState();
   }
@@ -102,54 +146,47 @@ class _CompareGunState extends State<CompareGun> {
                     ),
                   ),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Center(
-                            widthFactor: 1,
-                            child: Text(
-                              'Nome da arma pô',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: colorPallete.dodgerBlue,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Center(
+                              widthFactor: 1,
+                              child: Text(
+                                gunTittle01!,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: colorPallete.dodgerBlue,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Center(
-                            widthFactor: 2,
-                            child: Text(
-                              'Nome da arma pô',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: colorPallete.orange,
+                          Expanded(
+                            flex: 2,
+                            child: Center(
+                              widthFactor: 2,
+                              child: Text(
+                                gunTittle02!,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: colorPallete.orange,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Spacer()
-                      ],
+                          Spacer()
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
             Divider(color: Colors.grey),
-            Column(
-              children: [
-                LineComparison("Munição:", 0.8, 0.9),
-                LineComparison("Prêmio por matar:", 0.8, 0.9),
-                LineComparison("Dano:", 0.8, 0.9),
-                LineComparison("Taxa de disparo:", 0.8, 0.9),
-                LineComparison("Controle de coice:", 0.8, 0.9),
-                LineComparison("Precisão a distância:", 0.8, 0.9),
-                LineComparison("Penetração em proteção:", 0.8, 0.9),
-              ],
-            ),
+            lines,
             Divider(color: Colors.grey),
             Expanded(
               child: Row(
@@ -200,7 +237,7 @@ class _CompareGunState extends State<CompareGun> {
                                   comparisonItem.damage = item["damage"];
                                   comparisonItem.firingRate =
                                       item["firingRate"];
-                                  comparisonItem.penetrationInProtection =
+                                  comparisonItem.penetration =
                                       item["penetrationInProtection"];
                                   comparisonItem.precisionRange =
                                       item["precisionRange"];
@@ -220,7 +257,10 @@ class _CompareGunState extends State<CompareGun> {
                                       primary: Colors.white,
                                       onPrimary: colorPallete.orange,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      _initializeInterface(false,
+                                          ci01: comparisonItem, item: 1);
+                                    },
                                   );
                                 },
                               );
@@ -275,7 +315,7 @@ class _CompareGunState extends State<CompareGun> {
                                   comparisonItem.damage = item["damage"];
                                   comparisonItem.firingRate =
                                       item["firingRate"];
-                                  comparisonItem.penetrationInProtection =
+                                  comparisonItem.penetration =
                                       item["penetrationInProtection"];
                                   comparisonItem.precisionRange =
                                       item["precisionRange"];
@@ -295,7 +335,10 @@ class _CompareGunState extends State<CompareGun> {
                                       primary: Colors.white,
                                       onPrimary: colorPallete.dodgerBlue,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      _initializeInterface(false,
+                                          ci02: comparisonItem, item: 2);
+                                    },
                                   );
                                 },
                               );

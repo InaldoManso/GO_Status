@@ -4,10 +4,9 @@ import 'package:go_status/core/tools/spliter.dart';
 import 'package:go_status/features/comparison/model/comparison_item.dart';
 
 class LineComparison extends StatefulWidget {
-  var tittle = "";
-  var value01;
-  var value02;
-  LineComparison(this.tittle, this.value01, this.value02);
+  ComparisonItem value01;
+  ComparisonItem value02;
+  LineComparison(this.value01, this.value02);
 
   @override
   _LineComparisonState createState() => _LineComparisonState();
@@ -20,10 +19,21 @@ class _LineComparisonState extends State<LineComparison> {
   //Attributes
   EdgeInsetsGeometry edgeInsets = EdgeInsets.only(bottom: 4, left: 4, right: 4);
   ColorPallete colorPallete = ColorPallete();
-  ComparisonItem cItem1 = ComparisonItem();
-  ComparisonItem cItem2 = ComparisonItem();
+  ComparisonItem ci01 = ComparisonItem();
+  ComparisonItem ci02 = ComparisonItem();
+  int? ammunition1 = 0;
+  int? ammunition2 = 0;
+  List<String> labels = [
+    'Munição:',
+    'Prêmio por matar:',
+    'Dano:',
+    'Taxa de disparo:',
+    'Controle de coice:',
+    'Precisão a distância:',
+    'Penetração em proteção:',
+  ];
 
-  Widget _lineGenerator(int currentValue, int maxValue) {
+  Widget _lineGenerator(int currentValue, int maxValue, Color color) {
     double percentMax = 100 / maxValue;
     double percentCurrent = percentMax / 100;
     double value = percentCurrent * currentValue;
@@ -31,54 +41,70 @@ class _LineComparisonState extends State<LineComparison> {
 
     return Padding(
       padding: edgeInsets,
-      child: LinearProgressIndicator(
-        value: value,
-        color: colorPallete.orange,
-        backgroundColor: Colors.orange[50],
+      child: Row(
+        children: [
+          Expanded(
+            child: LinearProgressIndicator(
+              value: value,
+              color: color,
+              backgroundColor: Colors.orange[50],
+            ),
+          ),
+          Container(
+            width: 40,
+            child: Center(
+              child: Text(
+                currentValue.toString(),
+                style: TextStyle(fontSize: 10),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
 
   @override
   void initState() {
-    cItem1.id = 'arma1';
-    cItem1.name = 'Arma 01';
-    cItem1.ammunition = '20/120';
-    cItem1.damage = 30;
-    cItem1.firingRate = 6;
-    cItem1.penetrationInProtection = 94;
-    cItem1.precisionRange = 22;
-    cItem1.prizeForKilling = 300;
-    cItem1.recoilControl = 83;
-    //==
-    cItem2.id = 'arma1';
-    cItem2.name = 'Arma 01';
-    cItem2.ammunition = '20/120';
-    cItem2.damage = 35;
-    cItem2.firingRate = 8;
-    cItem2.penetrationInProtection = 100;
-    cItem2.precisionRange = 28;
-    cItem2.prizeForKilling = 350;
-    cItem2.recoilControl = 90;
+    ci01 = widget.value01;
+    ci02 = widget.value02;
+    ammunition1 = spliter.ammunitionResult(ci01.ammunition!);
+    ammunition2 = spliter.ammunitionResult(ci02.ammunition!);
+    print(ammunition1);
+    print(ammunition2);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(padding: const EdgeInsets.all(4.0), child: Text('Munição')),
-        _lineGenerator(40, 200),
-        Padding(
-          padding: edgeInsets,
-          child: LinearProgressIndicator(
-            value: widget.value02 == null ? 0.0 : widget.value02,
-            color: colorPallete.dodgerBlue,
-            backgroundColor: Colors.blue[50],
-          ),
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(padding: const EdgeInsets.all(4.0), child: Text(labels[0])),
+          _lineGenerator(ammunition1!, 200, colorPallete.dodgerBlue),
+          _lineGenerator(ammunition2!, 200, colorPallete.orange),
+          Padding(padding: const EdgeInsets.all(4.0), child: Text(labels[1])),
+          _lineGenerator(ci01.prizeForKilling!, 200, colorPallete.dodgerBlue),
+          _lineGenerator(ci02.prizeForKilling!, 200, colorPallete.orange),
+          Padding(padding: const EdgeInsets.all(4.0), child: Text(labels[2])),
+          _lineGenerator(ci01.damage!, 200, colorPallete.dodgerBlue),
+          _lineGenerator(ci02.damage!, 200, colorPallete.orange),
+          Padding(padding: const EdgeInsets.all(4.0), child: Text(labels[3])),
+          _lineGenerator(ci01.firingRate!, 200, colorPallete.dodgerBlue),
+          _lineGenerator(ci02.firingRate!, 200, colorPallete.orange),
+          Padding(padding: const EdgeInsets.all(4.0), child: Text(labels[4])),
+          _lineGenerator(ci01.recoilControl!, 200, colorPallete.dodgerBlue),
+          _lineGenerator(ci02.recoilControl!, 200, colorPallete.orange),
+          Padding(padding: const EdgeInsets.all(4.0), child: Text(labels[5])),
+          _lineGenerator(ci01.precisionRange!, 200, colorPallete.dodgerBlue),
+          _lineGenerator(ci02.precisionRange!, 200, colorPallete.orange),
+          Padding(padding: const EdgeInsets.all(4.0), child: Text(labels[6])),
+          _lineGenerator(ci01.penetration!, 200, colorPallete.dodgerBlue),
+          _lineGenerator(ci02.penetration!, 200, colorPallete.orange),
+        ],
+      ),
     );
   }
 }

@@ -16,6 +16,7 @@ class _SnappingScreenShowState extends State<SnappingScreenShow> {
   Widget _screenWidget = Container();
 
   _initScreen() {
+    print(widget.screen);
     setState(() {
       _screenWidget = snappingSelector.menuScreens(widget.screen);
     });

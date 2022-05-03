@@ -32,7 +32,7 @@ def keystoreProperties = new Properties()
    }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -75,3 +75,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:<latest_version>'
 }
 apply plugin: 'com.google.gms.google-services'
+
+def flutterMinSdkVersion = localProperties.getProperty('flutter.minSdkVersion')
+if (flutterMinSdkVersion == null) {
+    flutterMinSdkVersion = '21'
+}
